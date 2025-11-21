@@ -47,7 +47,8 @@ export function usePlayerRegistration() {
     hash: updateData,
   });
 
-  const isRegistered = playerInfo ? (playerInfo as any)[6] : false; // isRegistered field
+  // Check if registered by checking if username exists (index 0)
+  const isRegistered = playerInfo ? !!(playerInfo as any)[0] && (playerInfo as any)[0].length > 0 : false;
 
   return {
     playerInfo,

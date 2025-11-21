@@ -19,6 +19,7 @@ export default function RegisterPage() {
     registerIsSuccess,
     registerIsError,
     registerError,
+    refetchPlayerInfo,
   } = usePlayerRegistration();
 
   // Redirect if already registered
@@ -32,11 +33,13 @@ export default function RegisterPage() {
   useEffect(() => {
     if (registerIsSuccess) {
       toast.success('Registration successful! 🎉');
+      // Refetch player info to update isRegistered status
+      refetchPlayerInfo();
       setTimeout(() => {
         router.push('/play');
       }, 2000);
     }
-  }, [registerIsSuccess, router]);
+  }, [registerIsSuccess, router, refetchPlayerInfo]);
 
   // Show error toast
   useEffect(() => {

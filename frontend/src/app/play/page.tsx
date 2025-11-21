@@ -13,7 +13,14 @@ export default function PlayPage() {
   const router = useRouter();
   const [isStarting, setIsStarting] = useState(false);
   
-  const { isRegistered, playerInfo } = usePlayerRegistration();
+  const { isRegistered, playerInfo, refetchPlayerInfo } = usePlayerRegistration();
+
+  // Refetch player info when page loads to ensure fresh data
+  useEffect(() => {
+    if (address) {
+      refetchPlayerInfo();
+    }
+  }, [address, refetchPlayerInfo]);
   const { startGame, startGameIsLoading, startGameIsSuccess, startGameError } = useGameSession();
   const { balance } = useCeloBalance();
   const { questionCount, contractBalance } = useContractInfo();
