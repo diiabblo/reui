@@ -37,8 +37,10 @@ export default function PlayPage() {
   
   // Handle join success
   useEffect(() => {
-    if (joinIsSuccess && !isJoining) {
+    if (joinIsSuccess && isJoining) {
+      toast.dismiss(); // Dismiss loading toast
       toast.success('Successfully joined the game!');
+      setIsJoining(false);
       router.push(`/play/game?gameId=${GAME_ID}`);
     }
   }, [joinIsSuccess, router, isJoining, GAME_ID]);
@@ -49,43 +51,56 @@ export default function PlayPage() {
       return;
     }
 
+    // Check if already joined
+    if (hasJoined) {
+      toast.success('You\'ve already joined! Starting game...');
+      router.push(`/play/game?gameId=${GAME_ID}`);
+      return;
+    }
+
     setIsJoining(true);
 
     try {
-      // Check if already joined
-      if (hasJoined) {
-        toast.success('You\'ve already joined! Starting game...');
-        router.push(`/play/game?gameId=${GAME_ID}`);
-        return;
-      }
-
       // Auto-claim from faucet if needed
       if (needsClaim && !hasClaimed) {
-        toast.loading('Getting you some cUSD from faucet...');
-        const claimed = await autoClaimIfNeeded();
-        if (claimed) {
-          toast.success('Received 10 cUSD! Now joining game...');
-          // Wait a bit for balance to update
-          await new Promise(resolve => setTimeout(resolve, 2000));
+        const loadingToast = toast.loading('Getting you some cUSD from faucet...');
+        try {
+          const claimed = await autoClaimIfNeeded();
+          toast.dismiss(loadingToast);
+          if (claimed) {
+            toast.success('Received 10 cUSD! Now joining game...');
+            // Wait a bit for balance to update
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        } catch (err) {
+          toast.dismiss(loadingToast);
+          toast.error('Failed to claim from faucet. Please try again.');
+          setIsJoining(false);
+          return;
         }
       }
 
       // Check game state
-      if (gameState !== GameState.Open) {
+      if (gameState !== undefined && gameState !== GameState.Open) {
         toast.error('Game is not open for joining');
         setIsJoining(false);
         return;
       }
 
       // Join the game
-      toast.loading('Joining game...');
+      toast.loading('Joining game... Please confirm the transaction in your wallet');
       if (joinGame) {
-        await joinGame({
+        joinGame({
           args: [BigInt(GAME_ID)],
         });
+        // Note: setIsJoining(false) will be called in useEffect when joinIsSuccess is true
+      } else {
+        toast.error('Unable to join game. Please try again.');
+        setIsJoining(false);
       }
     } catch (error: any) {
       console.error('Error joining game:', error);
+      toast.dismiss();
       toast.error(error?.message || 'Failed to join game');
       setIsJoining(false);
     }
