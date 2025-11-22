@@ -6,6 +6,7 @@ import { useAccount } from 'wagmi';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import QuickRewards from '@/components/QuickRewards';
 
 export default function RewardsPage() {
   const router = useRouter();
@@ -312,6 +313,9 @@ export default function RewardsPage() {
           </div>
         </motion.div>
       </div>
+      
+      {/* Quick Rewards */}
+      {isConnected && isRegistered && <QuickRewards />}
     </div>
   );
 }
