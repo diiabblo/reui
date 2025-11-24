@@ -6,9 +6,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import QuestionCard from '@/components/QuestionCard';
 import Timer from '@/components/Timer';
 import ProgressBar from '@/components/ProgressBar';
-import { SAMPLE_QUESTIONS, calculateScore, type Question } from '@/data/questions';
+import { calculateScore } from '@/data/questions';
 import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
+import { useQuestions } from '@/hooks/useContract';
+
+interface Question {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  category: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+}
 
 const QUESTION_TIME_LIMIT = 30; // seconds per question
 
@@ -19,21 +30,45 @@ export default function GamePage() {
   
   const gameId = searchParams.get('gameId') || '1';
   
-  const [questions] = useState<Question[]>(SAMPLE_QUESTIONS);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [timeSpent, setTimeSpent] = useState<number[]>([]);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  
+  // Fetch questions from the smart contract
+  const { data: questionIds, isLoading: isLoadingQuestions } = useQuestions();
+  const [questions, setQuestions] = useState<Question[]>([]);
 
-  // Redirect if not connected
+  // Map the question data from the contract to our Question type
+  useEffect(() => {
+    if (questionIds && questionIds.length > 0) {
+      // For now, we'll use a placeholder since we need to implement the actual question fetching
+      // This will be updated once we have the contract's getQuestion function available
+      const mappedQuestions = questionIds.map((id, index) => ({
+        id: Number(id),
+        question: `Question ${index + 1} from contract`,
+        options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+        correctAnswer: 0, // This should come from the contract
+        explanation: 'Explanation will be shown after answering',
+        category: 'Blockchain',
+        difficulty: 'medium' as const,
+      }));
+      setQuestions(mappedQuestions);
+    }
+  }, [questionIds]);
+
+  // Redirect if not connected or if there's an error loading questions
   useEffect(() => {
     if (!isConnected) {
       toast.error('Please connect your wallet first');
       router.push('/play');
+    } else if (questionIds && questionIds.length === 0) {
+      toast.error('No questions available. Please try again later.');
+      router.push('/play');
     }
-  }, [isConnected, router]);
+  }, [isConnected, router, questionIds]);
 
   // Start game
   useEffect(() => {
@@ -119,12 +154,14 @@ export default function GamePage() {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isLoadingQuestions) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Submitting your answers...</p>
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-lg text-gray-700">
+            {isLoadingQuestions ? 'Loading questions...' : 'Processing...'}
+          </p>
         </div>
       </div>
     );

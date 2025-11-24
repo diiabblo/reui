@@ -1,7 +1,7 @@
 import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount, useBalance } from 'wagmi';
 import { CONTRACTS, GAME_CONSTANTS } from '@/config/contracts';
 import { parseEther, formatEther } from 'viem';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 // ============ TRIVIA GAME V2 HOOKS ============
 
@@ -120,23 +120,33 @@ export function useGameSession() {
     hash: submitData,
   });
 
-  return {
-    sessionCount: sessionCount ? Number(sessionCount) : 0,
-    startGame: () => startGame({
+  // Memoize the startGame function to prevent recreation on every render
+  const memoizedStartGame = useCallback(() => {
+    return startGame({
       address: CONTRACTS.triviaGameV2.address,
       abi: CONTRACTS.triviaGameV2.abi,
       functionName: 'startGame',
-    }),
-    startGameIsLoading,
-    startGameIsSuccess,
-    startGameIsError,
-    startGameError,
-    submitAnswers: (sessionId: bigint, answers: number[]) => submitAnswers({
+    });
+  }, [startGame]);
+
+  // Memoize the submitAnswers function
+  const memoizedSubmitAnswers = useCallback((sessionId: bigint, answers: number[]) => {
+    return submitAnswers({
       address: CONTRACTS.triviaGameV2.address,
       abi: CONTRACTS.triviaGameV2.abi,
       functionName: 'submitAnswers',
       args: [sessionId, answers],
-    }),
+    });
+  }, [submitAnswers]);
+
+  return {
+    sessionCount: sessionCount ? Number(sessionCount) : 0,
+    startGame: memoizedStartGame,
+    startGameIsLoading,
+    startGameIsSuccess,
+    startGameIsError,
+    startGameError,
+    submitAnswers: memoizedSubmitAnswers,
     submitIsLoading,
     submitIsSuccess,
     submitIsError,
@@ -167,28 +177,52 @@ export function useSession(sessionId?: number) {
 }
 
 /**
- * Hook for getting questions
+ * Hook for getting questions from the smart contract
  */
-export function useQuestions(questionIds?: bigint[]) {
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+export function useQuestions() {
+  // First, get the total number of questions
+  const { data: questionCount, isLoading: isLoadingCount } = useReadContract({
+    address: CONTRACTS.triviaGameV2.address,
+    abi: CONTRACTS.triviaGameV2.abi,
+    functionName: 'getQuestionCount',
+  });
 
-  useEffect(() => {
-    if (!questionIds || questionIds.length === 0) return;
+  // Generate an array of question indices to fetch
+  const questionIndices = Array.from(
+    { length: Number(questionCount || 0) },
+    (_, i) => BigInt(i)
+  );
 
-    const fetchQuestions = async () => {
-      setLoading(true);
-      // Fetch each question individually
-      // This would need to be implemented with multiple contract reads
-      setLoading(false);
-    };
+  // Then fetch all questions in parallel
+  const { data: questionsData, isLoading: isLoadingQuestions } = useReadContract({
+    address: CONTRACTS.triviaGameV2.address,
+    abi: CONTRACTS.triviaGameV2.abi,
+    functionName: 'getQuestion',
+    args: [questionIndices],
+    query: {
+      enabled: !!questionCount && questionCount > 0,
+    },
+  });
 
-    fetchQuestions();
-  }, [questionIds]);
+  // Transform the contract data into our Question type
+  const questions = useMemo(() => {
+    if (!questionsData) return [];
+    
+    return questionsData.map((q: any, index: number) => ({
+      id: Number(questionIndices[index]) + 1, // Convert to 1-based index
+      question: q.question || `Question ${index + 1}`,
+      options: q.options || ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+      correctAnswer: q.correctOptionIndex !== undefined ? Number(q.correctOptionIndex) : 0,
+      explanation: q.explanation || 'No explanation provided',
+      category: q.category || 'General Knowledge',
+      difficulty: (q.difficulty?.toLowerCase() || 'medium') as 'easy' | 'medium' | 'hard',
+    }));
+  }, [questionsData, questionIndices]);
 
   return {
-    questions,
-    loading,
+    data: questions,
+    isLoading: isLoadingCount || isLoadingQuestions,
+    questionIds: questionIndices.map(id => id + 1n), // Return 1-based IDs
   };
 }
 
@@ -204,30 +238,7 @@ export function useRewards() {
     abi: CONTRACTS.triviaGameV2.abi,
     functionName: 'getPendingRewards',
     args: address ? [address] : undefined,
-    query: {
-      enabled: !!address,
-    },
   });
-
-  // Get unclaimed sessions
-  const { data: unclaimedSessions } = useReadContract({
-    address: CONTRACTS.triviaGameV2.address,
-    abi: CONTRACTS.triviaGameV2.abi,
-    functionName: 'getUnclaimedSessions',
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address,
-    },
-  });
-
-  // Claim all rewards
-  const {
-    writeContract: claimRewards,
-    data: claimData,
-    isPending: claimIsLoading,
-    isError: claimIsError,
-    error: claimError,
-  } = useWriteContract();
 
   // Claim specific session rewards
   const {
@@ -236,17 +247,13 @@ export function useRewards() {
     isPending: claimSessionIsLoading,
   } = useWriteContract();
 
-  const { isSuccess: claimIsSuccess } = useWaitForTransactionReceipt({
-    hash: claimData,
-  });
-
   const { isSuccess: claimSessionIsSuccess } = useWaitForTransactionReceipt({
     hash: claimSessionData,
   });
 
   return {
     pendingRewards: pendingRewards ? formatEther(pendingRewards as bigint) : '0',
-    unclaimedSessions: unclaimedSessions as bigint[] || [],
+    unclaimedSessions: [],
     claimRewards: () => claimRewards({
       address: CONTRACTS.triviaGameV2.address,
       abi: CONTRACTS.triviaGameV2.abi,
