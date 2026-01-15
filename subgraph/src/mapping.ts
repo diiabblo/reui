@@ -24,3 +24,50 @@ export function handleQuestionAdded(event: QuestionAddedEvent): void {
   stats.totalQuestions = stats.totalQuestions.plus(BigInt.fromI32(1));
   stats.save();
 }
+
+export function handleAnswerSubmitted(event: AnswerSubmittedEvent): void {
+  let playerId = event.params.user.toHexString();
+  let player = getOrCreatePlayer(event.params.user, event.block.timestamp);
+
+  let answerId = event.transaction.hash.toHexString() + "-" + event.logIndex.toString();
+  let answer = new Answer(answerId);
+
+  answer.player = playerId;
+  answer.question = event.params.questionId.toString();
+  answer.questionId = event.params.questionId;
+  answer.isCorrect = event.params.isCorrect;
+  answer.reward = event.params.reward;
+  answer.timestamp = event.block.timestamp;
+  answer.blockNumber = event.block.number;
+  answer.transactionHash = event.transaction.hash;
+
+  answer.save();
+
+  player.totalAnswers = player.totalAnswers.plus(BigInt.fromI32(1));
+
+  if (event.params.isCorrect) {
+    player.correctAnswers = player.correctAnswers.plus(BigInt.fromI32(1));
+    player.totalScore = player.totalScore.plus(BigInt.fromI32(1));
+    player.totalRewards = player.totalRewards.plus(event.params.reward);
+  }
+
+  player.lastPlayedAt = event.block.timestamp;
+  player.save();
+
+  let question = Question.load(event.params.questionId.toString());
+  if (question != null) {
+    question.totalAnswers = question.totalAnswers.plus(BigInt.fromI32(1));
+    if (event.params.isCorrect) {
+      question.correctAnswers = question.correctAnswers.plus(BigInt.fromI32(1));
+    }
+    question.save();
+  }
+
+  let stats = getOrCreateGlobalStats();
+  stats.totalAnswers = stats.totalAnswers.plus(BigInt.fromI32(1));
+  if (event.params.isCorrect) {
+    stats.totalCorrectAnswers = stats.totalCorrectAnswers.plus(BigInt.fromI32(1));
+  }
+  stats.totalRewardsDistributed = stats.totalRewardsDistributed.plus(event.params.reward);
+  stats.save();
+}
