@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAccount, useBalance } from 'wagmi';
 import { CONTRACTS } from '@/config/contracts';
 import { useFaucet } from '@/hooks/useContract';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
 
 export default function FaucetPage() {
   const { address } = useAccount();
@@ -36,8 +37,17 @@ export default function FaucetPage() {
     setError(null);
     try {
       await claim?.();
+      trackEvent(ANALYTICS_EVENTS.FAUCET_USED, {
+        address: address,
+        amount: claimAmount.data ? Number(claimAmount.data) / 1e18 : 0,
+      });
     } catch (err: any) {
-      setError(err.message || 'Failed to claim cUSD');
+      const errorMessage = err.message || 'Failed to claim cUSD';
+      setError(errorMessage);
+      trackEvent(ANALYTICS_EVENTS.ERROR_OCCURRED, {
+        error: errorMessage,
+        context: 'faucet_claim',
+      });
     }
   };
 
