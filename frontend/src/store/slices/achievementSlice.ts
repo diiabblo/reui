@@ -1,11 +1,31 @@
 import { StateCreator } from 'zustand';
 import { Achievement, AchievementState } from '@/types/achievement';
 
+const calculateStreak = (dates: string[]): number => {
+  if (dates.length === 0) return 0;
+  const sorted = [...dates].sort();
+  let streak = 1;
+  let maxStreak = 1;
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i - 1]);
+    const curr = new Date(sorted[i]);
+    const diff = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
+    if (diff === 1) {
+      streak++;
+      maxStreak = Math.max(maxStreak, streak);
+    } else {
+      streak = 1;
+    }
+  }
+  return maxStreak;
+};
+
 export interface AchievementActions {
   unlockAchievement: (id: string) => void;
   updateAchievementProgress: (id: string, progress: number) => void;
   updateGlobalStats: (stats: Partial<AchievementState['globalStats']>) => void;
   checkAchievements: () => void;
+  updatePlayDate: () => void;
 }
 
 export type AchievementSlice = AchievementState & AchievementActions;
@@ -165,5 +185,21 @@ export const createAchievementSlice: StateCreator<
 
     // Streak Champion - need to implement daily streak logic
     // For now, placeholder
+  },
+
+  updatePlayDate: () => {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    set(
+      (state) => {
+        if (!state.globalStats.playDates.includes(today)) {
+          state.globalStats.playDates.push(today);
+          // Sort and calculate streak
+          state.globalStats.playDates.sort();
+          state.globalStats.dailyStreak = calculateStreak(state.globalStats.playDates);
+        }
+      },
+      false,
+      'achievement/updatePlayDate'
+    );
   },
 });
