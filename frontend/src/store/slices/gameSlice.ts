@@ -87,6 +87,18 @@ export const createGameSlice: StateCreator<
       false,
       'game/startGame'
     );
+
+    // Update play date and check time-based achievements
+    (get() as any).updatePlayDate();
+    const now = new Date();
+    const hour = now.getHours();
+    const achievements = (get() as any).achievements;
+    if (hour < 8 && !achievements.find((a: any) => a.id === 'early-bird')?.isUnlocked) {
+      (get() as any).unlockAchievement('early-bird');
+    }
+    if (hour >= 22 && !achievements.find((a: any) => a.id === 'night-owl')?.isUnlocked) {
+      (get() as any).unlockAchievement('night-owl');
+    }
   },
 
   endGame: () => 
