@@ -1,0 +1,138 @@
+import { StateCreator } from 'zustand';
+import { Achievement, AchievementState } from '@/types/achievement';
+
+export interface AchievementActions {
+  unlockAchievement: (id: string) => void;
+  updateAchievementProgress: (id: string, progress: number) => void;
+  updateGlobalStats: (stats: Partial<AchievementState['globalStats']>) => void;
+  checkAchievements: () => void;
+}
+
+export type AchievementSlice = AchievementState & AchievementActions;
+
+const initialAchievements: Achievement[] = [
+  {
+    id: 'first-answer',
+    title: 'First Answer',
+    description: 'Answer your first question',
+    icon: '🎯',
+    category: 'milestone',
+    isUnlocked: false,
+  },
+  {
+    id: 'perfect-score',
+    title: 'Perfect Score',
+    description: 'Get 10 answers correct in a row',
+    icon: '🔥',
+    category: 'skill',
+    target: 10,
+    progress: 0,
+    isUnlocked: false,
+  },
+  {
+    id: 'speed-demon',
+    title: 'Speed Demon',
+    description: 'Answer in under 5 seconds',
+    icon: '⚡',
+    category: 'time',
+    isUnlocked: false,
+  },
+  {
+    id: 'trivia-master',
+    title: 'Trivia Master',
+    description: 'Answer 100 questions total',
+    icon: '👑',
+    category: 'milestone',
+    target: 100,
+    progress: 0,
+    isUnlocked: false,
+  },
+  {
+    id: 'streak-champion',
+    title: 'Streak Champion',
+    description: '7-day answer streak',
+    icon: '🗓️',
+    category: 'streak',
+    target: 7,
+    progress: 0,
+    isUnlocked: false,
+  },
+  {
+    id: 'early-bird',
+    title: 'Early Bird',
+    description: 'Play before 8am',
+    icon: '🌅',
+    category: 'time',
+    isUnlocked: false,
+  },
+  {
+    id: 'night-owl',
+    title: 'Night Owl',
+    description: 'Play after 10pm',
+    icon: '🦉',
+    category: 'time',
+    isUnlocked: false,
+  },
+];
+
+export const createAchievementSlice: StateCreator<
+  AchievementSlice,
+  [['zustand/immer', never], ['zustand/devtools', never], ['zustand/persist', unknown]],
+  [],
+  AchievementSlice
+> = (set, get) => ({
+  achievements: initialAchievements,
+  globalStats: {
+    totalAnswers: 0,
+    totalCorrectAnswers: 0,
+    highestStreak: 0,
+    dailyStreak: 0,
+    playDates: [],
+  },
+
+  unlockAchievement: (id) =>
+    set(
+      (state) => {
+        const achievement = state.achievements.find((a) => a.id === id);
+        if (achievement && !achievement.isUnlocked) {
+          achievement.isUnlocked = true;
+          achievement.unlockedAt = new Date().toISOString();
+          achievement.progress = achievement.target;
+          
+          // Add notification logic here later
+          console.log(`Achievement Unlocked: ${achievement.title}`);
+        }
+      },
+      false,
+      'achievement/unlockAchievement'
+    ),
+
+  updateAchievementProgress: (id, progress) =>
+    set(
+      (state) => {
+        const achievement = state.achievements.find((a) => a.id === id);
+        if (achievement && !achievement.isUnlocked) {
+          achievement.progress = progress;
+          if (achievement.target && progress >= achievement.target) {
+            achievement.isUnlocked = true;
+            achievement.unlockedAt = new Date().toISOString();
+          }
+        }
+      },
+      false,
+      'achievement/updateAchievementProgress'
+    ),
+
+  updateGlobalStats: (stats) =>
+    set(
+      (state) => {
+        state.globalStats = { ...state.globalStats, ...stats };
+      },
+      false,
+      'achievement/updateGlobalStats'
+    ),
+
+  checkAchievements: () => {
+    // This will be implemented in subsequent steps
+  },
+});
