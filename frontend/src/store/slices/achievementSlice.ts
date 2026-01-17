@@ -133,6 +133,26 @@ export const createAchievementSlice: StateCreator<
     ),
 
   checkAchievements: () => {
-    // This will be implemented in subsequent steps
+    const state = get();
+    const { achievements, globalStats } = state;
+    const gameState = (state as any).playerStats; // Access game state
+
+    // First Answer
+    if (globalStats.totalAnswers >= 1 && !achievements.find(a => a.id === 'first-answer')?.isUnlocked) {
+      state.unlockAchievement('first-answer');
+    }
+
+    // Perfect Score
+    if (gameState?.highestStreak >= 10 && !achievements.find(a => a.id === 'perfect-score')?.isUnlocked) {
+      state.unlockAchievement('perfect-score');
+    }
+
+    // Trivia Master
+    if (globalStats.totalAnswers >= 100 && !achievements.find(a => a.id === 'trivia-master')?.isUnlocked) {
+      state.unlockAchievement('trivia-master');
+    }
+
+    // Streak Champion - need to implement daily streak logic
+    // For now, placeholder
   },
 });
