@@ -94,6 +94,7 @@ export default function Navbar() {
     { name: 'Rewards', href: '/rewards' },
     { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'Achievements', href: '/achievements' },
+    { name: 'Submit Question', href: '/submit-question' },
   ];
 
   return (
