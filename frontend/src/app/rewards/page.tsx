@@ -13,7 +13,8 @@ import {
   SparklesIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
-import { useRewards, usePlayerRegistration, useLeaderboard } from '@/hooks/useContract';
+import { useRewards } from '@/hooks/useRewardManagement';
+import { usePlayerRegistration, useLeaderboard } from '@/hooks/useGameQueries';
 import { useMiniPay } from '@/hooks/useMiniPay';
 import { useCUSDBalance } from '@/hooks/useCUSDBalance';
 import { RewardCardSkeleton } from '@/components/skeletons';
