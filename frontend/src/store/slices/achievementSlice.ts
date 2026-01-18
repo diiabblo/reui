@@ -207,9 +207,20 @@ export const createAchievementSlice: StateCreator<
       state.unlockAchievement('trivia-master');
     }
 
-    // Streak Champion
-    if (globalStats.dailyStreak >= 7 && !achievements.find(a => a.id === 'streak-champion')?.isUnlocked) {
-      state.unlockAchievement('streak-champion');
+    // Update progress for progress-based achievements
+    const triviaMaster = achievements.find(a => a.id === 'trivia-master');
+    if (triviaMaster && !triviaMaster.isUnlocked) {
+      state.updateAchievementProgress('trivia-master', globalStats.totalAnswers);
+    }
+
+    const perfectScore = achievements.find(a => a.id === 'perfect-score');
+    if (perfectScore && !perfectScore.isUnlocked) {
+      state.updateAchievementProgress('perfect-score', gameState?.highestStreak || 0);
+    }
+
+    const streakChampion = achievements.find(a => a.id === 'streak-champion');
+    if (streakChampion && !streakChampion.isUnlocked) {
+      state.updateAchievementProgress('streak-champion', globalStats.dailyStreak);
     }
   },
 
