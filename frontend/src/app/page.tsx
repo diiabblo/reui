@@ -51,7 +51,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto"
+              className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto"
               role="region"
               aria-label="Key game statistics"
             >
@@ -66,6 +66,10 @@ export default function Home() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <div className="text-3xl font-bold text-blue-600 mb-2" aria-label="Optimized for MiniPay wallet">MiniPay</div>
                 <div className="text-gray-600">Optimized</div>
+              </div>
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <div className="text-3xl font-bold text-purple-600 mb-2" aria-label="Number of questions">80+</div>
+                <div className="text-gray-600">Questions</div>
               </div>
             </motion.div>
           </div>
