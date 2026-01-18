@@ -114,6 +114,7 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
     { name: 'Rewards', href: '/rewards' },
     { name: 'Leaderboard', href: '/leaderboard' },
     { name: 'Achievements', href: '/achievements' },
+    { name: 'Submit Question', href: '/submit-question' },
   ];
 
   return (

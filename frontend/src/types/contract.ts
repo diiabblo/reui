@@ -26,8 +26,8 @@ export interface ContractQuestion {
   question: string;
   answers: string[];
   correctAnswerIndex: number;
-  category: string;
-  difficulty: number;
+  category: 'Celo' | 'DeFi' | 'Web3' | 'GeneralCrypto' | 'NFTs' | 'DAOs';
+  difficulty: 'Easy' | 'Medium' | 'Hard';
   createdAt: bigint;
 }
 
