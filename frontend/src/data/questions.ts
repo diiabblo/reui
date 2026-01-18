@@ -662,8 +662,96 @@ export const questions: Question[] = [
     correctAnswer: 1,
     explanation: "Quadratic funding matches donations to projects based on contribution distribution.",
     category: "DAOs",
-    difficulty: "Hard"
-  }
+    difficulty: "Hard"  },
+  {
+    id: 71,
+    question: "What is a layer 1 blockchain?",
+    options: ["First layer of internet", "Base blockchain network", "A wallet layer", "A dApp layer"],
+    correctAnswer: 1,
+    explanation: "Layer 1 blockchains are the foundational networks like Ethereum, Bitcoin, Celo.",
+    category: "GeneralCrypto",
+    difficulty: "Easy"
+  },
+  {
+    id: 72,
+    question: "What is a vesting schedule?",
+    options: ["A calendar", "Time-locked token release", "A payment plan", "A reward system"],
+    correctAnswer: 1,
+    explanation: "Vesting schedules release tokens over time to align incentives and prevent dumps.",
+    category: "Web3",
+    difficulty: "Medium"
+  },
+  {
+    id: 73,
+    question: "What is a bear market?",
+    options: ["Market with bears", "Extended period of declining prices", "Bull market opposite", "Crypto winter"],
+    correctAnswer: 1,
+    explanation: "A bear market is characterized by falling asset prices and widespread pessimism.",
+    category: "GeneralCrypto",
+    difficulty: "Easy"
+  },
+  {
+    id: 74,
+    question: "What is a permissioned blockchain?",
+    options: ["Requires permission to join", "Controlled access blockchain", "Private blockchain", "All of the above"],
+    correctAnswer: 3,
+    explanation: "Permissioned blockchains restrict participation to approved entities.",
+    category: "Web3",
+    difficulty: "Medium"
+  },
+  {
+    id: 75,
+    question: "What is a stablecoin?",
+    options: ["Coin that doesn't change", "Cryptocurrency pegged to stable asset", "A safe investment", "A government coin"],
+    correctAnswer: 1,
+    explanation: "Stablecoins maintain a stable value by being pegged to assets like USD or commodities.",
+    category: "DeFi",
+    difficulty: "Easy"
+  },
+  {
+    id: 76,
+    question: "What is a fork in crypto?",
+    options: ["Eating utensil", "Blockchain split into two paths", "A mining tool", "A wallet feature"],
+    correctAnswer: 1,
+    explanation: "A fork occurs when a blockchain diverges into two separate chains.",
+    category: "GeneralCrypto",
+    difficulty: "Easy"
+  },
+  {
+    id: 77,
+    question: "What is a DEX aggregator?",
+    options: ["Collects DEX data", "Finds best prices across DEXs", "Aggregates liquidity", "All of the above"],
+    correctAnswer: 3,
+    explanation: "DEX aggregators compare prices across multiple decentralized exchanges to find the best rates.",
+    category: "DeFi",
+    difficulty: "Medium"
+  },
+  {
+    id: 78,
+    question: "What is a PFP NFT?",
+    options: ["Profile Picture NFT", "Personal Finance Protocol", "Proof of Financial Performance", "Public Finance Platform"],
+    correctAnswer: 0,
+    explanation: "PFP NFTs are profile picture collections that serve as digital identity and community membership.",
+    category: "NFTs",
+    difficulty: "Easy"
+  },
+  {
+    id: 79,
+    question: "What is a delegate in DAO governance?",
+    options: ["A representative", "Someone who votes on behalf of others", "A leader", "All of the above"],
+    correctAnswer: 3,
+    explanation: "Delegates represent community members in governance decisions.",
+    category: "DAOs",
+    difficulty: "Medium"
+  },
+  {
+    id: 80,
+    question: "What is Celo's carbon-negative feature?",
+    options: ["Trees planted", "Offsetting emissions through reforestation", "No emissions", "Electric mining"],
+    correctAnswer: 1,
+    explanation: "Celo offsets its carbon emissions through reforestation and other environmental initiatives.",
+    category: "Celo",
+    difficulty: "Medium"  }
 ];
 
 /**
