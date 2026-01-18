@@ -136,8 +136,15 @@ export const createAchievementSlice: StateCreator<
           achievement.unlockedAt = new Date().toISOString();
           achievement.progress = achievement.target;
           
-          // Add notification logic here later
-          console.log(`Achievement Unlocked: ${achievement.title}`);
+          // Show notification
+          if (typeof window !== 'undefined') {
+            import('react-hot-toast').then(({ toast }) => {
+              toast.success(`Achievement Unlocked: ${achievement.title}!`, {
+                duration: 5000,
+                icon: achievement.icon,
+              });
+            });
+          }
         }
       },
       false,
