@@ -93,6 +93,7 @@ export default function Navbar() {
     { name: 'Play', href: '/play' },
     { name: 'Rewards', href: '/rewards' },
     { name: 'Leaderboard', href: '/leaderboard' },
+    { name: 'Achievements', href: '/achievements' },
   ];
 
   return (
