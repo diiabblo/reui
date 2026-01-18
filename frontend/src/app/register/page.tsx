@@ -6,9 +6,7 @@ import { useAccount } from 'wagmi';
 import toast from 'react-hot-toast';
 import { registrationSchema, RegistrationFormData } from '@/utils/validations/auth.schema';
 import { useSanitizedForm } from '@/hooks/useSanitizedForm';
-import { usePlayerRegistration } from '@/hooks/useContract';
-import { LoadingButton, LoadingCard, useLoading } from '@/components/loading';
-import { FormErrorBoundary } from '@/components/FormErrorBoundary';
+import { usePlayerRegistration } from '@/hooks/useGameQueries';
 
 export default function RegisterPage() {
   const router = useRouter();

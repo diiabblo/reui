@@ -5,7 +5,7 @@ import { useAccount } from 'wagmi';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { usePlayerRegistration, useGameSession, useCeloBalance, useContractInfo, useQuestions } from '@/hooks/useContract';
+import { usePlayerRegistration, useGameSession, useContractInfo, useQuestions } from '@/hooks/useGameQueries';
 import { PlayerInfoSkeleton, StatsCardSkeleton } from '@/components/skeletons';
 import { LoadingButton, LoadingCard, useLoading } from '@/components/loading';
 import { GAME_CONSTANTS } from '@/config/contracts';
