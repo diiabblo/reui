@@ -483,6 +483,186 @@ export const questions: Question[] = [
     explanation: "Composability refers to how DeFi protocols can be combined to create new financial products.",
     category: "DeFi",
     difficulty: "Hard"
+  },
+  {
+    id: 51,
+    question: "What is Valora?",
+    options: ["A Celo wallet", "A DeFi protocol", "A stablecoin", "A mining tool"],
+    correctAnswer: 0,
+    explanation: "Valora is a mobile wallet for Celo that allows sending crypto using phone numbers.",
+    category: "Celo",
+    difficulty: "Easy"
+  },
+  {
+    id: 52,
+    question: "What is cEUR?",
+    options: ["Euro stablecoin on Celo", "A currency", "A wallet", "A dApp"],
+    correctAnswer: 0,
+    explanation: "cEUR is Celo's Euro-pegged stablecoin, allowing stable transactions in Euros.",
+    category: "Celo",
+    difficulty: "Easy"
+  },
+  {
+    id: 53,
+    question: "What is a Merkle tree?",
+    options: ["A tree data structure", "Cryptographic structure for efficient verification", "A mining algorithm", "A wallet type"],
+    correctAnswer: 1,
+    explanation: "Merkle trees are cryptographic structures that allow efficient verification of large data sets.",
+    category: "GeneralCrypto",
+    difficulty: "Hard"
+  },
+  {
+    id: 54,
+    question: "What is a zero-knowledge proof?",
+    options: ["No knowledge required", "Proving something without revealing information", "A math problem", "A security hack"],
+    correctAnswer: 1,
+    explanation: "Zero-knowledge proofs allow proving knowledge of information without revealing the information itself.",
+    category: "Web3",
+    difficulty: "Hard"
+  },
+  {
+    id: 55,
+    question: "What is an AMM?",
+    options: ["Automated Market Maker", "Advanced Mining Machine", "Asset Management Module", "Automated Money Machine"],
+    correctAnswer: 0,
+    explanation: "AMM stands for Automated Market Maker, algorithms that enable decentralized trading.",
+    category: "DeFi",
+    difficulty: "Medium"
+  },
+  {
+    id: 56,
+    question: "What is rarity in NFTs?",
+    options: ["How rare the NFT is", "Scarcity based on traits and attributes", "Price of the NFT", "Age of the NFT"],
+    correctAnswer: 1,
+    explanation: "NFT rarity is determined by the uniqueness and scarcity of its traits and attributes.",
+    category: "NFTs",
+    difficulty: "Easy"
+  },
+  {
+    id: 57,
+    question: "What is a snapshot in DAOs?",
+    options: ["A photo", "Recording token holder balances at a point in time", "A meeting recording", "A financial report"],
+    correctAnswer: 1,
+    explanation: "Snapshots capture token balances at a specific time for governance voting.",
+    category: "DAOs",
+    difficulty: "Medium"
+  },
+  {
+    id: 58,
+    question: "What is arbitrage in DeFi?",
+    options: ["Taking loans", "Exploiting price differences across platforms", "Providing liquidity", "Staking tokens"],
+    correctAnswer: 1,
+    explanation: "Arbitrage involves buying low on one platform and selling high on another to profit from price differences.",
+    category: "DeFi",
+    difficulty: "Medium"
+  },
+  {
+    id: 59,
+    question: "What is a soulbound token?",
+    options: ["A token tied to your soul", "Non-transferable NFT representing credentials", "A cursed token", "A wallet token"],
+    correctAnswer: 1,
+    explanation: "Soulbound tokens are non-transferable NFTs that represent achievements, credentials, or memberships.",
+    category: "NFTs",
+    difficulty: "Medium"
+  },
+  {
+    id: 60,
+    question: "What is a multi-sig wallet?",
+    options: ["Wallet with multiple signatures", "Multiple signatures required for transactions", "A shared wallet", "A secure wallet"],
+    correctAnswer: 1,
+    explanation: "Multi-signature wallets require multiple approvals before executing transactions.",
+    category: "Web3",
+    difficulty: "Medium"
+  },
+  {
+    id: 61,
+    question: "What is the halving in Bitcoin?",
+    options: ["Splitting coins", "Reducing mining rewards by half", "A market crash", "A fork"],
+    correctAnswer: 1,
+    explanation: "Bitcoin halving reduces the mining reward from 6.25 to 3.125 BTC approximately every 4 years.",
+    category: "GeneralCrypto",
+    difficulty: "Medium"
+  },
+  {
+    id: 62,
+    question: "What is a sidechain?",
+    options: ["A chain next to main chain", "Separate blockchain connected to mainnet", "A mining side job", "A wallet chain"],
+    correctAnswer: 1,
+    explanation: "Sidechains are separate blockchains that run parallel to the main blockchain and can interact with it.",
+    category: "GeneralCrypto",
+    difficulty: "Hard"
+  },
+  {
+    id: 63,
+    question: "What is a Dutch auction?",
+    options: ["Auction from Netherlands", "Price starts high and decreases", "Price starts low and increases", "Random pricing"],
+    correctAnswer: 1,
+    explanation: "In Dutch auctions, the price starts high and decreases until a buyer accepts it.",
+    category: "NFTs",
+    difficulty: "Medium"
+  },
+  {
+    id: 64,
+    question: "What is a timelock in smart contracts?",
+    options: ["A clock", "Delay mechanism for executing functions", "A security feature", "A timer"],
+    correctAnswer: 1,
+    explanation: "Timelocks delay the execution of certain smart contract functions for security purposes.",
+    category: "Web3",
+    difficulty: "Hard"
+  },
+  {
+    id: 65,
+    question: "What is a rebase token?",
+    options: ["Token that changes base", "Token supply adjusts to maintain peg", "A rebased wallet", "A forked token"],
+    correctAnswer: 1,
+    explanation: "Rebase tokens automatically adjust supply to maintain a stable price peg.",
+    category: "DeFi",
+    difficulty: "Hard"
+  },
+  {
+    id: 66,
+    question: "What is a genesis NFT?",
+    options: ["First NFT ever", "NFT from project launch", "A special NFT", "A rare NFT"],
+    correctAnswer: 1,
+    explanation: "Genesis NFTs are the first NFTs minted in a collection, often with special significance.",
+    category: "NFTs",
+    difficulty: "Easy"
+  },
+  {
+    id: 67,
+    question: "What is a veto in DAO governance?",
+    options: ["A vote against", "Power to block proposals", "A voting right", "A proposal type"],
+    correctAnswer: 1,
+    explanation: "A veto allows certain members to block proposals from being implemented.",
+    category: "DAOs",
+    difficulty: "Medium"
+  },
+  {
+    id: 68,
+    question: "What is a wrapped token?",
+    options: ["Token in wrapping paper", "Token representing another asset on different chain", "A packaged token", "A gift token"],
+    correctAnswer: 1,
+    explanation: "Wrapped tokens represent assets from one blockchain on another blockchain.",
+    category: "Web3",
+    difficulty: "Medium"
+  },
+  {
+    id: 69,
+    question: "What is a hard fork?",
+    options: ["Difficult mining", "Permanent divergence in blockchain", "A software update", "A temporary split"],
+    correctAnswer: 1,
+    explanation: "A hard fork creates a permanent divergence in the blockchain, creating two separate chains.",
+    category: "GeneralCrypto",
+    difficulty: "Medium"
+  },
+  {
+    id: 70,
+    question: "What is a quadratic funding?",
+    options: ["Funding with equations", "Funding mechanism that matches donations", "Government funding", "Bank funding"],
+    correctAnswer: 1,
+    explanation: "Quadratic funding matches donations to projects based on contribution distribution.",
+    category: "DAOs",
+    difficulty: "Hard"
   }
 ];
 
