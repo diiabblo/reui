@@ -1,6 +1,6 @@
 # Loading Indicators System
 
-This document describes the comprehensive loading indicators system implemented in the Zali application.
+This document describes the comprehensive loading indicators system implemented in the reui application.
 
 ## Overview
 
@@ -19,17 +19,18 @@ The loading system provides a unified approach to handling loading states across
 A versatile spinner component with customizable size, color, message, and progress.
 
 ```tsx
-import { LoadingSpinner } from '@/components/loading';
+import { LoadingSpinner } from "@/components/loading";
 
 <LoadingSpinner
   size="lg"
   color="primary"
   message="Loading data..."
   progress={75}
-/>
+/>;
 ```
 
 **Props:**
+
 - `size`: 'sm' | 'md' | 'lg' | 'xl'
 - `color`: 'primary' | 'secondary' | 'white' | 'gray'
 - `message`: Optional loading message
@@ -41,7 +42,7 @@ import { LoadingSpinner } from '@/components/loading';
 A button component with integrated loading states and spinner.
 
 ```tsx
-import { LoadingButton } from '@/components/loading';
+import { LoadingButton } from "@/components/loading";
 
 <LoadingButton
   isLoading={isSubmitting}
@@ -51,10 +52,11 @@ import { LoadingButton } from '@/components/loading';
   onClick={handleSubmit}
 >
   Submit Form
-</LoadingButton>
+</LoadingButton>;
 ```
 
 **Props:**
+
 - `isLoading`: Boolean loading state
 - `loadingText`: Text to show when loading
 - `variant`: 'primary' | 'secondary' | 'outline' | 'ghost'
@@ -66,17 +68,18 @@ import { LoadingButton } from '@/components/loading';
 A full-screen overlay for global loading states.
 
 ```tsx
-import { LoadingOverlay } from '@/components/loading';
+import { LoadingOverlay } from "@/components/loading";
 
 <LoadingOverlay
   isVisible={isLoading}
   message="Processing transaction..."
   progress={50}
   backdrop={true}
-/>
+/>;
 ```
 
 **Props:**
+
 - `isVisible`: Boolean to show/hide overlay
 - `message`: Optional loading message
 - `progress`: Optional progress percentage
@@ -88,17 +91,18 @@ import { LoadingOverlay } from '@/components/loading';
 A card-based loading component for content areas.
 
 ```tsx
-import { LoadingCard } from '@/components/loading';
+import { LoadingCard } from "@/components/loading";
 
 <LoadingCard
   title="Loading Game"
   message="Fetching questions from blockchain..."
   progress={60}
   showSpinner={true}
-/>
+/>;
 ```
 
 **Props:**
+
 - `title`: Optional card title
 - `message`: Optional loading message
 - `progress`: Optional progress percentage
@@ -110,12 +114,13 @@ import { LoadingCard } from '@/components/loading';
 Subtle animated dots for inline loading states.
 
 ```tsx
-import { LoadingDots } from '@/components/loading';
+import { LoadingDots } from "@/components/loading";
 
-<LoadingDots size="md" color="primary" />
+<LoadingDots size="md" color="primary" />;
 ```
 
 **Props:**
+
 - `size`: 'sm' | 'md' | 'lg'
 - `color`: 'primary' | 'secondary' | 'white' | 'gray'
 
@@ -124,17 +129,18 @@ import { LoadingDots } from '@/components/loading';
 Standalone progress bar component.
 
 ```tsx
-import { ProgressBar } from '@/components/loading';
+import { ProgressBar } from "@/components/loading";
 
 <ProgressBar
   progress={75}
   label="Upload Progress"
   color="success"
   showPercentage={true}
-/>
+/>;
 ```
 
 **Props:**
+
 - `progress`: Progress percentage (0-100)
 - `label`: Optional label text
 - `color`: 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
@@ -168,35 +174,35 @@ import { Skeleton, TextSkeleton, CardSkeleton, ButtonSkeleton } from '@/componen
 A custom hook for managing loading states with the centralized store.
 
 ```tsx
-import { useLoading } from '@/components/loading';
+import { useLoading } from "@/components/loading";
 
 function MyComponent() {
-  const { 
-    isLoading, 
-    message, 
-    progress, 
-    setLoading, 
-    clearLoading, 
-    updateProgress, 
-    updateMessage 
-  } = useLoading({ component: 'my-component' });
+  const {
+    isLoading,
+    message,
+    progress,
+    setLoading,
+    clearLoading,
+    updateProgress,
+    updateMessage,
+  } = useLoading({ component: "my-component" });
 
   const handleSubmit = async () => {
-    setLoading(true, 'Starting process...', 0);
-    
+    setLoading(true, "Starting process...", 0);
+
     try {
-      updateMessage('Step 1: Validating...');
+      updateMessage("Step 1: Validating...");
       updateProgress(25);
       await step1();
-      
-      updateMessage('Step 2: Processing...');
+
+      updateMessage("Step 2: Processing...");
       updateProgress(50);
       await step2();
-      
-      updateMessage('Step 3: Finalizing...');
+
+      updateMessage("Step 3: Finalizing...");
       updateProgress(75);
       await step3();
-      
+
       updateProgress(100);
       clearLoading();
     } catch (error) {
@@ -218,10 +224,12 @@ function MyComponent() {
 ```
 
 **Options:**
+
 - `component`: Component identifier for isolated loading state
 - `global`: Use global loading state (default: false)
 
 **Returns:**
+
 - `isLoading`: Current loading state
 - `message`: Current loading message
 - `progress`: Current progress percentage
@@ -258,16 +266,14 @@ The `LoadingProvider` is integrated into the main app layout:
 
 ```tsx
 // app/layout.tsx
-import { LoadingProvider } from '@/components/LoadingProvider';
+import { LoadingProvider } from "@/components/LoadingProvider";
 
 export default function RootLayout({ children }) {
   return (
     <html>
       <body>
         <Providers>
-          <LoadingProvider>
-            {children}
-          </LoadingProvider>
+          <LoadingProvider>{children}</LoadingProvider>
         </Providers>
       </body>
     </html>
@@ -281,30 +287,30 @@ export default function RootLayout({ children }) {
 
 ```tsx
 function PlayPage() {
-  const { setLoading, clearLoading } = useLoading({ component: 'play-page' });
+  const { setLoading, clearLoading } = useLoading({ component: "play-page" });
 
   const handleStartGame = async () => {
-    setLoading(true, 'Preparing game...', 10);
-    
+    setLoading(true, "Preparing game...", 10);
+
     try {
-      updateMessage('Checking registration...');
+      updateMessage("Checking registration...");
       updateProgress(25);
       await checkRegistration();
-      
-      updateMessage('Starting game session...');
+
+      updateMessage("Starting game session...");
       updateProgress(50);
       await startGameSession();
-      
-      updateMessage('Loading questions...');
+
+      updateMessage("Loading questions...");
       updateProgress(75);
       await loadQuestions();
-      
+
       updateProgress(100);
       clearLoading();
-      router.push('/play/game');
+      router.push("/play/game");
     } catch (error) {
       clearLoading();
-      toast.error('Failed to start game');
+      toast.error("Failed to start game");
     }
   };
 
@@ -327,11 +333,11 @@ function App() {
   const { setLoading, clearLoading } = useLoading({ global: true });
 
   const handleGlobalAction = async () => {
-    setLoading(true, 'Processing...', 0);
-    
+    setLoading(true, "Processing...", 0);
+
     // Long-running operation
     await processData();
-    
+
     clearLoading();
   };
 }
@@ -341,26 +347,26 @@ function App() {
 
 ```tsx
 function RegisterForm() {
-  const { isLoading, setLoading, clearLoading } = useLoading({ 
-    component: 'register-form' 
+  const { isLoading, setLoading, clearLoading } = useLoading({
+    component: "register-form",
   });
 
   const onSubmit = async (data) => {
-    setLoading(true, 'Registering username...', 25);
-    
+    setLoading(true, "Registering username...", 25);
+
     try {
       await registerUsername(data.username);
-      setLoading(true, 'Registration successful!', 100);
+      setLoading(true, "Registration successful!", 100);
       clearLoading();
     } catch (error) {
       clearLoading();
-      toast.error('Registration failed');
+      toast.error("Registration failed");
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('username')} />
+      <input {...register("username")} />
       <LoadingButton
         type="submit"
         isLoading={isLoading}
@@ -388,27 +394,27 @@ function RegisterForm() {
 
 ```tsx
 // Good
-setLoading(true, 'Submitting transaction to blockchain...', 50);
+setLoading(true, "Submitting transaction to blockchain...", 50);
 
 // Bad
-setLoading(true, 'Loading...', 50);
+setLoading(true, "Loading...", 50);
 ```
 
 ### 3. Use Progress Indicators
 
 ```tsx
 const handleMultiStepProcess = async () => {
-  setLoading(true, 'Step 1: Validation', 0);
+  setLoading(true, "Step 1: Validation", 0);
   await step1();
-  
-  updateMessage('Step 2: Processing');
+
+  updateMessage("Step 2: Processing");
   updateProgress(33);
   await step2();
-  
-  updateMessage('Step 3: Finalizing');
+
+  updateMessage("Step 3: Finalizing");
   updateProgress(66);
   await step3();
-  
+
   updateProgress(100);
   clearLoading();
 };
@@ -418,7 +424,7 @@ const handleMultiStepProcess = async () => {
 
 ```tsx
 try {
-  setLoading(true, 'Processing...');
+  setLoading(true, "Processing...");
   await operation();
   clearLoading();
 } catch (error) {
@@ -431,7 +437,7 @@ try {
 
 ```tsx
 // Good - isolated loading state
-const { setLoading } = useLoading({ component: 'user-profile' });
+const { setLoading } = useLoading({ component: "user-profile" });
 
 // Avoid - global loading for component-specific actions
 const { setLoading } = useLoading({ global: true });
@@ -492,9 +498,9 @@ To migrate existing loading states to the new system:
 Enable debug mode to log loading state changes:
 
 ```tsx
-const { setLoading } = useLoading({ 
-  component: 'debug-component',
-  debug: true // Enable logging
+const { setLoading } = useLoading({
+  component: "debug-component",
+  debug: true, // Enable logging
 });
 ```
 

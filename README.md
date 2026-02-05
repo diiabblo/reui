@@ -1,5 +1,4 @@
-
-# **Zali – Web3 Trivia Game**
+# **reui – Web3 Trivia Game**
 
 A Web3 trivia game built on Base network.
 Players can play trivia rounds, answer questions, and earn real ETH rewards on-chain.
@@ -8,13 +7,13 @@ Players can play trivia rounds, answer questions, and earn real ETH rewards on-c
 
 ## 📱 **Overview**
 
-Zali is a fun, lightweight Web3 game designed to showcase:
+reui is a fun, lightweight Web3 game designed to showcase:
 
-* **Seamless Web3 wallet integration**
-* **Fast L2 transactions on Base**
-* **Real ETH rewards**
-* **Smooth gameplay experience**
-* **Secure, simple blockchain architecture**
+- **Seamless Web3 wallet integration**
+- **Fast L2 transactions on Base**
+- **Real ETH rewards**
+- **Smooth gameplay experience**
+- **Secure, simple blockchain architecture**
 
 Players can:
 
@@ -34,27 +33,27 @@ No staking. No long setup. Just **connect → play → earn**.
 
 ### Production Contracts
 
-* **SimpleTriviaGame:** [`0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d`](https://basescan.org/address/0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d)
-* **USDC (Base Mainnet):** [`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`](https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
-* **Network:** Base Mainnet (Chain ID: 8453)
-* **Compiler:** Solc v0.8.30
-* **Optimization:** 200 runs
+- **SimpleTriviaGame:** [`0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d`](https://basescan.org/address/0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d)
+- **USDC (Base Mainnet):** [`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`](https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
+- **Network:** Base Mainnet (Chain ID: 8453)
+- **Compiler:** Solc v0.8.30
+- **Optimization:** 200 runs
 
 ### Contract Details
 
-| Property | Value |
-|----------|-------|
-| **Deployer** | `0x2c8D82a53f11B0E9B527a111B2f53C5D5E809806` |
-| **Gas Used** | 2,913,596 |
-| **Deploy Cost** | ~$0.05 |
-| **Initial Questions** | 5 trivia questions |
-| **Reward per Answer** | 0.1 USDC |
+| Property              | Value                                        |
+| --------------------- | -------------------------------------------- |
+| **Deployer**          | `0x2c8D82a53f11B0E9B527a111B2f53C5D5E809806` |
+| **Gas Used**          | 2,913,596                                    |
+| **Deploy Cost**       | ~$0.05                                       |
+| **Initial Questions** | 5 trivia questions                           |
+| **Reward per Answer** | 0.1 USDC                                     |
 
 ### Quick Links
 
-* 🔍 **[View on BaseScan](https://basescan.org/address/0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d)**
-* 🎮 **Frontend:** (Deploying soon)
-* 📹 **Demo Video:** (Coming soon)
+- 🔍 **[View on BaseScan](https://basescan.org/address/0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d)**
+- 🎮 **Frontend:** (Deploying soon)
+- 📹 **Demo Video:** (Coming soon)
 
 ---
 
@@ -62,45 +61,45 @@ No staking. No long setup. Just **connect → play → earn**.
 
 ### 🌐 **Wallet Integration**
 
-* Works with **any Web3 wallet** (MetaMask, Coinbase Wallet, WalletConnect)
-* Instant balance updates
-* Fast and cheap Base L2 transactions
+- Works with **any Web3 wallet** (MetaMask, Coinbase Wallet, WalletConnect)
+- Instant balance updates
+- Fast and cheap Base L2 transactions
 
 ### 💰 **Optional USDC Faucet**
 
-* Each player can receive **10 USDC** once (testnet only)
-* Enforced by smart contract
-* Secure against multiple claims
+- Each player can receive **10 USDC** once (testnet only)
+- Enforced by smart contract
+- Secure against multiple claims
 
 ### 🕹 **Trivia Gameplay**
 
-* Multiple-choice questions with 2-4 options
-* Owner-managed question addition
-* Configurable reward amounts per question
-* Question categories (Celo, DeFi, Web3, Crypto, NFTs, DAOs)
-* Difficulty levels (Easy, Medium, Hard)
-* Active/Inactive question management
+- Multiple-choice questions with 2-4 options
+- Owner-managed question addition
+- Configurable reward amounts per question
+- Question categories (Celo, DeFi, Web3, Crypto, NFTs, DAOs)
+- Difficulty levels (Easy, Medium, Hard)
+- Active/Inactive question management
 
 ### 🎁 **Reward Distribution**
 
-* **FREE to play** (no entry fee)
-* Rewards are configurable per question
-* Token-based rewards (USDC on Base mainnet)
-* Direct distribution to players
-* Owner can manage reward amounts
+- **FREE to play** (no entry fee)
+- Rewards are configurable per question
+- Token-based rewards (USDC on Base mainnet)
+- Direct distribution to players
+- Owner can manage reward amounts
 
 ### 🏆 **User Scoring**
 
-* Track user scores for answered questions
-* Owner can manage questions and rewards
-* Simple scoring mechanism without complex leaderboards
+- Track user scores for answered questions
+- Owner can manage questions and rewards
+- Simple scoring mechanism without complex leaderboards
 
 ### 📱 **Built for All Devices**
 
-* Responsive design
-* Optimized for both desktop and mobile
-* Smooth animations with Framer Motion
-* Minimal steps to play
+- Responsive design
+- Optimized for both desktop and mobile
+- Smooth animations with Framer Motion
+- Minimal steps to play
 
 ---
 
@@ -132,36 +131,36 @@ Web3 Wallet → Connect → Play Questions → Submit Answers → Earn Rewards
 
 ### **Smart Contracts**
 
-* Solidity 0.8.20
-* Foundry (Forge)
-* OpenZeppelin Contracts
-* Base Mainnet
-* USDC (ERC20)
+- Solidity 0.8.20
+- Foundry (Forge)
+- OpenZeppelin Contracts
+- Base Mainnet
+- USDC (ERC20)
 
 ### **Frontend**
 
-* Next.js 14 (App Router)
-* React 18
-* TypeScript
-* Wagmi v2 (React Hooks for Ethereum)
-* Viem (Ethereum utilities)
-* Reown AppKit (WalletConnect v2)
-* TailwindCSS
-* Framer Motion
-* React Hot Toast
+- Next.js 14 (App Router)
+- React 18
+- TypeScript
+- Wagmi v2 (React Hooks for Ethereum)
+- Viem (Ethereum utilities)
+- Reown AppKit (WalletConnect v2)
+- TailwindCSS
+- Framer Motion
+- React Hot Toast
 
 ### **Backend**
 
-* On-chain only (no traditional backend)
-* Questions stored in smart contract
-* Token rewards managed by contract
+- On-chain only (no traditional backend)
+- Questions stored in smart contract
+- Token rewards managed by contract
 
 ---
 
 # 📦 **Project Structure**
 
 ```
-Zali/
+reui/
   ├── contracts/               # Smart contracts (Foundry)
   │    ├── src/
   │    │    ├── Faucet.sol
@@ -196,6 +195,7 @@ Manages basic trivia gameplay with question management and user scoring.
 Direct token-based rewards without VRF randomness or leaderboard features.
 
 Key features:
+
 - Simple question and answer management
 - Token-based reward system
 - Owner-controlled question management
@@ -236,8 +236,8 @@ function withdrawTokens(uint256 amount) external onlyOwner;
 ## 1️⃣ Clone the Repo
 
 ```bash
-git clone https://github.com/yourname/zali.git
-cd Zali
+git clone https://github.com/yourname/reui.git
+cd reui
 ```
 
 ## 2️⃣ Install Dependencies
@@ -279,6 +279,7 @@ PRIVATE_KEY=your_private_key_here
 ```
 
 ### Network Details:
+
 - **Base Mainnet**: Chain ID `8453`
 - **Base Sepolia (Testnet)**: Chain ID `84532`
 
@@ -393,15 +394,15 @@ If correct, reward tokens transferred to user's wallet
 
 # 🎨 **UI/UX Features**
 
-* Responsive design (mobile & desktop)
-* Smooth animations with Framer Motion
-* Progress tracking
-* Real-time balance updates
-* Toast notifications for transactions
-* Error boundaries for graceful error handling
-* Loading states and skeleton screens
-* Gradient themes
-* Wallet connection modal (AppKit)
+- Responsive design (mobile & desktop)
+- Smooth animations with Framer Motion
+- Progress tracking
+- Real-time balance updates
+- Toast notifications for transactions
+- Error boundaries for graceful error handling
+- Loading states and skeleton screens
+- Gradient themes
+- Wallet connection modal (AppKit)
 
 ---
 
@@ -409,10 +410,10 @@ If correct, reward tokens transferred to user's wallet
 
 SimpleTriviaGame maintains user scores:
 
-* User scores tracked in contract storage
-* Incrementing scores for each correct answer
-* Owner controls reward amounts per question
-* No automatic leaderboard (can be added in future versions)
+- User scores tracked in contract storage
+- Incrementing scores for each correct answer
+- Owner controls reward amounts per question
+- No automatic leaderboard (can be added in future versions)
 
 ---
 
@@ -440,8 +441,8 @@ The application implements comprehensive input sanitization to prevent XSS and i
 The `useSanitizedForm` hook wraps react-hook-form with automatic input sanitization:
 
 ```typescript
-import { useSanitizedForm } from '@/hooks/useSanitizedForm';
-import { z } from 'zod';
+import { useSanitizedForm } from "@/hooks/useSanitizedForm";
+import { z } from "zod";
 
 const schema = z.object({
   username: z.string().min(3).max(20),
@@ -458,14 +459,14 @@ const form = useSanitizedForm(schema, {
 Input validation is handled by Zod schemas with built-in sanitization:
 
 ```typescript
-import { z } from 'zod';
-import { sanitizeUsername } from '@/utils/sanitize';
+import { z } from "zod";
+import { sanitizeUsername } from "@/utils/sanitize";
 
 export const usernameSchema = z
   .string()
   .min(3)
   .max(20)
-  .transform(val => sanitizeUsername(val.trim()));
+  .transform((val) => sanitizeUsername(val.trim()));
 ```
 
 ### Testing
@@ -476,12 +477,12 @@ All sanitization functions have corresponding unit tests in `src/utils/__tests__
 
 # 🛡 **Security Notes**
 
-* **Reentrancy Protection**: All contracts use OpenZeppelin's `ReentrancyGuard`
-* **Access Control**: Admin functions protected with `onlyOwner` modifier
-* **Input validation**: Alphanumeric + underscore only
-* **Time limits**: 5-minute timeout per game session
-* **Gas optimization**: Efficient storage patterns and loops
-* **No price manipulation**: Rewards are fixed in ETH, not dependent on oracle prices
+- **Reentrancy Protection**: All contracts use OpenZeppelin's `ReentrancyGuard`
+- **Access Control**: Admin functions protected with `onlyOwner` modifier
+- **Input validation**: Alphanumeric + underscore only
+- **Time limits**: 5-minute timeout per game session
+- **Gas optimization**: Efficient storage patterns and loops
+- **No price manipulation**: Rewards are fixed in ETH, not dependent on oracle prices
 
 ---
 
@@ -505,15 +506,15 @@ Your demo video should include:
 
 # 🏆 **Why This Project Stands Out**
 
-* **Built on Base**: Fast, cheap L2 transactions
-* **Real USDC rewards**: Instant payouts on-chain
-* **No entry fees**: Free to play, earn based on performance
-* **Simple & efficient**: Minimal contract footprint
-* **Production-ready**: Full error handling, state management, and testing
-* **Fully on-chain**: No backend dependencies
-* **Modern Web3 stack**: Wagmi, Viem, AppKit for seamless wallet integration
-* **Clean architecture**: Well-documented and maintainable code
-* **Future upgrade path**: Can be extended with VRF, leaderboards, or other features
+- **Built on Base**: Fast, cheap L2 transactions
+- **Real USDC rewards**: Instant payouts on-chain
+- **No entry fees**: Free to play, earn based on performance
+- **Simple & efficient**: Minimal contract footprint
+- **Production-ready**: Full error handling, state management, and testing
+- **Fully on-chain**: No backend dependencies
+- **Modern Web3 stack**: Wagmi, Viem, AppKit for seamless wallet integration
+- **Clean architecture**: Well-documented and maintainable code
+- **Future upgrade path**: Can be extended with VRF, leaderboards, or other features
 
 ---
 
@@ -543,6 +544,7 @@ MIT License © 2025
 ## 🆘 **Support & Contact**
 
 For issues, questions, or contributions:
+
 - Open an issue on GitHub
 - Check `BASE_MIGRATION_GUIDE.md` for deployment help
 - Review contract documentation in `/contracts/src/`

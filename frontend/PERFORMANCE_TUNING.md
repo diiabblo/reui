@@ -8,20 +8,20 @@ Guide to achieving Core Web Vitals targets and performance optimization.
 
 ### Core Web Vitals (CWV)
 
-| Metric | Target | Current | Status |
-|--------|--------|---------|--------|
-| **Largest Contentful Paint (LCP)** | < 2.5s | ~3-4s | ⚠️ |
-| **First Input Delay (FID)** | < 100ms | ~80-120ms | ⚠️ |
-| **Cumulative Layout Shift (CLS)** | < 0.1 | ~0.05 | ✅ |
+| Metric                             | Target  | Current   | Status |
+| ---------------------------------- | ------- | --------- | ------ |
+| **Largest Contentful Paint (LCP)** | < 2.5s  | ~3-4s     | ⚠️     |
+| **First Input Delay (FID)**        | < 100ms | ~80-120ms | ⚠️     |
+| **Cumulative Layout Shift (CLS)**  | < 0.1   | ~0.05     | ✅     |
 
 ### Bundle Metrics
 
-| Metric | Target | Current | Status |
-|--------|--------|---------|--------|
-| **Initial JS** | < 200KB | ~350KB | ⚠️ |
-| **Total CSS** | < 50KB | ~60KB | ⚠️ |
-| **Time to Interactive (TTI)** | < 3s (3G) | ~4-5s | ⚠️ |
-| **First Contentful Paint (FCP)** | < 1.8s | ~2.5-3s | ⚠️ |
+| Metric                           | Target    | Current | Status |
+| -------------------------------- | --------- | ------- | ------ |
+| **Initial JS**                   | < 200KB   | ~350KB  | ⚠️     |
+| **Total CSS**                    | < 50KB    | ~60KB   | ⚠️     |
+| **Time to Interactive (TTI)**    | < 3s (3G) | ~4-5s   | ⚠️     |
+| **First Contentful Paint (FCP)** | < 1.8s    | ~2.5-3s | ⚠️     |
 
 ---
 
@@ -38,7 +38,7 @@ import Image from 'next/image';
 
 <Image
   src="/logo.png"
-  alt="Zali Logo"
+  alt="reui Logo"
   width={200}
   height={100}
   priority // Load above the fold
@@ -53,20 +53,20 @@ import Image from 'next/image';
 
 ```typescript
 // app/layout.tsx
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono } from "next/font/google";
 
 // Load only needed weights
 const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  display: 'swap', // Show fallback immediately
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap", // Show fallback immediately
 });
 
 const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-mono',
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-mono",
+  display: "swap",
 });
 ```
 
@@ -107,8 +107,8 @@ if (process.env.NODE_ENV === 'production') {
 // tailwind.config.ts
 module.exports = {
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
+    "./src/app/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     // Limit color palette for smaller CSS
@@ -179,7 +179,7 @@ function Component({ data }) {
   const processed = useMemo(() => {
     return data.map(expensiveFunction);
   }, [data]);
-  
+
   return <div>{processed}</div>;
 }
 ```
@@ -191,9 +191,7 @@ function Component({ data }) {
 ```typescript
 // ❌ BAD: N+1 queries
 const users = await getAllUsers();
-const scores = await Promise.all(
-  users.map(u => getUserScore(u.id))
-);
+const scores = await Promise.all(users.map((u) => getUserScore(u.id)));
 
 // ✅ GOOD: Batch queries
 const data = await db.query(`
@@ -256,23 +254,27 @@ Resource Metrics:
 ### Week 1 Implementation
 
 1. **Enable Image Optimization** (Save 60%)
+
    ```typescript
    // Already have Image component? Great!
    // Just ensure all <img> tags are converted
    ```
 
 2. **Remove Unused CSS** (Save 20-30KB)
+
    ```bash
    npm run build
    # Check CSS sizes in .next/static
    ```
 
 3. **Code Split Routes** (Already done by Next.js)
+
    ```bash
    # Verify in .next/static/chunks/app/
    ```
 
 4. **Defer Non-Critical JS** (Save 0.5-1s LCP)
+
    ```typescript
    // Move analytics to afterInteractive
    ```
@@ -290,28 +292,28 @@ Set limits for different resources:
 
 ```typescript
 // next.config.ts
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
 });
 
 // After building, set these budgets
 const budgets = {
   bundles: [
     {
-      type: 'javascript',
-      maxSize: '250kb', // All JS chunks combined
+      type: "javascript",
+      maxSize: "250kb", // All JS chunks combined
     },
     {
-      type: 'css',
-      maxSize: '50kb',
+      type: "css",
+      maxSize: "50kb",
     },
     {
-      type: 'fonts',
-      maxSize: '100kb',
+      type: "fonts",
+      maxSize: "100kb",
     },
     {
-      type: 'image',
-      maxSize: '500kb',
+      type: "image",
+      maxSize: "500kb",
     },
   ],
 };
@@ -324,6 +326,7 @@ const budgets = {
 ### Issue: Slow Initial Load
 
 **Diagnosis:**
+
 ```bash
 1. Run Lighthouse audit
 2. Check "Opportunities" section
@@ -331,6 +334,7 @@ const budgets = {
 ```
 
 **Solutions:**
+
 - Optimize images
 - Code split
 - Defer non-critical JS
@@ -339,6 +343,7 @@ const budgets = {
 ### Issue: High Main Thread Time
 
 **Diagnosis:**
+
 ```bash
 1. Open Performance tab in DevTools
 2. Look for long tasks (> 50ms)
@@ -346,6 +351,7 @@ const budgets = {
 ```
 
 **Solutions:**
+
 - Break long tasks into smaller ones
 - Use requestAnimationFrame
 - Move work to web workers
@@ -354,6 +360,7 @@ const budgets = {
 ### Issue: CLS (Layout Shift)
 
 **Diagnosis:**
+
 ```bash
 1. Monitor CLS in DevTools
 2. Find elements that shift
@@ -361,6 +368,7 @@ const budgets = {
 ```
 
 **Solutions:**
+
 - Set explicit dimensions
 - Use aspect-ratio
 - Optimize fonts with display: swap
@@ -369,12 +377,14 @@ const budgets = {
 ### Issue: Large Bundle
 
 **Diagnosis:**
+
 ```bash
 npm run build:analyze
 # Identify large dependencies
 ```
 
 **Solutions:**
+
 - Remove unused packages
 - Use lighter alternatives
 - Tree shake
@@ -409,15 +419,15 @@ npm run build:analyze
 
 ```typescript
 // lib/web-vitals.ts
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+import { getCLS, getFID, getFCP, getLCP, getTTFB } from "web-vitals";
 
 export function reportWebVitals(metric) {
   // Send to analytics
   if (navigator.sendBeacon) {
-    navigator.sendBeacon('/api/metrics', JSON.stringify(metric));
+    navigator.sendBeacon("/api/metrics", JSON.stringify(metric));
   } else {
-    fetch('/api/metrics', {
-      method: 'POST',
+    fetch("/api/metrics", {
+      method: "POST",
       body: JSON.stringify(metric),
     });
   }
@@ -435,13 +445,13 @@ getTTFB(reportWebVitals);
 
 ## 🔗 Performance Budgets by Route
 
-| Route | Budget | Current | Gap |
-|-------|--------|---------|-----|
-| / | 150KB | 180KB | -30KB |
-| /play | 200KB | 240KB | -40KB |
-| /leaderboard | 160KB | 190KB | -30KB |
-| /profile | 150KB | 170KB | -20KB |
-| /admin | 180KB | 220KB | -40KB |
+| Route        | Budget | Current | Gap   |
+| ------------ | ------ | ------- | ----- |
+| /            | 150KB  | 180KB   | -30KB |
+| /play        | 200KB  | 240KB   | -40KB |
+| /leaderboard | 160KB  | 190KB   | -30KB |
+| /profile     | 150KB  | 170KB   | -20KB |
+| /admin       | 180KB  | 220KB   | -40KB |
 
 **Total:** Must reduce by ~160KB to hit targets
 

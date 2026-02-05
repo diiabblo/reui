@@ -7,10 +7,10 @@ This document provides practical code examples for integrating SimpleTriviaGame 
 ### 1. Contract Setup
 
 ```typescript
-import { useContract, useContractRead } from 'wagmi';
-import SimpleTriviaGameABI from './contracts/SimpleTriviaGame.json';
+import { useContract, useContractRead } from "wagmi";
+import SimpleTriviaGameABI from "./contracts/SimpleTriviaGame.json";
 
-const CONTRACT_ADDRESS = '0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d';
+const CONTRACT_ADDRESS = "0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d";
 
 // Initialize contract
 const { data: contract } = useContract({
@@ -22,7 +22,7 @@ const { data: contract } = useContract({
 ### 2. Load Questions
 
 ```typescript
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface Question {
   questionText: string;
@@ -37,15 +37,17 @@ interface Question {
 export function useQuestions() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(true);
-  const { data: contract } = useContract({ /* ... */ });
+  const { data: contract } = useContract({
+    /* ... */
+  });
 
   useEffect(() => {
     const loadQuestions = async () => {
       if (!contract) return;
-      
+
       const questions = [];
       const totalQuestions = await contract.questionId();
-      
+
       for (let i = 1; i <= Number(totalQuestions); i++) {
         try {
           const question = await contract.getQuestion(i);
@@ -56,14 +58,14 @@ export function useQuestions() {
           console.error(`Error loading question ${i}:`, error);
         }
       }
-      
+
       setQuestions(questions);
       setLoading(false);
     };
-    
+
     loadQuestions();
   }, [contract]);
-  
+
   return { questions, loading };
 }
 ```
@@ -85,15 +87,15 @@ export function QuestionCard({
   return (
     <div className="question-card">
       <h2 className="question-text">{question.questionText}</h2>
-      
+
       <div className="difficulty-badge">
         {['Easy', 'Medium', 'Hard'][question.difficulty]}
       </div>
-      
+
       <div className="reward-amount">
         Reward: {formatUSDC(question.rewardAmount)}
       </div>
-      
+
       <div className="options">
         {question.options.map((option, index) => (
           <button
@@ -121,7 +123,7 @@ function formatUSDC(amount: bigint): string {
 ```typescript
 export function checkAnswer(
   userAnswer: number,
-  correctAnswer: number
+  correctAnswer: number,
 ): boolean {
   return userAnswer === correctAnswer;
 }
@@ -130,10 +132,10 @@ export function submitAnswer(
   questionId: number,
   userAnswer: number,
   question: Question,
-  userAddress: string
+  userAddress: string,
 ) {
   const isCorrect = checkAnswer(userAnswer, question.correctOption);
-  
+
   // Emit or log event
   console.log({
     questionId,
@@ -143,10 +145,10 @@ export function submitAnswer(
     user: userAddress,
     timestamp: new Date(),
   });
-  
+
   // Update score on contract (if needed)
   // Note: SimpleTriviaGame tracks scores internally
-  
+
   return {
     isCorrect,
     reward: isCorrect ? question.rewardAmount : 0n,
@@ -160,25 +162,27 @@ export function submitAnswer(
 export function useUserScore(userAddress?: string) {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
-  const { data: contract } = useContract({ /* ... */ });
+  const { data: contract } = useContract({
+    /* ... */
+  });
 
   useEffect(() => {
     const loadScore = async () => {
       if (!contract || !userAddress) return;
-      
+
       try {
         const userScore = await contract.getUserScore(userAddress);
         setScore(Number(userScore));
       } catch (error) {
-        console.error('Error loading user score:', error);
+        console.error("Error loading user score:", error);
       } finally {
         setLoading(false);
       }
     };
-    
+
     loadScore();
   }, [contract, userAddress]);
-  
+
   return { score, loading };
 }
 ```
@@ -189,9 +193,9 @@ export function useUserScore(userAddress?: string) {
 export function useTrivia GameEvents() {
   useEffect(() => {
     const { data: contract } = useContract({ /* ... */ });
-    
+
     if (!contract) return;
-    
+
     // Listen for new questions
     const unsubscribeQuestionAdded = contract.on(
       'QuestionAdded',
@@ -200,7 +204,7 @@ export function useTrivia GameEvents() {
         // Refresh question list
       }
     );
-    
+
     // Listen for answers
     const unsubscribeAnswerSubmitted = contract.on(
       'AnswerSubmitted',
@@ -209,7 +213,7 @@ export function useTrivia GameEvents() {
         // Update UI
       }
     );
-    
+
     return () => {
       unsubscribeQuestionAdded?.();
       unsubscribeAnswerSubmitted?.();
@@ -229,7 +233,7 @@ export function TriviaGame() {
   const { address } = useAccount();
   const { questions, loading: questionsLoading } = useQuestions();
   const { score, loading: scoreLoading } = useUserScore(address);
-  
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [result, setResult] = useState<{
@@ -258,7 +262,7 @@ export function TriviaGame() {
       currentQuestion,
       address
     );
-    
+
     setResult(result);
     setAnswered(true);
   };
@@ -277,7 +281,7 @@ export function TriviaGame() {
   return (
     <div className="trivia-game">
       <div className="header">
-        <h1>Zali Trivia</h1>
+        <h1>reui Trivia</h1>
         <div className="stats">
           <span>Score: {score}</span>
           <span>Question: {currentQuestionIndex + 1}/{questions.length}</span>
@@ -318,11 +322,9 @@ export function TriviaGame() {
     <div v-else-if="questions.length === 0">No active questions</div>
     <div v-else>
       <h2>{{ currentQuestion.questionText }}</h2>
-      
-      <div class="score">
-        Your Score: {{ score }}
-      </div>
-      
+
+      <div class="score">Your Score: {{ score }}</div>
+
       <div class="options">
         <button
           v-for="(option, index) in currentQuestion.options"
@@ -333,9 +335,11 @@ export function TriviaGame() {
           {{ option }}
         </button>
       </div>
-      
+
       <div v-if="answered && result" class="result">
-        <p v-if="result.isCorrect">✅ Correct! +{{ formatReward(result.reward) }}</p>
+        <p v-if="result.isCorrect">
+          ✅ Correct! +{{ formatReward(result.reward) }}
+        </p>
         <p v-else>❌ Incorrect</p>
         <button @click="nextQuestion">Next</button>
       </div>
@@ -344,8 +348,8 @@ export function TriviaGame() {
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useContractRead } from 'wagmi';
+import { ref, onMounted } from "vue";
+import { useContractRead } from "wagmi";
 
 const questions = ref([]);
 const currentQuestionIndex = ref(0);
@@ -393,25 +397,25 @@ export function useContractErrors() {
   const handleError = (error: unknown, context: string) => {
     if (error instanceof Error) {
       console.error(`${context}:`, error.message);
-      
+
       // Parse contract errors
-      if (error.message.includes('InvalidOptions')) {
-        return 'Question must have 2-4 options';
+      if (error.message.includes("InvalidOptions")) {
+        return "Question must have 2-4 options";
       }
-      if (error.message.includes('InvalidCorrectOption')) {
-        return 'Selected correct option is out of range';
+      if (error.message.includes("InvalidCorrectOption")) {
+        return "Selected correct option is out of range";
       }
-      if (error.message.includes('QuestionNotActive')) {
-        return 'This question is no longer active';
+      if (error.message.includes("QuestionNotActive")) {
+        return "This question is no longer active";
       }
-      if (error.message.includes('InsufficientBalance')) {
-        return 'Contract insufficient funds for reward';
+      if (error.message.includes("InsufficientBalance")) {
+        return "Contract insufficient funds for reward";
       }
     }
-    
-    return 'An unknown error occurred';
+
+    return "An unknown error occurred";
   };
-  
+
   return { handleError };
 }
 ```
@@ -427,12 +431,12 @@ describe('TriviaGame', () => {
     render(<TriviaGame />);
     // Assert questions loaded
   });
-  
+
   it('correctly identifies right answers', () => {
     const isCorrect = checkAnswer(0, 0);
     expect(isCorrect).toBe(true);
   });
-  
+
   it('formats USDC amounts correctly', () => {
     const amount = BigInt('1000000'); // 1 USDC
     expect(formatUSDC(amount)).toBe('1.00 USDC');

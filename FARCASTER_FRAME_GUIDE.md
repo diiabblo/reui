@@ -1,6 +1,6 @@
 # Farcaster Frame Integration Guide
 
-This guide explains how to use and deploy the Zali Trivia Farcaster Frame.
+This guide explains how to use and deploy the reui Trivia Farcaster Frame.
 
 ## What is a Farcaster Frame?
 
@@ -21,10 +21,12 @@ Our Farcaster Frame includes:
 ### Endpoints
 
 #### Frame Routes
+
 - `GET/POST /api/frame` - Main frame handler
 - `POST /api/frame/submit` - Answer submission handler
 
 #### Image Routes (Open Graph)
+
 - `GET /api/frame/image/home` - Home screen
 - `GET /api/frame/image/game` - Question display
 - `GET /api/frame/image/correct` - Correct answer feedback
@@ -105,7 +107,10 @@ The frame uses these meta tags (defined in `/frame/page.tsx`):
 
 ```html
 <meta name="fc:frame" content="vNext" />
-<meta name="fc:frame:image" content="https://yourdomain.com/api/frame/image/home" />
+<meta
+  name="fc:frame:image"
+  content="https://yourdomain.com/api/frame/image/home"
+/>
 <meta name="fc:frame:button:1" content="Play Trivia" />
 <meta name="fc:frame:button:2" content="Leaderboard" />
 <meta name="fc:frame:button:3" content="My Profile" />
@@ -126,6 +131,7 @@ The frame uses these meta tags (defined in `/frame/page.tsx`):
 Main frame handler that routes button clicks.
 
 **Request Body:**
+
 ```json
 {
   "untrustedData": {
@@ -144,6 +150,7 @@ Main frame handler that routes button clicks.
 ```
 
 **Response:**
+
 ```json
 {
   "image": "https://yourdomain.com/api/frame/image/game",
@@ -212,14 +219,15 @@ Encourage sharing with compelling copy:
 
 ```typescript
 const shareUrl = generateShareUrl({
-  text: 'I just earned 0.5 USDC answering trivia on Zali! 🎮💰 Can you beat my score?',
-  embeds: ['https://yourdomain.com/frame'],
+  text: "I just earned 0.5 USDC answering trivia on reui! 🎮💰 Can you beat my score?",
+  embeds: ["https://yourdomain.com/frame"],
 });
 ```
 
 ### Leaderboard
 
 Display top players to encourage competition:
+
 - Show top 5-10 players
 - Display rewards earned
 - Highlight user's rank
@@ -227,6 +235,7 @@ Display top players to encourage competition:
 ### Profile Stats
 
 Show achievements to encourage continued play:
+
 - Total score
 - Correct answers
 - USDC earned
@@ -238,6 +247,7 @@ Show achievements to encourage continued play:
 ### Styling Images
 
 Edit image routes in `/api/frame/image/*` to customize:
+
 - Colors and gradients
 - Fonts and sizes
 - Layout and spacing
@@ -246,6 +256,7 @@ Edit image routes in `/api/frame/image/*` to customize:
 ### Questions
 
 Update `frameGameService.ts` to:
+
 - Fetch from smart contract
 - Add more question categories
 - Implement difficulty levels
@@ -254,6 +265,7 @@ Update `frameGameService.ts` to:
 ### Rewards
 
 Configure in `frame.config.ts`:
+
 ```typescript
 rewards: {
   correctAnswer: '0.1', // USDC per answer
@@ -302,6 +314,7 @@ curl -X POST http://localhost:3000/api/frame \
 ### Frame Validator
 
 Use Farcaster's frame validator:
+
 - https://warpcast.com/~/developers/frames
 
 ### Production Testing
@@ -315,24 +328,28 @@ Use Farcaster's frame validator:
 ## Best Practices
 
 ### Performance
+
 - Optimize image generation
 - Cache frequently accessed data
 - Use CDN for static assets
 - Minimize API calls
 
 ### User Experience
+
 - Clear, concise copy
 - Obvious call-to-actions
 - Fast response times
 - Helpful error messages
 
 ### Security
+
 - Always validate signatures in production
 - Implement rate limiting
 - Sanitize user inputs
 - Monitor for abuse
 
 ### Analytics
+
 - Track all interactions
 - Monitor conversion rates
 - A/B test different copy
@@ -348,9 +365,10 @@ Use Farcaster's frame validator:
 ## Support
 
 For issues or questions:
+
 - Create an issue on GitHub
 - Join our Discord
-- Contact: support@zali.app
+- Contact: support@reui.app
 
 ## License
 

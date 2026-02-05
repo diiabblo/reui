@@ -1,12 +1,13 @@
 # Component Accessibility Guide
 
-Detailed accessibility requirements for each component in Zali.
+Detailed accessibility requirements for each component in reui.
 
 ## Navbar
 
 **File**: `src/components/Navbar.tsx`
 
 ### Features Implemented
+
 - ✅ Navigation landmark (`<nav>`)
 - ✅ Logo link with aria-label
 - ✅ Active page indication
@@ -17,6 +18,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Icon buttons have aria-labels
 
 ### Testing
+
 ```
 [ ] Tab navigates through all links
 [ ] Focus indicator visible on each link
@@ -27,6 +29,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-expanded`: Mobile menu state
 - `aria-controls`: Links to mobile menu ID
 - `aria-haspopup`: Indicates dropdown
@@ -39,6 +42,7 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/components/QuestionCard.tsx`
 
 ### Features Implemented
+
 - ✅ Fieldset/legend for form structure
 - ✅ Answer options as buttons with aria-label
 - ✅ aria-pressed for selected state
@@ -48,6 +52,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Decorative checkmark has aria-hidden
 
 ### Testing
+
 ```
 [ ] Legend shows question text
 [ ] Each option has clear aria-label with letter and text
@@ -59,6 +64,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-label`: Option labels (e.g., "Option A: Answer text")
 - `aria-pressed`: Selected/unselected state
 - `aria-hidden`: Decorative elements
@@ -71,6 +77,7 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/components/Leaderboard.tsx`
 
 ### Features Implemented
+
 - ✅ Section with aria-label
 - ✅ Ordered list structure
 - ✅ List items properly marked
@@ -81,6 +88,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Icons marked aria-hidden
 
 ### Testing
+
 ```
 [ ] Section announced as "Game leaderboard"
 [ ] List announced as "Top 10 players ranking"
@@ -92,6 +100,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-label`: Section and list labels
 - `aria-label`: Rank badges (e.g., "Rank 1")
 - `aria-label`: Score information
@@ -104,12 +113,14 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/components/SkipNavLink.tsx`
 
 ### Features Implemented
+
 - ✅ Screen reader only (.sr-only)
 - ✅ Visible on focus
 - ✅ Links to #main-content
 - ✅ First keyboard stop
 
 ### Testing
+
 ```
 [ ] Not visible normally
 [ ] Visible when focused with Tab
@@ -119,6 +130,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key Attributes
+
 - `href="#main-content"`: Jump target
 - `sr-only` + `focus:not-sr-only`: Visibility
 
@@ -129,6 +141,7 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/app/register/page.tsx`
 
 ### Features Implemented
+
 - ✅ Fieldset/legend structure
 - ✅ Username input with label
 - ✅ aria-invalid for errors
@@ -141,6 +154,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Character counter
 
 ### Testing
+
 ```
 [ ] Fieldset and legend present
 [ ] Username label associated
@@ -153,6 +167,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-invalid`: Form field validation state
 - `aria-describedby`: Links to help/error text
 - `aria-busy`: Loading state
@@ -166,6 +181,7 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/app/signin/page.tsx`
 
 ### Features Implemented
+
 - ✅ Status message with role="status"
 - ✅ Fieldset/legend for wallet options
 - ✅ Connector buttons with aria-label
@@ -176,6 +192,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Icons marked aria-hidden
 
 ### Testing
+
 ```
 [ ] Status message updates announced
 [ ] Fieldset contains wallet options
@@ -187,6 +204,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-live="polite"`: Status updates
 - `aria-label`: Wallet buttons
 - `aria-busy`: Connecting state
@@ -199,6 +217,7 @@ Detailed accessibility requirements for each component in Zali.
 **File**: `src/app/page.tsx`
 
 ### Features Implemented
+
 - ✅ Proper h1 page title
 - ✅ Section landmarks with aria-label
 - ✅ Stats section with role="region"
@@ -208,6 +227,7 @@ Detailed accessibility requirements for each component in Zali.
 - ✅ Proper heading hierarchy
 
 ### Testing
+
 ```
 [ ] Page title in h1
 [ ] Each section has aria-label
@@ -218,6 +238,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Key ARIA Attributes
+
 - `aria-label`: Section labels
 - `role="region"`: Stats container
 - `aria-hidden`: Decorative emojis
@@ -257,6 +278,7 @@ Detailed accessibility requirements for each component in Zali.
 ## Common Patterns Used
 
 ### Form Field with Error
+
 ```tsx
 <fieldset>
   <legend>Username</legend>
@@ -264,12 +286,17 @@ Detailed accessibility requirements for each component in Zali.
     aria-invalid={hasError}
     aria-describedby={hasError ? "error" : "help"}
   />
-  {hasError && <p id="error" role="alert">{error}</p>}
+  {hasError && (
+    <p id="error" role="alert">
+      {error}
+    </p>
+  )}
   {!hasError && <p id="help">{helpText}</p>}
 </fieldset>
 ```
 
 ### Icon Button
+
 ```tsx
 <button aria-label="Delete item">
   <TrashIcon aria-hidden="true" />
@@ -277,6 +304,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Status Message
+
 ```tsx
 <div role="status" aria-live="polite" aria-atomic="true">
   {message}
@@ -284,6 +312,7 @@ Detailed accessibility requirements for each component in Zali.
 ```
 
 ### Disabled Button
+
 ```tsx
 <button
   disabled={isLoading}
@@ -342,21 +371,22 @@ When modifying components:
 
 ## Component Accessibility Scores
 
-| Component | Semantic HTML | ARIA | Keyboard | Tests | Overall |
-|-----------|---|---|---|---|---|
-| Navbar | ✅ | ✅ | ✅ | ✅ | ✅ |
-| QuestionCard | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Leaderboard | ✅ | ✅ | ✅ | ✅ | ✅ |
-| SkipNavLink | ✅ | ✅ | ✅ | ✅ | ✅ |
-| RegisterForm | ✅ | ✅ | ✅ | ✅ | ✅ |
-| SignInForm | ✅ | ✅ | ✅ | ✅ | ✅ |
-| HomePage | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Component    | Semantic HTML | ARIA | Keyboard | Tests | Overall |
+| ------------ | ------------- | ---- | -------- | ----- | ------- |
+| Navbar       | ✅            | ✅   | ✅       | ✅    | ✅      |
+| QuestionCard | ✅            | ✅   | ✅       | ✅    | ✅      |
+| Leaderboard  | ✅            | ✅   | ✅       | ✅    | ✅      |
+| SkipNavLink  | ✅            | ✅   | ✅       | ✅    | ✅      |
+| RegisterForm | ✅            | ✅   | ✅       | ✅    | ✅      |
+| SignInForm   | ✅            | ✅   | ✅       | ✅    | ✅      |
+| HomePage     | ✅            | ✅   | ✅       | ✅    | ✅      |
 
 ---
 
 ## Maintenance
 
 Review and update this guide:
+
 - When adding new components
 - When accessibility issues found
 - When frameworks updated

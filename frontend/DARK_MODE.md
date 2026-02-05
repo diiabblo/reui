@@ -2,7 +2,8 @@
 
 ## Overview
 
-Zali supports a comprehensive dark mode theme with three options:
+reui supports a comprehensive dark mode theme with three options:
+
 - **Light Mode**: Traditional light theme
 - **Dark Mode**: Dark theme for low-light environments
 - **System Mode**: Automatically matches your system preferences
@@ -61,9 +62,7 @@ Dark mode colors are defined in `globals.css`:
 #### Method 2: CSS Variables
 
 ```tsx
-<div className="bg-background text-foreground">
-  Content
-</div>
+<div className="bg-background text-foreground">Content</div>
 ```
 
 ## Theme Toggle Component
@@ -71,20 +70,22 @@ Dark mode colors are defined in `globals.css`:
 The `ThemeToggle` component provides an accessible UI for switching themes:
 
 ```tsx
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { ThemeToggle } from "@/components/ThemeToggle";
 
-<ThemeToggle />
+<ThemeToggle />;
 ```
 
 ## Color Palette
 
 ### Light Mode
+
 - Background: #ffffff
 - Foreground: #171717
 - Primary: #3b82f6
 - Secondary: #f3f4f6
 
 ### Dark Mode
+
 - Background: #030712
 - Foreground: #f9fafb
 - Primary: #3b82f6
@@ -135,14 +136,17 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 ## Troubleshooting
 
 ### Theme not persisting
+
 - Check localStorage is enabled
 - Verify ThemeProvider is wrapping your app
 
 ### Colors not changing
+
 - Ensure `.dark` class is applied to `<html>` element
 - Check CSS variables are properly defined
 
 ### Flashing on page load
+
 - Theme is applied before render via useEffect
 - Consider adding `suppressHydrationWarning` to `<html>` tag
 

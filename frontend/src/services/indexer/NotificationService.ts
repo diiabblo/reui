@@ -11,11 +11,11 @@ import type {
   AnswerSubmittedEvent,
   RewardDistributedEvent,
   ScoreUpdatedEvent,
-} from '@/types/events';
-import type { EventNotifier, LeaderboardEntry } from './EventHandlers';
+} from "@/types/events";
+import type { EventNotifier, LeaderboardEntry } from "./EventHandlers";
 
 // Notification types
-export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+export type NotificationType = "info" | "success" | "warning" | "error";
 
 // Notification data
 export interface Notification {
@@ -74,15 +74,15 @@ export class NotificationService implements EventNotifier {
    * Load preferences from localStorage
    */
   private loadPreferences(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     try {
-      const stored = localStorage.getItem('notification-preferences');
+      const stored = localStorage.getItem("notification-preferences");
       if (stored) {
         this.preferences = { ...this.preferences, ...JSON.parse(stored) };
       }
     } catch (error) {
-      console.warn('[NotificationService] Failed to load preferences:', error);
+      console.warn("[NotificationService] Failed to load preferences:", error);
     }
   }
 
@@ -92,11 +92,17 @@ export class NotificationService implements EventNotifier {
   savePreferences(preferences: Partial<NotificationPreferences>): void {
     this.preferences = { ...this.preferences, ...preferences };
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        localStorage.setItem('notification-preferences', JSON.stringify(this.preferences));
+        localStorage.setItem(
+          "notification-preferences",
+          JSON.stringify(this.preferences),
+        );
       } catch (error) {
-        console.warn('[NotificationService] Failed to save preferences:', error);
+        console.warn(
+          "[NotificationService] Failed to save preferences:",
+          error,
+        );
       }
     }
   }
@@ -134,7 +140,9 @@ export class NotificationService implements EventNotifier {
    * Mark notification as read
    */
   markAsRead(notificationId: string): void {
-    const notification = this.notifications.find((n) => n.id === notificationId);
+    const notification = this.notifications.find(
+      (n) => n.id === notificationId,
+    );
     if (notification) {
       notification.read = true;
     }
@@ -153,7 +161,9 @@ export class NotificationService implements EventNotifier {
    * Dismiss a notification
    */
   dismiss(notificationId: string): void {
-    const notification = this.notifications.find((n) => n.id === notificationId);
+    const notification = this.notifications.find(
+      (n) => n.id === notificationId,
+    );
     if (notification) {
       notification.dismissed = true;
     }
@@ -173,7 +183,7 @@ export class NotificationService implements EventNotifier {
     type: NotificationType,
     title: string,
     message: string,
-    data?: Record<string, unknown>
+    data?: Record<string, unknown>,
   ): void {
     const notification: Notification = {
       id: crypto.randomUUID(),
@@ -199,7 +209,7 @@ export class NotificationService implements EventNotifier {
       try {
         listener(notification);
       } catch (error) {
-        console.error('[NotificationService] Listener error:', error);
+        console.error("[NotificationService] Listener error:", error);
       }
     });
 
@@ -224,11 +234,11 @@ export class NotificationService implements EventNotifier {
    */
   private showToast(notification: Notification): void {
     // This will be picked up by the UI component
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.dispatchEvent(
-        new CustomEvent('zali-toast', {
+        new CustomEvent("reui-toast", {
           detail: notification,
-        })
+        }),
       );
     }
   }
@@ -237,10 +247,16 @@ export class NotificationService implements EventNotifier {
    * Play notification sound
    */
   private playSound(type: NotificationType): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     try {
-      const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
+      const AudioContext =
+        window.AudioContext ||
+        (
+          window as unknown as {
+            webkitAudioContext: typeof window.AudioContext;
+          }
+        ).webkitAudioContext;
       if (!AudioContext) return;
 
       const audioContext = new AudioContext();
@@ -259,43 +275,51 @@ export class NotificationService implements EventNotifier {
       };
 
       oscillator.frequency.value = frequencies[type];
-      oscillator.type = 'sine';
+      oscillator.type = "sine";
 
       gainNode.gain.value = this.preferences.soundVolume * 0.1;
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioContext.currentTime + 0.2,
+      );
 
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.2);
     } catch (error) {
-      console.warn('[NotificationService] Failed to play sound:', error);
+      console.warn("[NotificationService] Failed to play sound:", error);
     }
   }
 
   /**
    * Show browser notification
    */
-  private async showBrowserNotification(notification: Notification): Promise<void> {
-    if (typeof window === 'undefined' || !('Notification' in window)) return;
+  private async showBrowserNotification(
+    notification: Notification,
+  ): Promise<void> {
+    if (typeof window === "undefined" || !("Notification" in window)) return;
 
     try {
-      if (Notification.permission === 'granted') {
+      if (Notification.permission === "granted") {
         new Notification(notification.title, {
           body: notification.message,
-          icon: '/favicon.ico',
+          icon: "/favicon.ico",
           tag: notification.id,
         });
-      } else if (Notification.permission !== 'denied') {
+      } else if (Notification.permission !== "denied") {
         const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
+        if (permission === "granted") {
           new Notification(notification.title, {
             body: notification.message,
-            icon: '/favicon.ico',
+            icon: "/favicon.ico",
             tag: notification.id,
           });
         }
       }
     } catch (error) {
-      console.warn('[NotificationService] Failed to show browser notification:', error);
+      console.warn(
+        "[NotificationService] Failed to show browser notification:",
+        error,
+      );
     }
   }
 
@@ -303,8 +327,8 @@ export class NotificationService implements EventNotifier {
    * Request browser notification permission
    */
   async requestPermission(): Promise<NotificationPermission> {
-    if (typeof window === 'undefined' || !('Notification' in window)) {
-      return 'denied';
+    if (typeof window === "undefined" || !("Notification" in window)) {
+      return "denied";
     }
 
     return Notification.requestPermission();
@@ -319,16 +343,16 @@ export class NotificationService implements EventNotifier {
     if (!this.preferences.showNewQuestions) return;
 
     this.notify(
-      'info',
-      'New Question Added',
+      "info",
+      "New Question Added",
       `Question #${event.args.questionId}: "${event.args.questionText.substring(0, 50)}${
-        event.args.questionText.length > 50 ? '...' : ''
+        event.args.questionText.length > 50 ? "..." : ""
       }"`,
       {
-        eventType: 'QuestionAdded',
+        eventType: "QuestionAdded",
         questionId: event.args.questionId.toString(),
         reward: event.args.reward.toString(),
-      }
+      },
     );
   }
 
@@ -338,14 +362,14 @@ export class NotificationService implements EventNotifier {
   notifyAnswer(event: AnswerSubmittedEvent): void {
     if (!this.preferences.showAnswerResults) return;
 
-    const title = event.args.isCorrect ? 'Correct Answer!' : 'Wrong Answer';
-    const type: NotificationType = event.args.isCorrect ? 'success' : 'warning';
+    const title = event.args.isCorrect ? "Correct Answer!" : "Wrong Answer";
+    const type: NotificationType = event.args.isCorrect ? "success" : "warning";
     const message = event.args.isCorrect
       ? `${shortenAddress(event.args.user)} answered correctly!`
       : `${shortenAddress(event.args.user)} answered incorrectly`;
 
     this.notify(type, title, message, {
-      eventType: 'AnswerSubmitted',
+      eventType: "AnswerSubmitted",
       user: event.args.user,
       questionId: event.args.questionId.toString(),
       isCorrect: event.args.isCorrect,
@@ -360,14 +384,14 @@ export class NotificationService implements EventNotifier {
 
     const amount = formatUSDC(event.args.amount);
     this.notify(
-      'success',
-      'Reward Distributed',
+      "success",
+      "Reward Distributed",
       `${shortenAddress(event.args.user)} earned ${amount} USDC!`,
       {
-        eventType: 'RewardDistributed',
+        eventType: "RewardDistributed",
         user: event.args.user,
         amount: event.args.amount.toString(),
-      }
+      },
     );
   }
 
@@ -380,16 +404,21 @@ export class NotificationService implements EventNotifier {
     const newScore = Number(event.args.newScore);
 
     // Notify on milestone scores
-    if (newScore === 10 || newScore === 25 || newScore === 50 || newScore === 100) {
+    if (
+      newScore === 10 ||
+      newScore === 25 ||
+      newScore === 50 ||
+      newScore === 100
+    ) {
       this.notify(
-        'success',
-        'Milestone Reached!',
+        "success",
+        "Milestone Reached!",
         `${shortenAddress(event.args.user)} reached ${newScore} points!`,
         {
-          eventType: 'ScoreUpdated',
+          eventType: "ScoreUpdated",
           user: event.args.user,
           score: newScore,
-        }
+        },
       );
     }
   }
@@ -403,14 +432,14 @@ export class NotificationService implements EventNotifier {
     if (topPlayers.length > 0) {
       const leader = topPlayers[0];
       this.notify(
-        'info',
-        'Leaderboard Updated',
+        "info",
+        "Leaderboard Updated",
         `${shortenAddress(leader.address)} leads with ${leader.score.toString()} points!`,
         {
-          eventType: 'LeaderboardUpdate',
+          eventType: "LeaderboardUpdate",
           topPlayer: leader.address,
           topScore: leader.score.toString(),
-        }
+        },
       );
     }
   }

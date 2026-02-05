@@ -1,10 +1,11 @@
-# Zali Trivia Game Subgraph
+# reui Trivia Game Subgraph
 
 This subgraph indexes on-chain events from the SimpleTriviaGame contract deployed on Base Mainnet, providing fast and efficient queries for leaderboard data, player statistics, and game analytics.
 
 ## Overview
 
 The subgraph tracks:
+
 - **Players**: Individual player statistics including scores, answers, and rewards
 - **Questions**: Question metadata and answer statistics
 - **Answers**: Individual answer records with timestamps and correctness
@@ -19,6 +20,7 @@ The subgraph tracks:
 ## Entities
 
 ### Player
+
 - `id`: Player's Ethereum address
 - `address`: Player's address as bytes
 - `totalScore`: Total number of correct answers
@@ -30,6 +32,7 @@ The subgraph tracks:
 - `answers`: List of all answers submitted by player
 
 ### Question
+
 - `id`: Question ID
 - `questionId`: On-chain question ID
 - `questionText`: The question text
@@ -40,6 +43,7 @@ The subgraph tracks:
 - `correctAnswers`: Total correct answers for this question
 
 ### Answer
+
 - `id`: Unique answer ID (txHash-logIndex)
 - `player`: Reference to player
 - `question`: Reference to question
@@ -50,6 +54,7 @@ The subgraph tracks:
 - `transactionHash`: Transaction hash
 
 ### GlobalStats
+
 - `id`: Always "global"
 - `totalPlayers`: Total unique players
 - `totalAnswers`: Total answers submitted
@@ -60,6 +65,7 @@ The subgraph tracks:
 ## Setup
 
 ### Prerequisites
+
 - Node.js >= 16
 - The Graph CLI
 
@@ -207,10 +213,10 @@ npm run deploy-local
 After deployment, you'll receive a subgraph URL. Use this in your frontend with Apollo Client or urql:
 
 ```typescript
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/<SUBGRAPH_ID>/zali-trivia/v1.0.0',
+  uri: "https://api.studio.thegraph.com/query/<SUBGRAPH_ID>/reui-trivia/v1.0.0",
   cache: new InMemoryCache(),
 });
 
@@ -232,6 +238,7 @@ const { data } = await client.query({
 ## Performance Benefits
 
 Compared to direct blockchain queries:
+
 - **Faster Queries**: Pre-indexed data returns in milliseconds
 - **Complex Filtering**: Sort, filter, and paginate easily
 - **Historical Data**: Access complete historical records

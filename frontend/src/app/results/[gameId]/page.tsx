@@ -1,24 +1,23 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useSearchParams, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
-import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics';
+import { useEffect, useState } from "react";
+import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
+import { trackEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
 
-import { useAccount } from 'wagmi';
+import { useAccount } from "wagmi";
 
 export default function ResultsPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { address } = useAccount();
-  
-  const gameId = params.gameId as string;
-  const score = parseInt(searchParams.get('score') || '0');
-  const total = parseInt(searchParams.get('total') || '5');
 
-  
+  const gameId = params.gameId as string;
+  const score = parseInt(searchParams.get("score") || "0");
+  const total = parseInt(searchParams.get("total") || "5");
+
   const [rewards, setRewards] = useState(0);
   const [rank, setRank] = useState(0);
 
@@ -48,15 +47,15 @@ export default function ResultsPage() {
           angle: 60,
           spread: 55,
           origin: { x: 0 },
-          colors: ['#10b981', '#3b82f6', '#f59e0b']
+          colors: ["#10b981", "#3b82f6", "#f59e0b"],
         });
-        
+
         confetti({
           particleCount: 2,
           angle: 120,
           spread: 55,
           origin: { x: 1 },
-          colors: ['#10b981', '#3b82f6', '#f59e0b']
+          colors: ["#10b981", "#3b82f6", "#f59e0b"],
         });
 
         if (Date.now() < end) {
@@ -77,28 +76,28 @@ export default function ResultsPage() {
   }, [isWinner, percentage]);
 
   const getRankEmoji = () => {
-    if (rank === 1) return '🥇';
-    if (rank === 2) return '🥈';
-    return '📊';
+    if (rank === 1) return "🥇";
+    if (rank === 2) return "🥈";
+    return "📊";
   };
 
   const getRankText = () => {
-    if (rank === 1) return '1st Place';
-    if (rank === 2) return '2nd Place';
-    return 'Participant';
+    if (rank === 1) return "1st Place";
+    if (rank === 2) return "2nd Place";
+    return "Participant";
   };
 
   const getScoreColor = () => {
-    if (percentage >= 80) return 'text-green-600';
-    if (percentage >= 60) return 'text-yellow-600';
-    return 'text-red-600';
+    if (percentage >= 80) return "text-green-600";
+    if (percentage >= 60) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getScoreMessage = () => {
-    if (isPerfect) return '🎉 Perfect Score! You\'re a Celo Expert!';
-    if (percentage >= 80) return '🌟 Excellent! You really know your Celo!';
-    if (percentage >= 60) return '👍 Good job! Keep learning!';
-    return '📚 Keep studying! You\'ll do better next time!';
+    if (isPerfect) return "🎉 Perfect Score! You're a Celo Expert!";
+    if (percentage >= 80) return "🌟 Excellent! You really know your Celo!";
+    if (percentage >= 60) return "👍 Good job! Keep learning!";
+    return "📚 Keep studying! You'll do better next time!";
   };
 
   return (
@@ -128,7 +127,9 @@ export default function ResultsPage() {
               transition={{ delay: 0.4, type: "spring" }}
               className="mb-4"
             >
-              <div className={`text-7xl md:text-8xl font-bold ${getScoreColor()}`}>
+              <div
+                className={`text-7xl md:text-8xl font-bold ${getScoreColor()}`}
+              >
                 {score}/{total}
               </div>
               <div className="text-2xl md:text-3xl font-semibold text-gray-700 mt-2">
@@ -197,28 +198,28 @@ export default function ResultsPage() {
             <div className="bg-gray-50 rounded-lg p-4 text-center">
               <p className="text-sm text-gray-600 mb-1">Rank</p>
               <p className="text-2xl font-bold text-yellow-600">
-                {rank > 0 ? `#${rank}` : '-'}
+                {rank > 0 ? `#${rank}` : "-"}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <button
-              onClick={() => router.push('/play/game?gameId=' + (parseInt(gameId) + 1))}
+              onClick={() =>
+                router.push("/play/game?gameId=" + (parseInt(gameId) + 1))
+              }
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg hover:shadow-xl"
             >
               🎮 Play Again
             </button>
             <button
-              onClick={() => router.push('/play')}
+              onClick={() => router.push("/play")}
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg hover:shadow-xl"
             >
               🏠 Back to Games
             </button>
           </div>
         </motion.div>
-
-
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -229,8 +230,11 @@ export default function ResultsPage() {
           <p className="text-gray-600 mb-4">Share your results!</p>
           <button
             onClick={() => {
-              const text = `I just scored ${score}/${total} (${percentage}%) on Zali! 🎮`;
-              window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+              const text = `I just scored ${score}/${total} (${percentage}%) on reui! 🎮`;
+              window.open(
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+                "_blank",
+              );
             }}
             className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
           >

@@ -1,14 +1,14 @@
 {
-  "name": "zali-subgraph",
+  "name": "reui-subgraph",
   "version": "1.0.0",
-  "description": "The Graph subgraph for Zali trivia game on Base",
+  "description": "The Graph subgraph for reui trivia game on Base",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --studio zali-trivia",
-    "create-local": "graph create --node http://localhost:8020/ zali-trivia",
-    "remove-local": "graph remove --node http://localhost:8020/ zali-trivia",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 zali-trivia",
+    "deploy": "graph deploy --studio reui-trivia",
+    "create-local": "graph create --node http://localhost:8020/ reui-trivia",
+    "remove-local": "graph remove --node http://localhost:8020/ reui-trivia",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 reui-trivia",
     "test": "graph test"
   },
   "dependencies": {

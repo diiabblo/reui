@@ -1,6 +1,6 @@
 # Dynamic Imports & Code Splitting Guide
 
-Implementation guide for code splitting and lazy loading in Zali frontend.
+Implementation guide for code splitting and lazy loading in reui frontend.
 
 ---
 
@@ -160,15 +160,15 @@ const AdminLayout = dynamic(
 export default function AdminPage() {
   const router = useRouter();
   const isOwner = useStore((state) => state.isOwner);
-  
+
   useEffect(() => {
     if (!isOwner) {
       router.push('/');
     }
   }, [isOwner, router]);
-  
+
   if (!isOwner) return null;
-  
+
   return (
     <AdminLayout>
       <AdminDashboard />
@@ -185,18 +185,18 @@ export default function AdminPage() {
 // Only load for specific users/conditions
 const AdvancedReports = dynamic(
   () => import('@/components/AdvancedReports'),
-  { 
+  {
     ssr: false,
-    loading: () => <Skeleton /> 
+    loading: () => <Skeleton />
   }
 );
 
 // Only show if user has premium
 const PremiumFeature = () => {
   const isPremium = useStore((state) => state.isPremium);
-  
+
   if (!isPremium) return null;
-  
+
   return <AdvancedReports />;
 };
 ```
@@ -212,23 +212,22 @@ Split heavy libraries into separate chunks.
 ```typescript
 // Before: ~35KB added to initial bundle
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 // After: Load only when used
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const AnimatedBox = dynamic(
-  () => import('@/components/AnimatedBox'),
-  { ssr: false }
-);
+const AnimatedBox = dynamic(() => import("@/components/AnimatedBox"), {
+  ssr: false,
+});
 ```
 
 ### Sentry (Error Monitoring)
 
 ```typescript
 // Option 1: Lazy load after app initialization
-if (process.env.NODE_ENV === 'production') {
-  import('@sentry/nextjs').then((sentry) => {
+if (process.env.NODE_ENV === "production") {
+  import("@sentry/nextjs").then((sentry) => {
     // Initialize Sentry
   });
 }
@@ -244,10 +243,10 @@ if (process.env.NODE_ENV === 'production') {
 // Production: Lazy load pino
 
 const getLogger = async () => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     return console;
   }
-  const pino = await import('pino');
+  const pino = await import("pino");
   return pino();
 };
 ```
@@ -262,22 +261,19 @@ Load features conditionally based on environment/features.
 
 ```typescript
 // hooks/useAdvancedMetrics.ts
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const AdvancedMetrics = dynamic(
-  () => import('@/lib/advancedMetrics'),
-  {
-    ssr: false,
-  }
-);
+const AdvancedMetrics = dynamic(() => import("@/lib/advancedMetrics"), {
+  ssr: false,
+});
 
 export const useAdvancedMetrics = () => {
-  const isEnabled = process.env.NEXT_PUBLIC_ENABLE_METRICS === 'true';
-  
+  const isEnabled = process.env.NEXT_PUBLIC_ENABLE_METRICS === "true";
+
   if (!isEnabled) {
     return { track: () => {} }; // No-op
   }
-  
+
   return AdvancedMetrics;
 };
 ```
@@ -300,7 +296,7 @@ const HeavyComponent = dynamic(
 
 export default function Page() {
   const [show, setShow] = useState(false);
-  
+
   return (
     <>
       <button onClick={() => setShow(true)}>
@@ -328,7 +324,7 @@ export default function Page() {
     triggerOnce: true, // Load only once
     threshold: 0.1,
   });
-  
+
   return (
     <div ref={ref}>
       {inView && <HeavyComponent />}
@@ -373,11 +369,11 @@ const FeatureComponent = dynamic(
   async () => {
     const isEnabled = await fetch('/api/features/new-feature')
       .then((r) => r.json());
-    
+
     if (!isEnabled) {
       return { default: () => null };
     }
-    
+
     return import('@/components/NewFeature');
   },
   { ssr: false }
@@ -445,18 +441,16 @@ ls -lah .next/static/chunks/
 
 ```typescript
 // __tests__/dynamic-imports.test.ts
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-describe('Dynamic Imports', () => {
-  it('should lazy load components', async () => {
-    const Component = dynamic(
-      () => import('@/components/AnimatedBox')
-    );
-    
+describe("Dynamic Imports", () => {
+  it("should lazy load components", async () => {
+    const Component = dynamic(() => import("@/components/AnimatedBox"));
+
     expect(Component).toBeDefined();
   });
-  
-  it('should not include heavy libs in initial bundle', () => {
+
+  it("should not include heavy libs in initial bundle", () => {
     // Check build artifacts
     // Verify chunk sizes are within limits
   });
@@ -491,8 +485,8 @@ Time to Interactive: 2.5s on 3G ✅ (-44%)
 
 ```typescript
 // Don't split everything
-const Button = dynamic(() => import('@/components/Button'));
-const Input = dynamic(() => import('@/components/Input'));
+const Button = dynamic(() => import("@/components/Button"));
+const Input = dynamic(() => import("@/components/Input"));
 // This creates too many small chunks
 ```
 
@@ -500,15 +494,15 @@ const Input = dynamic(() => import('@/components/Input'));
 
 ```typescript
 // Only split heavy components
-const AnimatedCard = dynamic(() => import('@/components/AnimatedCard'));
-const AdminDashboard = dynamic(() => import('@/components/AdminDashboard'));
+const AnimatedCard = dynamic(() => import("@/components/AnimatedCard"));
+const AdminDashboard = dynamic(() => import("@/components/AdminDashboard"));
 ```
 
 ### ❌ Mistake 2: Forgetting loading state
 
 ```typescript
 // User sees blank screen
-const Component = dynamic(() => import('@/components/Component'));
+const Component = dynamic(() => import("@/components/Component"));
 ```
 
 ### ✅ Solution: Always provide loading state
@@ -525,7 +519,7 @@ const Component = dynamic(
 ```typescript
 // Causes server-side Framer Motion issues
 const Animated = dynamic(
-  () => import('@/components/Animated')
+  () => import("@/components/Animated"),
   // Missing ssr: false
 );
 ```
@@ -534,8 +528,8 @@ const Animated = dynamic(
 
 ```typescript
 const Animated = dynamic(
-  () => import('@/components/Animated'),
-  { ssr: false } // ✅
+  () => import("@/components/Animated"),
+  { ssr: false }, // ✅
 );
 ```
 

@@ -2,7 +2,7 @@
 
 ## Component Error Handling Standards
 
-This guide outlines the standards for implementing error boundaries across all components in the Zali application.
+This guide outlines the standards for implementing error boundaries across all components in the reui application.
 
 ## Error Boundary Placement Rules
 
@@ -94,10 +94,10 @@ All error messages must be user-friendly and non-technical:
 
 ```tsx
 // ✅ GOOD
-"Unable to load your profile. Please try again."
+"Unable to load your profile. Please try again.";
 
 // ❌ BAD
-"TypeError: Cannot read property 'user' of undefined"
+"TypeError: Cannot read property 'user' of undefined";
 ```
 
 ### Action-Oriented Messages
@@ -106,10 +106,10 @@ Error messages should suggest next steps:
 
 ```tsx
 // ✅ GOOD
-"Your wallet is disconnected. Please connect your wallet to continue."
+"Your wallet is disconnected. Please connect your wallet to continue.";
 
 // ❌ BAD
-"Wallet error"
+"Wallet error";
 ```
 
 ### Context-Specific Messages
@@ -119,9 +119,9 @@ Customize messages based on the operation:
 ```tsx
 // ✅ GOOD
 switch (operation) {
-  case 'playGame':
+  case "playGame":
     return "Unable to start game. Check your wallet connection.";
-  case 'claimReward':
+  case "claimReward":
     return "Unable to claim reward. Try again shortly.";
 }
 
@@ -137,13 +137,17 @@ Log errors with relevant context:
 
 ```tsx
 // ✅ GOOD
-errorLogger.logError(error, {
-  component: 'GameForm',
-  operation: 'submitAnswer',
-  questionId: '123',
-  userId: user?.id,
-  timestamp: new Date(),
-}, 'critical');
+errorLogger.logError(
+  error,
+  {
+    component: "GameForm",
+    operation: "submitAnswer",
+    questionId: "123",
+    userId: user?.id,
+    timestamp: new Date(),
+  },
+  "critical",
+);
 
 // ❌ BAD
 errorLogger.logError(error);
@@ -156,15 +160,15 @@ Use appropriate severity levels:
 ```tsx
 // ✅ GOOD
 if (isContractError) {
-  errorLogger.logError(error, context, 'critical');
+  errorLogger.logError(error, context, "critical");
 } else if (isNetworkError) {
-  errorLogger.logError(error, context, 'warning');
+  errorLogger.logError(error, context, "warning");
 } else {
-  errorLogger.logError(error, context, 'info');
+  errorLogger.logError(error, context, "info");
 }
 
 // ❌ BAD
-errorLogger.logError(error, context, 'critical'); // Always critical
+errorLogger.logError(error, context, "critical"); // Always critical
 ```
 
 ## Custom Fallback UI Standards
@@ -190,7 +194,7 @@ Every fallback UI should include:
       <p className="mt-2 text-sm">{getErrorMessage(error)}</p>
       <div className="mt-4 flex gap-2">
         <button onClick={reset}>Try Again</button>
-        <button onClick={() => navigate('/')}>Go Home</button>
+        <button onClick={() => navigate("/")}>Go Home</button>
       </div>
       {isDev && (
         <details className="mt-4">
@@ -220,29 +224,29 @@ Use consistent colors and styles for error boundaries:
 Every error boundary implementation must include:
 
 ```tsx
-describe('ErrorBoundary', () => {
+describe("ErrorBoundary", () => {
   // 1. Test rendering without error
-  it('should render children when there is no error', () => {
+  it("should render children when there is no error", () => {
     // ...
   });
 
   // 2. Test fallback rendering
-  it('should render fallback when error occurs', () => {
+  it("should render fallback when error occurs", () => {
     // ...
   });
 
   // 3. Test error callback
-  it('should call onError callback', () => {
+  it("should call onError callback", () => {
     // ...
   });
 
   // 4. Test error recovery
-  it('should reset error when retry button is clicked', () => {
+  it("should reset error when retry button is clicked", () => {
     // ...
   });
 
   // 5. Test metadata display
-  it('should display component name when provided', () => {
+  it("should display component name when provided", () => {
     // ...
   });
 });
@@ -253,7 +257,7 @@ describe('ErrorBoundary', () => {
 Test error boundaries in context:
 
 ```tsx
-describe('Error Boundary Integration', () => {
+describe("Error Boundary Integration", () => {
   // Test error recovery flow
   // Test navigation after error
   // Test error logging
@@ -329,7 +333,7 @@ Every error boundary implementation should include:
 3. **Usage example**: How to use it
 4. **Recovery strategy**: How users can recover
 
-```tsx
+````tsx
 /**
  * GameErrorBoundary
  *
@@ -348,7 +352,7 @@ Every error boundary implementation should include:
 export function GameErrorBoundary({ children }) {
   // ...
 }
-```
+````
 
 ## Performance Standards
 

@@ -1,11 +1,14 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { devtools } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
-import { createAuthSlice, AuthSlice } from './slices/authSlice';
-import { createGameSlice, GameSlice } from './slices/gameSlice';
-import { createUISlice, UISlice } from './slices/uiSlice';
-import { createAchievementSlice, AchievementSlice } from './slices/achievementSlice';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { createAuthSlice, AuthSlice } from "./slices/authSlice";
+import { createGameSlice, GameSlice } from "./slices/gameSlice";
+import { createUISlice, UISlice } from "./slices/uiSlice";
+import {
+  createAchievementSlice,
+  AchievementSlice,
+} from "./slices/achievementSlice";
 
 export type RootState = AuthSlice & GameSlice & UISlice & AchievementSlice;
 
@@ -19,7 +22,7 @@ export const useStore = create<RootState>()(
         ...createAchievementSlice(...a),
       })),
       {
-        name: 'zali-store',
+        name: "reui-store",
         partialize: (state) => ({
           auth: {
             user: state.user,
@@ -32,7 +35,7 @@ export const useStore = create<RootState>()(
           achievements: state.achievements,
           globalStats: state.globalStats,
         }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );

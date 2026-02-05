@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide establishes best practices for tracking work items in the Zali codebase. As of Issue #147, the project has deprecated TODO comments in favor of GitHub Issues for better tracking and team visibility.
+This guide establishes best practices for tracking work items in the reui codebase. As of Issue #147, the project has deprecated TODO comments in favor of GitHub Issues for better tracking and team visibility.
 
 ---
 
@@ -45,24 +45,28 @@ This guide establishes best practices for tracking work items in the Zali codeba
 ### Benefits of GitHub Issues
 
 ✅ **Centralized Tracking**
-   - All work visible in one place
-   - Project board integration
-   - Searchable and filterable
+
+- All work visible in one place
+- Project board integration
+- Searchable and filterable
 
 ✅ **Team Collaboration**
-   - Assign to developers
-   - @ mentions for discussions
-   - Comment history and decisions
+
+- Assign to developers
+- @ mentions for discussions
+- Comment history and decisions
 
 ✅ **Automated Workflows**
-   - Link PRs to close issues
-   - Milestone tracking
-   - Workflow automation (labels, assignments)
+
+- Link PRs to close issues
+- Milestone tracking
+- Workflow automation (labels, assignments)
 
 ✅ **Visibility & Accountability**
-   - Clear ownership
-   - Priority and difficulty estimates
-   - Completion tracking
+
+- Clear ownership
+- Priority and difficulty estimates
+- Completion tracking
 
 ---
 
@@ -98,11 +102,13 @@ When creating an issue that references code:
 
 ```markdown
 ## Related Code
+
 - File: `src/hooks/useRewardManagement.ts` (line 216)
 - Current state: `unclaimedSessions: []` (hardcoded)
 - Issue: Feature not implemented
 
 ## Context
+
 See commit `abc123` and Issue #147 for background.
 ```
 
@@ -170,12 +176,14 @@ const calculateReward = (points: number) => {
 ### Prohibited Comment Types
 
 ❌ **TODO Comments**
+
 ```typescript
 // TODO: Implement unclaimed sessions logic ← Don't do this!
 // Create GitHub Issue instead
 ```
 
 ❌ **Vague Markers**
+
 ```typescript
 // TODO: Fix this later ← Too vague
 // FIXME: Something is wrong ← Insufficient context
@@ -236,25 +244,31 @@ This PR implements the toast notification system...
 
 ```markdown
 ## Description
+
 Clear description of the feature and why it's needed.
 
 ## Acceptance Criteria
+
 - [ ] Criterion 1
 - [ ] Criterion 2
 - [ ] Criterion 3
 
 ## Implementation Notes
+
 Technical approach and considerations.
 
 ## Related Files
+
 - `src/path/to/file.ts` (line XXX)
 
 ## Effort Estimate
+
 - [ ] Quick (<1h)
 - [ ] Moderate (1-3h)
 - [ ] Large (3+h)
 
 ## Priority
+
 - [ ] Critical
 - [ ] High
 - [ ] Medium
@@ -265,29 +279,36 @@ Technical approach and considerations.
 
 ```markdown
 ## Description
+
 Clear description of the bug.
 
 ## Steps to Reproduce
+
 1. Step 1
 2. Step 2
 3. Step 3
 
 ## Expected Behavior
+
 What should happen.
 
 ## Actual Behavior
+
 What actually happens.
 
 ## Affected Code
+
 - File: `src/path/to/file.ts` (line XXX)
 - Function: `functionName()`
 
 ## Environment
+
 - Node version: X.XX.X
 - Browser: Chrome/Firefox/Safari
 - OS: macOS/Windows/Linux
 
 ## Screenshots/Logs
+
 If applicable, add screenshots or error logs.
 ```
 
@@ -295,18 +316,23 @@ If applicable, add screenshots or error logs.
 
 ```markdown
 ## Description
+
 Why is refactoring needed?
 
 ## Scope
+
 Files and components affected.
 
 ## Benefits
+
 Improved performance, maintainability, type safety, etc.
 
 ## Testing
+
 How will you validate the refactoring?
 
 ## Effort Estimate
+
 - [ ] Quick (<1h)
 - [ ] Moderate (1-3h)
 - [ ] Large (3+h)
@@ -319,6 +345,7 @@ How will you validate the refactoring?
 ### 1. Create Issues Early
 
 Don't wait until code is complete:
+
 - Create issue as soon as you identify work
 - Use issues for discussion and planning
 - Update as understanding evolves
@@ -326,11 +353,13 @@ Don't wait until code is complete:
 ### 2. Write Clear Titles
 
 Good:
+
 - "Implement Farcaster frame signature verification"
 - "Fix race condition in balance update"
 - "Add error handling for network timeouts"
 
 Bad:
+
 - "Implement feature"
 - "Fix bug"
 - "Improve code"
@@ -339,6 +368,7 @@ Bad:
 
 ```markdown
 ## Acceptance Criteria
+
 - [ ] Frame signatures are validated using hub-nodejs
 - [ ] Invalid frames return appropriate error messages
 - [ ] Validation errors are logged for debugging
@@ -350,6 +380,7 @@ Bad:
 
 ```markdown
 ## Related Issues
+
 - Closes #123 (depends on completion)
 - References #124 (related feature)
 - Blocks #125 (this must complete first)
@@ -358,6 +389,7 @@ Bad:
 ### 5. Use Labels for Organization
 
 Apply labels for quick filtering:
+
 - `type: feature` / `type: bug` / `type: chore`
 - `priority: critical` / `priority: high`
 - `effort: quick` / `effort: moderate` / `effort: large`
@@ -367,6 +399,7 @@ Apply labels for quick filtering:
 ### 6. Update Issues Regularly
 
 Keep issues current:
+
 - Add comments as you discover more
 - Update estimates if they change
 - Link PRs when work starts
@@ -375,6 +408,7 @@ Keep issues current:
 ### 7. Use Milestones for Planning
 
 Group related issues:
+
 - Create milestone for each sprint
 - Link issues to relevant milestone
 - Track progress with milestone dashboard
@@ -393,6 +427,7 @@ If you find old TODO comments:
    - Set priority and effort
 
 2. **Update Code Comment**
+
    ```typescript
    // OLD:
    // TODO: Implement feature X
@@ -439,13 +474,14 @@ When reviewing code, check:
 - [GitHub Issues Documentation](https://docs.github.com/en/issues)
 - [Linking PRs to Issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
 - [Project Board Management](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues)
-- [Zali Issue #147: TODO Resolution](../../issues/147)
+- [reui Issue #147: TODO Resolution](../../issues/147)
 
 ---
 
 ## Questions?
 
 If you have questions about this policy or need clarification:
+
 1. Check existing issues for examples
 2. Ask in PR review comments
 3. Bring up in team meetings
@@ -453,6 +489,6 @@ If you have questions about this policy or need clarification:
 
 ---
 
-*Last Updated: Issue #147 - TODO Comments Resolution*  
-*Applies to: All frontend and backend code*  
-*Enforced by: Code review*
+_Last Updated: Issue #147 - TODO Comments Resolution_  
+_Applies to: All frontend and backend code_  
+_Enforced by: Code review_

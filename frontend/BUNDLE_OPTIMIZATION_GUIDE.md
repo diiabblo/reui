@@ -1,29 +1,30 @@
 # Bundle Size Optimization Guide
 
-Comprehensive guide to analyzing and optimizing the Zali frontend bundle size.
+Comprehensive guide to analyzing and optimizing the reui frontend bundle size.
 
 ---
 
 ## 📊 Current Bundle Analysis
 
 ### Target Metrics
+
 - ✅ Initial load: **< 200KB gzipped** (Core JS)
 - ✅ Time to interactive: **< 3s on 3G** (with optimal caching)
 - ✅ Total bundle: **< 500KB gzipped** (All chunks combined)
 
 ### Key Dependencies (Size Estimates)
 
-| Package | Size | Type | Priority |
-|---------|------|------|----------|
-| wagmi | ~85KB | Essential | Keep |
-| viem | ~45KB | Essential | Keep |
-| framer-motion | ~35KB | Animation | Optimize |
-| react-query | ~30KB | Caching | Keep |
-| @reown/appkit | ~50KB | Wallet UI | Keep |
-| sentry | ~40KB | Monitoring | Optional |
-| zod | ~18KB | Validation | Keep |
-| pino | ~25KB | Logging | Optional |
-| Others | ~100KB | Misc | Review |
+| Package       | Size   | Type       | Priority |
+| ------------- | ------ | ---------- | -------- |
+| wagmi         | ~85KB  | Essential  | Keep     |
+| viem          | ~45KB  | Essential  | Keep     |
+| framer-motion | ~35KB  | Animation  | Optimize |
+| react-query   | ~30KB  | Caching    | Keep     |
+| @reown/appkit | ~50KB  | Wallet UI  | Keep     |
+| sentry        | ~40KB  | Monitoring | Optional |
+| zod           | ~18KB  | Validation | Keep     |
+| pino          | ~25KB  | Logging    | Optional |
+| Others        | ~100KB | Misc       | Review   |
 
 ---
 
@@ -89,17 +90,18 @@ const AdminDashboard = dynamic(
 
 **Current Issue:** Unused utilities and dead code
 
-**Solution:** 
+**Solution:**
+
 - Remove unused exports
 - Use named imports
 - Enable production optimizations
 
 ```typescript
 // ❌ Import entire module
-import * as utils from '@/utils';
+import * as utils from "@/utils";
 
 // ✅ Import specific functions
-import { formatAddress, formatTokenAmount } from '@/utils';
+import { formatAddress, formatTokenAmount } from "@/utils";
 ```
 
 **Expected Savings:** 10-20KB
@@ -108,12 +110,12 @@ import { formatAddress, formatTokenAmount } from '@/utils';
 
 **Evaluate these packages:**
 
-| Package | Alternative | Savings | Notes |
-|---------|-------------|---------|-------|
-| framer-motion | CSS animations | 30-35KB | Consider for non-critical animations |
-| pino | console.log | 25KB | Remove in production |
-| sentry | Custom error handler | 40KB | Optional monitoring |
-| @geist-ui/core | Tailwind UI | 50KB | Already using Tailwind |
+| Package        | Alternative          | Savings | Notes                                |
+| -------------- | -------------------- | ------- | ------------------------------------ |
+| framer-motion  | CSS animations       | 30-35KB | Consider for non-critical animations |
+| pino           | console.log          | 25KB    | Remove in production                 |
+| sentry         | Custom error handler | 40KB    | Optional monitoring                  |
+| @geist-ui/core | Tailwind UI          | 50KB    | Already using Tailwind               |
 
 ### 6. Tree Shake Web3 Libraries (Priority: LOW)
 
@@ -123,7 +125,7 @@ import { formatAddress, formatTokenAmount } from '@/utils';
 
 ```typescript
 // ✅ Named imports (automatically tree-shaken)
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance } from "wagmi";
 
 // Can verify with webpack bundle analyzer
 ```
@@ -135,6 +137,7 @@ import { useAccount, useBalance } from 'wagmi';
 ## 🛠️ Implementation Checklist
 
 ### Phase 1: Analysis (Week 1)
+
 - [ ] Install `@next/bundle-analyzer`
 - [ ] Generate bundle report
 - [ ] Document dependency sizes
@@ -142,6 +145,7 @@ import { useAccount, useBalance } from 'wagmi';
 - [ ] Create baseline metrics
 
 ### Phase 2: Quick Wins (Week 1-2)
+
 - [ ] Remove unused dependencies
 - [ ] Enable Next.js compression
 - [ ] Configure dynamic imports
@@ -149,6 +153,7 @@ import { useAccount, useBalance } from 'wagmi';
 - [ ] Add bundle size budgets
 
 ### Phase 3: Code Splitting (Week 2-3)
+
 - [ ] Split by routes
 - [ ] Split by features
 - [ ] Lazy load components
@@ -156,6 +161,7 @@ import { useAccount, useBalance } from 'wagmi';
 - [ ] Measure improvements
 
 ### Phase 4: Dependency Reduction (Week 3-4)
+
 - [ ] Evaluate alternatives
 - [ ] Replace heavy packages
 - [ ] Update imports
@@ -163,6 +169,7 @@ import { useAccount, useBalance } from 'wagmi';
 - [ ] Final measurements
 
 ### Phase 5: Monitoring (Ongoing)
+
 - [ ] Add CI bundle checks
 - [ ] Monitor metrics
 - [ ] Alert on increases
@@ -174,6 +181,7 @@ import { useAccount, useBalance } from 'wagmi';
 ## 📈 Expected Results
 
 ### Before Optimization
+
 ```
 Initial JS:     ~350KB gzipped
 Framer Motion:  ~35KB
@@ -183,6 +191,7 @@ Time to Interactive: ~4-5s on 3G
 ```
 
 ### After Optimization
+
 ```
 Initial JS:     ~180KB gzipped ✅
 Framer Motion:  Lazy loaded
@@ -232,16 +241,16 @@ jobs:
 
 ### Pages (Estimated Post-Optimization)
 
-| Route | Size | Load Time |
-|-------|------|-----------|
-| / (Home) | 45KB | 0.5s |
-| /play | 85KB | 1.0s |
-| /leaderboard | 55KB | 0.7s |
-| /profile | 50KB | 0.6s |
-| /admin | 60KB* | 0.8s* |
-| /faucet | 35KB | 0.4s |
+| Route        | Size   | Load Time |
+| ------------ | ------ | --------- |
+| / (Home)     | 45KB   | 0.5s      |
+| /play        | 85KB   | 1.0s      |
+| /leaderboard | 55KB   | 0.7s      |
+| /profile     | 50KB   | 0.6s      |
+| /admin       | 60KB\* | 0.8s\*    |
+| /faucet      | 35KB   | 0.4s      |
 
-*Lazy loaded on demand
+\*Lazy loaded on demand
 
 ---
 
@@ -266,6 +275,7 @@ jobs:
 ## 💡 Best Practices
 
 ### DO ✅
+
 - Use dynamic imports for heavy components
 - Tree shake dependencies with named imports
 - Code split at route level
@@ -275,6 +285,7 @@ jobs:
 - Document bundle size decisions
 
 ### DON'T ❌
+
 - Import entire utility modules
 - Mix default and named imports
 - Load all features for all users

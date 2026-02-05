@@ -1,9 +1,12 @@
-import { test, expect } from './test-setup';
-import { TestDataFactory } from './utils/test-data-factory';
-import { ApiMock } from './utils/api-mock';
+import { test, expect } from "./test-setup";
+import { TestDataFactory } from "./utils/test-data-factory";
+import { ApiMock } from "./utils/api-mock";
 
-test.describe('Complete User Journey', () => {
-  test('should complete full user registration and game flow', async ({ page, walletMock }) => {
+test.describe("Complete User Journey", () => {
+  test("should complete full user registration and game flow", async ({
+    page,
+    walletMock,
+  }) => {
     const apiMock = new ApiMock(page);
     await apiMock.setupContractMocks();
     await apiMock.mockExternalAPIs();
@@ -13,11 +16,13 @@ test.describe('Complete User Journey', () => {
     const testGame = TestDataFactory.generateGameSession();
 
     // Step 1: Visit homepage
-    await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Zali: Learn, Play, Earn' })).toBeVisible();
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { name: "reui: Learn, Play, Earn" }),
+    ).toBeVisible();
 
     // Step 2: Navigate to registration
-    await page.getByRole('link', { name: 'Play' }).click();
+    await page.getByRole("link", { name: "Play" }).click();
     await expect(page).toHaveURL(/.*play/);
 
     // Should redirect to registration if not registered
@@ -28,16 +33,16 @@ test.describe('Complete User Journey', () => {
     await page.reload(); // Simulate wallet connection refresh
 
     // Step 4: Complete registration
-    const usernameInput = page.locator('input[type="text"]').or(
-      page.getByPlaceholder(/username|Username/i)
-    );
+    const usernameInput = page
+      .locator('input[type="text"]')
+      .or(page.getByPlaceholder(/username|Username/i));
 
     if (await usernameInput.isVisible()) {
       await usernameInput.fill(testUser.username);
 
-      const submitButton = page.locator('button[type="submit"]').or(
-        page.locator('button').filter({ hasText: /register|Register/i })
-      );
+      const submitButton = page
+        .locator('button[type="submit"]')
+        .or(page.locator("button").filter({ hasText: /register|Register/i }));
 
       await submitButton.click();
 
@@ -46,11 +51,11 @@ test.describe('Complete User Journey', () => {
     }
 
     // Step 5: Start a game
-    const startButton = page.locator('button').filter({
-      hasText: /start.*game|play.*now|begin|Begin/i
+    const startButton = page.locator("button").filter({
+      hasText: /start.*game|play.*now|begin|Begin/i,
     });
 
-    if (await startButton.isVisible() && await startButton.isEnabled()) {
+    if ((await startButton.isVisible()) && (await startButton.isEnabled())) {
       await startButton.click();
 
       // Should navigate to game page
@@ -63,8 +68,8 @@ test.describe('Complete User Journey', () => {
       await page.waitForTimeout(1000);
 
       // Look for answer options
-      const answerButtons = page.locator('button').filter({
-        hasText: /^[A-D]\.|^[A-D]\s/
+      const answerButtons = page.locator("button").filter({
+        hasText: /^[A-D]\.|^[A-D]\s/,
       });
 
       if (await answerButtons.first().isVisible()) {
@@ -79,38 +84,43 @@ test.describe('Complete User Journey', () => {
     // Step 7: Complete game and view results
     // Should either show results or navigate to results page
     await expect(
-      page.getByText(/results|Results|score|Score|completed|Completed/i).or(
-        page.url().includes('/results')
-      )
+      page
+        .getByText(/results|Results|score|Score|completed|Completed/i)
+        .or(page.url().includes("/results")),
     ).toBeTruthy({ timeout: 10000 });
 
     // Cleanup
     await apiMock.clearMocks();
   });
 
-  test('should handle faucet claim and balance updates', async ({ page, walletMock }) => {
+  test("should handle faucet claim and balance updates", async ({
+    page,
+    walletMock,
+  }) => {
     const apiMock = new ApiMock(page);
     await apiMock.setupContractMocks();
 
     // Step 1: Connect wallet and navigate to faucet
     await walletMock.connectWallet();
-    await page.goto('/faucet');
+    await page.goto("/faucet");
 
     // Step 2: Check initial balance display
-    const balanceElements = page.locator('text=/balance|Balance|\\$|cUSD/');
+    const balanceElements = page.locator("text=/balance|Balance|\\$|cUSD/");
     await expect(balanceElements.first()).toBeVisible();
 
     // Step 3: Claim tokens
-    const claimButton = page.locator('button').filter({ hasText: /claim|Claim/i });
+    const claimButton = page
+      .locator("button")
+      .filter({ hasText: /claim|Claim/i });
 
-    if (await claimButton.isVisible() && await claimButton.isEnabled()) {
+    if ((await claimButton.isVisible()) && (await claimButton.isEnabled())) {
       await claimButton.click();
 
       // Should show success feedback
       await expect(
-        page.getByText(/success|Success|claimed|Claimed/i).or(
-          page.getByRole('alert')
-        )
+        page
+          .getByText(/success|Success|claimed|Claimed/i)
+          .or(page.getByRole("alert")),
       ).toBeVisible({ timeout: 10000 });
     }
 
@@ -121,27 +131,29 @@ test.describe('Complete User Journey', () => {
     await apiMock.clearMocks();
   });
 
-  test('should navigate leaderboard and view rankings', async ({ page }) => {
+  test("should navigate leaderboard and view rankings", async ({ page }) => {
     const apiMock = new ApiMock(page);
     await apiMock.setupContractMocks();
 
     // Step 1: Navigate to leaderboard
-    await page.goto('/leaderboard');
+    await page.goto("/leaderboard");
 
     // Step 2: Verify leaderboard loads
-    await expect(page.getByRole('heading', { name: '🏆 Leaderboard' })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "🏆 Leaderboard" }),
+    ).toBeVisible();
 
     // Step 3: Check for ranking data
     await page.waitForTimeout(2000); // Wait for data to load
 
-    const rankingElements = page.locator('text=/^\\d+$/').first(); // Look for numbers
+    const rankingElements = page.locator("text=/^\\d+$/").first(); // Look for numbers
     const hasRankings = await rankingElements.isVisible().catch(() => false);
 
     if (hasRankings) {
       // Should show multiple players
-      const playerElements = page.locator('[class*="player"]').or(
-        page.locator('text=/player|Player/i')
-      );
+      const playerElements = page
+        .locator('[class*="player"]')
+        .or(page.locator("text=/player|Player/i"));
 
       await expect(playerElements.first()).toBeVisible();
     }
@@ -150,15 +162,21 @@ test.describe('Complete User Journey', () => {
     await apiMock.clearMocks();
   });
 
-  test('should handle mobile user journey', async ({ page, isMobile, walletMock }) => {
+  test("should handle mobile user journey", async ({
+    page,
+    isMobile,
+    walletMock,
+  }) => {
     if (!isMobile) test.skip();
 
     const apiMock = new ApiMock(page);
     await apiMock.setupContractMocks();
 
     // Step 1: Mobile homepage
-    await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Zali: Learn, Play, Earn' })).toBeVisible();
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", { name: "reui: Learn, Play, Earn" }),
+    ).toBeVisible();
 
     // Step 2: Mobile navigation
     const mobileMenuButton = page.locator('button[aria-label*="menu" i]');
@@ -166,28 +184,30 @@ test.describe('Complete User Journey', () => {
       await mobileMenuButton.click();
 
       // Mobile menu should be visible
-      await expect(page.getByRole('link', { name: 'Play' })).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Leaderboard' })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Play" })).toBeVisible();
+      await expect(
+        page.getByRole("link", { name: "Leaderboard" }),
+      ).toBeVisible();
     }
 
     // Step 3: Connect wallet on mobile
     await walletMock.connectWallet();
 
     // Step 4: Navigate to play page
-    await page.getByRole('link', { name: 'Play' }).click();
+    await page.getByRole("link", { name: "Play" }).click();
     await expect(page).toHaveURL(/.*play/);
 
     // Mobile layout should be responsive
-    const content = page.locator('.max-w-4xl');
+    const content = page.locator(".max-w-4xl");
     await expect(content).toBeVisible();
 
     // Cleanup
     await apiMock.clearMocks();
   });
 
-  test('should handle error states gracefully', async ({ page }) => {
+  test("should handle error states gracefully", async ({ page }) => {
     // Test network errors, contract failures, etc.
-    await page.goto('/');
+    await page.goto("/");
 
     // Simulate network failure
     await page.context().setOffline(true);
@@ -196,7 +216,9 @@ test.describe('Complete User Journey', () => {
     await page.reload();
 
     // Should still show basic UI
-    await expect(page.getByRole('heading', { name: 'Zali: Learn, Play, Earn' })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "reui: Learn, Play, Earn" }),
+    ).toBeVisible();
 
     // Re-enable network
     await page.context().setOffline(false);

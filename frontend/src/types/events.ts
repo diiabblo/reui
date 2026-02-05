@@ -1,5 +1,5 @@
 /**
- * Smart Contract Event Types for Zali Trivia Game
+ * Smart Contract Event Types for reui Trivia Game
  *
  * This module defines TypeScript types for all contract events
  * that the indexer will listen to and process.
@@ -16,7 +16,7 @@ export interface BaseEvent {
 
 // QuestionAdded event
 export interface QuestionAddedEvent extends BaseEvent {
-  eventName: 'QuestionAdded';
+  eventName: "QuestionAdded";
   args: {
     questionId: bigint;
     questionText: string;
@@ -26,7 +26,7 @@ export interface QuestionAddedEvent extends BaseEvent {
 
 // AnswerSubmitted event
 export interface AnswerSubmittedEvent extends BaseEvent {
-  eventName: 'AnswerSubmitted';
+  eventName: "AnswerSubmitted";
   args: {
     user: string;
     questionId: bigint;
@@ -37,7 +37,7 @@ export interface AnswerSubmittedEvent extends BaseEvent {
 
 // RewardDistributed event (derived from AnswerSubmitted when reward > 0)
 export interface RewardDistributedEvent extends BaseEvent {
-  eventName: 'RewardDistributed';
+  eventName: "RewardDistributed";
   args: {
     user: string;
     questionId: bigint;
@@ -47,7 +47,7 @@ export interface RewardDistributedEvent extends BaseEvent {
 
 // ScoreUpdated event (derived from successful answers)
 export interface ScoreUpdatedEvent extends BaseEvent {
-  eventName: 'ScoreUpdated';
+  eventName: "ScoreUpdated";
   args: {
     user: string;
     newScore: bigint;
@@ -65,8 +65,8 @@ export type ContractEvent =
 // Event filter options
 export interface EventFilterOptions {
   fromBlock?: number;
-  toBlock?: number | 'latest';
-  eventTypes?: Array<ContractEvent['eventName']>;
+  toBlock?: number | "latest";
+  eventTypes?: Array<ContractEvent["eventName"]>;
   user?: string;
   questionId?: bigint;
 }
@@ -80,11 +80,13 @@ export interface IndexedEvent {
 }
 
 // Event subscription callback
-export type EventCallback<T extends ContractEvent = ContractEvent> = (event: T) => void;
+export type EventCallback<T extends ContractEvent = ContractEvent> = (
+  event: T,
+) => void;
 
 // Subscription options
 export interface SubscriptionOptions {
-  eventTypes?: Array<ContractEvent['eventName']>;
+  eventTypes?: Array<ContractEvent["eventName"]>;
   user?: string;
   questionId?: bigint;
 }

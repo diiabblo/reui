@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Test execution script for Zali contracts
+# Test execution script for reui contracts
 # This script provides convenient ways to run the contract test suite
 
 set -e
@@ -86,7 +86,7 @@ gas_report() {
 # Show help
 show_help() {
     cat << EOF
-${BLUE}Zali Contract Testing Script${NC}
+${BLUE}reui Contract Testing Script${NC}
 
 Usage: $0 [COMMAND] [OPTIONS]
 

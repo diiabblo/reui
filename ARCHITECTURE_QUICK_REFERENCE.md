@@ -1,6 +1,6 @@
 # Architecture Quick Reference Card
 
-One-page cheat sheet for understanding the Zali architecture at a glance.
+One-page cheat sheet for understanding the reui architecture at a glance.
 
 ---
 
@@ -66,49 +66,49 @@ contracts/src/
 ```
 1. User Action
    (click, form input)
-   
+
    ↓
-   
+
 2. React Component
    (handler function)
-   
+
    ↓
-   
+
 3. Zustand Store
    (dispatch action)
-   
+
    ↓
-   
+
 4. Wagmi Hook
    (useContractWrite)
-   
+
    ↓
-   
+
 5. Smart Contract
    (submitAnswer)
-   
+
    ↓
-   
+
 6. Blockchain
    (execute TX)
-   
+
    ↓
-   
+
 7. Event Emission
    (AnswerSubmitted)
-   
+
    ↓
-   
+
 8. Event Listener
    (frontend)
-   
+
    ↓
-   
+
 9. Update Store
    (new score, etc)
-   
+
    ↓
-   
+
 10. Component Re-render
     (show new UI)
 ```
@@ -118,6 +118,7 @@ contracts/src/
 ## 🎮 Key Components
 
 ### Game Page Component Tree
+
 ```
 PlayPage (/play)
 ├── GameLayout
@@ -129,6 +130,7 @@ PlayPage (/play)
 ```
 
 ### Leaderboard Page
+
 ```
 LeaderboardPage (/leaderboard)
 ├── LeaderboardHeader       ← Filters
@@ -138,6 +140,7 @@ LeaderboardPage (/leaderboard)
 ```
 
 ### Profile Page
+
 ```
 ProfilePage (/profile/[address])
 ├── ProfileHeader           ← User info & avatar
@@ -179,6 +182,7 @@ AchievementSlice
 ## 🔐 Access Patterns
 
 ### Reading Data (useContractRead)
+
 ```
 Component
   ↓
@@ -190,6 +194,7 @@ React Query (Cache Check)
 ```
 
 ### Writing Data (useContractWrite)
+
 ```
 User Action
   ↓
@@ -232,18 +237,18 @@ Re-render UI
 
 ## 🔗 Key Integrations
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Wallet | AppKit (Reown) | Connect & manage wallets |
-| Web3 | Wagmi + Viem | Contract interactions |
-| State | Zustand | Global app state |
-| Caching | React Query | API response caching |
-| Styling | Tailwind CSS | Component styles |
-| Forms | React + Zod | Validation & submission |
-| Tables | Tanstack Table | Data display |
-| Blockchain | Base Network | Deploy & execute TX |
-| Token | USDC (ERC20) | Rewards |
-| Contract | SimpleTriviaGame | Game logic |
+| Layer      | Technology       | Purpose                  |
+| ---------- | ---------------- | ------------------------ |
+| Wallet     | AppKit (Reown)   | Connect & manage wallets |
+| Web3       | Wagmi + Viem     | Contract interactions    |
+| State      | Zustand          | Global app state         |
+| Caching    | React Query      | API response caching     |
+| Styling    | Tailwind CSS     | Component styles         |
+| Forms      | React + Zod      | Validation & submission  |
+| Tables     | Tanstack Table   | Data display             |
+| Blockchain | Base Network     | Deploy & execute TX      |
+| Token      | USDC (ERC20)     | Rewards                  |
+| Contract   | SimpleTriviaGame | Game logic               |
 
 ---
 
@@ -256,18 +261,18 @@ SimpleTriviaGame {
     - questionId (counter)
     - questions[] (mapping)
     - userScores[] (mapping)
-    
+
     ENUMS:
     - Difficulty (Easy, Medium, Hard)
     - Category (Celo, DeFi, Web3, etc)
-    
+
     FUNCTIONS:
     - addQuestion() [owner]
     - submitAnswer() [public]
     - deactivateQuestion() [owner]
     - getQuestion() [view]
     - getUserScore() [view]
-    
+
     EVENTS:
     - QuestionAdded
     - AnswerSubmitted
@@ -279,6 +284,7 @@ SimpleTriviaGame {
 ## 🎯 Common Operations
 
 ### Add a Question (Owner Only)
+
 ```
 1. Call addQuestion() with:
    - Question text
@@ -293,6 +299,7 @@ SimpleTriviaGame {
 ```
 
 ### Player Submits Answer
+
 ```
 1. User selects answer
 2. Call submitAnswer(questionId, selectedOption)
@@ -307,13 +314,13 @@ SimpleTriviaGame {
 
 ## 🔌 API Endpoints (If Backend Exists)
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| /api/questions | GET | Fetch all questions |
-| /api/questions | POST | Add question (admin) |
-| /api/users/:addr | GET | Get user profile |
-| /api/leaderboard | GET | Get rankings |
-| /api/scores/:addr | GET | Get user score |
+| Endpoint          | Method | Purpose              |
+| ----------------- | ------ | -------------------- |
+| /api/questions    | GET    | Fetch all questions  |
+| /api/questions    | POST   | Add question (admin) |
+| /api/users/:addr  | GET    | Get user profile     |
+| /api/leaderboard  | GET    | Get rankings         |
+| /api/scores/:addr | GET    | Get user score       |
 
 ---
 
@@ -407,19 +414,20 @@ E2E TESTS
 
 ## 📚 File Size Reference
 
-| File | Size | Lines |
-|------|------|-------|
-| SimpleTriviaGame.sol | ~3KB | 106 |
-| PlayPage.tsx | ~5KB | 150 |
-| useContract.ts | ~2KB | 80 |
-| Zustand store | ~4KB | 120 |
-| Main bundle | ~200KB | (after minify) |
+| File                 | Size   | Lines          |
+| -------------------- | ------ | -------------- |
+| SimpleTriviaGame.sol | ~3KB   | 106            |
+| PlayPage.tsx         | ~5KB   | 150            |
+| useContract.ts       | ~2KB   | 80             |
+| Zustand store        | ~4KB   | 120            |
+| Main bundle          | ~200KB | (after minify) |
 
 ---
 
 ## 🔍 Debugging Tips
 
 ### Contract Issues
+
 ```
 1. Check tx hash on Base Explorer
 2. Look for revert reasons
@@ -429,6 +437,7 @@ E2E TESTS
 ```
 
 ### Frontend Issues
+
 ```
 1. Check browser console
 2. React DevTools
@@ -438,6 +447,7 @@ E2E TESTS
 ```
 
 ### Web3 Issues
+
 ```
 1. Verify wallet connected
 2. Check account address
@@ -495,5 +505,6 @@ E2E TESTS
 **Status:** Complete
 
 For detailed information, see:
+
 - [ARCHITECTURE_DIAGRAMS.md](ARCHITECTURE_DIAGRAMS.md)
 - [ARCHITECTURE_INDEX.md](ARCHITECTURE_INDEX.md)

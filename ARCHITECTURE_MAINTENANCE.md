@@ -6,9 +6,10 @@ How to keep architecture diagrams up-to-date as the system evolves.
 
 ## 📋 Overview
 
-This document provides guidelines for maintaining and updating the architecture diagrams as the Zali project evolves.
+This document provides guidelines for maintaining and updating the architecture diagrams as the reui project evolves.
 
 **Diagram Files:**
+
 - [ARCHITECTURE_DIAGRAMS.md](ARCHITECTURE_DIAGRAMS.md) - Core system architecture
 - [FRONTEND_COMPONENTS.md](FRONTEND_COMPONENTS.md) - React components
 - [CONTRACT_ARCHITECTURE.md](CONTRACT_ARCHITECTURE.md) - Smart contracts
@@ -67,16 +68,16 @@ This document provides guidelines for maintaining and updating the architecture 
 
 **Check this table:**
 
-| Change Type | Files to Update |
-|-------------|-----------------|
-| Frontend component | FRONTEND_COMPONENTS.md, SYSTEM_OVERVIEW.md |
-| Smart contract function | CONTRACT_ARCHITECTURE.md, SYSTEM_OVERVIEW.md |
-| Route/page | ARCHITECTURE_INDEX.md, FRONTEND_COMPONENTS.md |
-| State/Zustand | ARCHITECTURE_DIAGRAMS.md #5 |
-| Data flow | DATA_FLOW_ARCHITECTURE.md, SYSTEM_OVERVIEW.md |
-| Error handling | ARCHITECTURE_DIAGRAMS.md #8, DATA_FLOW_ARCHITECTURE.md #39 |
-| Deployment | DATA_FLOW_ARCHITECTURE.md #40-42 |
-| Integration | CONTRACT_ARCHITECTURE.md #31 |
+| Change Type             | Files to Update                                            |
+| ----------------------- | ---------------------------------------------------------- |
+| Frontend component      | FRONTEND_COMPONENTS.md, SYSTEM_OVERVIEW.md                 |
+| Smart contract function | CONTRACT_ARCHITECTURE.md, SYSTEM_OVERVIEW.md               |
+| Route/page              | ARCHITECTURE_INDEX.md, FRONTEND_COMPONENTS.md              |
+| State/Zustand           | ARCHITECTURE_DIAGRAMS.md #5                                |
+| Data flow               | DATA_FLOW_ARCHITECTURE.md, SYSTEM_OVERVIEW.md              |
+| Error handling          | ARCHITECTURE_DIAGRAMS.md #8, DATA_FLOW_ARCHITECTURE.md #39 |
+| Deployment              | DATA_FLOW_ARCHITECTURE.md #40-42                           |
+| Integration             | CONTRACT_ARCHITECTURE.md #31                               |
 
 ### Step 2: Locate the Diagram
 
@@ -92,16 +93,19 @@ graph TD
 Edit the Mermaid syntax. Common operations:
 
 **Add a node:**
+
 ```
 NewNode["Node Label<br/>Description"]
 ```
 
 **Add a connection:**
+
 ```
 ParentNode --> NewNode
 ```
 
 **Update styling:**
+
 ```
 style NewNode fill:#c8e6c9
 ```
@@ -127,6 +131,7 @@ git commit -m "Update [diagram name] - add [what changed]"
 ### Common Diagram Types
 
 **Flowchart (Top to Bottom):**
+
 ```mermaid
 graph TD
     A["Node A"]
@@ -135,6 +140,7 @@ graph TD
 ```
 
 **Hierarchy/Tree:**
+
 ```mermaid
 graph TB
     Parent["Parent"]
@@ -145,6 +151,7 @@ graph TB
 ```
 
 **Sequence (Timeline):**
+
 ```mermaid
 sequenceDiagram
     A->>B: Message
@@ -152,6 +159,7 @@ sequenceDiagram
 ```
 
 **State Machine:**
+
 ```mermaid
 stateDiagram-v2
     [*] --> State1
@@ -166,7 +174,7 @@ graph TD
     A["Simple"]
     B["<br/>Multiline"]
     C["Bold<br/><strong>text</strong>"]
-    
+
     style A fill:#c8e6c9
     style B fill:#fff9c4
     style C fill:#ffccbc
@@ -178,15 +186,15 @@ graph TD
 
 Use consistent colors across diagrams:
 
-| Purpose | Color | Hex |
-|---------|-------|-----|
-| Frontend/UI | Light Blue | #e1f5ff |
-| State Management | Light Purple | #f3e5f5 |
-| Smart Contracts | Light Green | #e8f5e9 |
-| Data/Services | Light Yellow | #fff9c4 |
+| Purpose              | Color        | Hex     |
+| -------------------- | ------------ | ------- |
+| Frontend/UI          | Light Blue   | #e1f5ff |
+| State Management     | Light Purple | #f3e5f5 |
+| Smart Contracts      | Light Green  | #e8f5e9 |
+| Data/Services        | Light Yellow | #fff9c4 |
 | External/Integration | Light Orange | #ffccbc |
-| Error States | Light Red | #ffebee |
-| Success States | Medium Green | #c8e6c9 |
+| Error States         | Light Red    | #ffebee |
+| Success States       | Medium Green | #c8e6c9 |
 
 ---
 
@@ -234,6 +242,7 @@ How the frontend requests data from contracts.
 Before committing changes, verify:
 
 ### Content
+
 - [ ] All elements are accurate
 - [ ] No outdated information
 - [ ] New components included
@@ -241,6 +250,7 @@ Before committing changes, verify:
 - [ ] Labels are clear
 
 ### Formatting
+
 - [ ] Consistent naming conventions
 - [ ] Proper Mermaid syntax
 - [ ] Rendering works in GitHub
@@ -248,12 +258,14 @@ Before committing changes, verify:
 - [ ] Readable font sizes
 
 ### Documentation
+
 - [ ] Diagram has title
 - [ ] Clear purpose described
 - [ ] Related docs referenced
 - [ ] Examples provided where helpful
 
 ### Organization
+
 - [ ] In correct file
 - [ ] Proper numbering
 - [ ] Cross-referenced in index
@@ -267,7 +279,7 @@ When adding new diagram:
 
 ### 1. Add to Source File
 
-```markdown
+````markdown
 ## 23. New Diagram Name
 
 Brief description of what the diagram shows.
@@ -278,9 +290,11 @@ graph TD
     B["Element 2"]
     A --> B
 ```
+````
 
 Related: [Other Diagram Name](link)
-```
+
+````
 
 ### 2. Add to Index Table
 
@@ -288,7 +302,7 @@ In ARCHITECTURE_INDEX.md, add to reference table:
 
 ```markdown
 | 48 | New Diagram | FILENAME.md | Purpose |
-```
+````
 
 ### 3. Update Navigation
 
@@ -350,6 +364,7 @@ PlayPage (/play)
 **Step 3:** Add to component list in relevant doc
 
 **Step 4:** Commit with message:
+
 ```
 Add NewComponent to component hierarchy diagram
 ```
@@ -372,6 +387,7 @@ Functions["Functions"]
 **Step 3:** Update gas optimization if needed
 
 **Step 4:** Commit with message:
+
 ```
 Add newFunction to contract architecture diagrams
 ```
@@ -385,6 +401,7 @@ Add newFunction to contract architecture diagrams
 **Step 3:** Add to "How it works" documentation
 
 **Step 4:** Commit with message:
+
 ```
 Add new data flow path for [feature]
 ```
@@ -409,6 +426,7 @@ Add new data flow path for [feature]
 ### Syntax Validation
 
 Use Mermaid Live Editor:
+
 - Go to [mermaid.live](https://mermaid.live)
 - Paste Mermaid code
 - Verify it renders
@@ -462,6 +480,7 @@ When reviewing PR with diagram changes:
 ### Commit Messages
 
 **Format:**
+
 ```
 [Diagram Type] [Action] - [Description]
 
@@ -475,6 +494,7 @@ Examples:
 ### Branch Naming
 
 If working on multiple diagrams:
+
 ```
 feature/update-architecture-diagrams
 docs/architecture-refresh
@@ -485,20 +505,24 @@ docs/architecture-refresh
 ## 📊 Maintenance Schedule
 
 ### Weekly
+
 - Monitor GitHub issues for architecture-related questions
 - Update quick reference if bugs found
 
 ### Monthly
+
 - Review all diagrams for accuracy
 - Check for outdated information
 - Update if needed
 
 ### Quarterly (Before Release)
+
 - Complete architecture review
 - Update deployment diagrams
 - Refresh security diagrams
 
 ### Yearly (Major Update)
+
 - Comprehensive diagram audit
 - Refactor if needed
 - Update learning paths

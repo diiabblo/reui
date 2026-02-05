@@ -1,4 +1,4 @@
-# Zali Contract Roadmap
+# reui Contract Roadmap
 
 ## Current Version: SimpleTriviaGame (v1.0)
 
@@ -7,6 +7,7 @@
 **Deployment Date:** December 14, 2024
 
 ### Features
+
 - Basic question management (add/deactivate questions)
 - Multiple-choice trivia with 2-4 options
 - Token-based reward system (USDC)
@@ -16,6 +17,7 @@
 - Faucet contract for testnet USDC distribution
 
 ### Security
+
 - OpenZeppelin Ownable for access control
 - SafeERC20 for secure token transfers
 - Input validation for all user inputs
@@ -30,6 +32,7 @@
 **Target:** Q2 2026
 
 #### Proposed Features
+
 - **Chainlink VRF V2 Integration**
   - Random question selection for each game session
   - Provably fair randomness for competitive gameplay
@@ -66,11 +69,13 @@
   - Streak bonuses
 
 #### Infrastructure Changes
+
 - Additional LINK token allocation for VRF
 - VRF subscription setup on Base Mainnet
 - Separate deployment script for V2
 
 #### Deployment Strategy
+
 - Deploy alongside SimpleTriviaGame (not replacing)
 - Users can choose which version to play
 - Data migration tools if needed
@@ -80,6 +85,7 @@
 ### Phase 3: Advanced Features (2026 H2)
 
 #### Possible Enhancements
+
 - **Categories & Seasons**
   - Category-specific leaderboards
   - Monthly/seasonal rankings
@@ -110,18 +116,21 @@
 ## Migration Path from SimpleTriviaGame to TriviaGameV2
 
 ### For Players
+
 1. No migration needed - SimpleTriviaGame will continue to function
 2. Scores in SimpleTriviaGame remain on-chain
 3. Option to play TriviaGameV2 for enhanced experience
 4. Rewards can be earned from both contracts
 
 ### For Developers
+
 1. Two separate contract deployments
 2. Both contracts share the same USDC token
 3. Independent question management per contract
 4. Separate leaderboards (can be unified via frontend)
 
 ### Data Continuity
+
 - SimpleTriviaGame scores are permanent
 - Option to transfer scores to TriviaGameV2 (if desired)
 - Historical data preserved on-chain
@@ -131,6 +140,7 @@
 ## Technical Considerations
 
 ### SimpleTriviaGame Limitations Addressed in V2
+
 1. **No Randomness** → Chainlink VRF V2
 2. **No Player Identity** → Username registration
 3. **No Leaderboard** → Full leaderboard system
@@ -138,6 +148,7 @@
 5. **Basic Rewards** → Enhanced reward system with bonuses
 
 ### Why SimpleTriviaGame is Production-Ready Despite Limited Features
+
 - Core functionality works reliably
 - Token transfers are safe and tested
 - Owner-controlled question management
@@ -166,6 +177,7 @@
 ## Community Feedback & Requests
 
 To request features or suggest improvements:
+
 1. Open an issue on GitHub
 2. Label with `enhancement` or `feature-request`
 3. Provide detailed description
@@ -176,27 +188,28 @@ To request features or suggest improvements:
 
 ## Version Comparison Matrix
 
-| Feature | SimpleTriviaGame | TriviaGameV2 | TriviaGameV3 |
-|---------|-----------------|--------------|--------------|
-| Basic Q&A | ✅ | ✅ | ✅ |
-| Token Rewards | ✅ | ✅ | ✅ |
-| Random Questions | ❌ | ✅ | ✅ |
-| Leaderboard | ❌ | ✅ | ✅ |
-| User Profiles | ❌ | ✅ | ✅ |
-| Game Sessions | ❌ | ✅ | ✅ |
-| Speed Bonuses | ❌ | ✅ | ✅ |
-| Weekly Rewards | ❌ | ✅ | ✅ |
-| Multiplayer | ❌ | ❌ | ✅* |
-| NFT Rewards | ❌ | ❌ | ✅* |
-| Governance | ❌ | ❌ | ✅* |
+| Feature          | SimpleTriviaGame | TriviaGameV2 | TriviaGameV3 |
+| ---------------- | ---------------- | ------------ | ------------ |
+| Basic Q&A        | ✅               | ✅           | ✅           |
+| Token Rewards    | ✅               | ✅           | ✅           |
+| Random Questions | ❌               | ✅           | ✅           |
+| Leaderboard      | ❌               | ✅           | ✅           |
+| User Profiles    | ❌               | ✅           | ✅           |
+| Game Sessions    | ❌               | ✅           | ✅           |
+| Speed Bonuses    | ❌               | ✅           | ✅           |
+| Weekly Rewards   | ❌               | ✅           | ✅           |
+| Multiplayer      | ❌               | ❌           | ✅\*         |
+| NFT Rewards      | ❌               | ❌           | ✅\*         |
+| Governance       | ❌               | ❌           | ✅\*         |
 
-*Planned, not confirmed
+\*Planned, not confirmed
 
 ---
 
 ## Support & Questions
 
 For questions about the roadmap:
+
 - Check this document first
 - Open an issue for specific inquiries
 - Review commit history for development progress

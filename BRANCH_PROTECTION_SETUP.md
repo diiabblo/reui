@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide helps you configure branch protection rules for the Zali repository to ensure code quality and prevent accidental changes to critical branches.
+This guide helps you configure branch protection rules for the reui repository to ensure code quality and prevent accidental changes to critical branches.
 
 ## Main Branch Protection
 
@@ -25,6 +25,7 @@ This guide helps you configure branch protection rules for the Zali repository t
 Enable "Require status checks to pass before merging"
 
 Check these required status checks:
+
 - ✅ `lint` (Frontend CI)
 - ✅ `test` (Frontend CI)
 - ✅ `e2e` (Frontend CI)
@@ -33,6 +34,7 @@ Check these required status checks:
 - ✅ `coverage` (Code Quality)
 
 Options:
+
 - ✅ Require branches to be up to date before merging
 - ✅ Require conversation resolution before merging
 
@@ -41,6 +43,7 @@ Options:
 Enable "Require a pull request before merging"
 
 Settings:
+
 - Required approving reviews: **1**
 - ✅ Dismiss stale pull request approvals when new commits are pushed
 - ✅ Require review from Code Owners (if CODEOWNERS file exists)
@@ -52,6 +55,7 @@ Settings:
 Enable "Restrict who can push to matching branches"
 
 Settings:
+
 - Add: **Maintainers** team
 - Add: Specific trusted contributors (if applicable)
 
@@ -67,6 +71,7 @@ Settings:
 ### Verification
 
 After setup, try to:
+
 1. Push directly to `main` (should fail)
 2. Create a PR without passing checks (should be blocked)
 3. Merge a PR without approval (should be blocked)
@@ -83,6 +88,7 @@ For the `develop` branch (if using GitFlow):
 Pattern: `develop`
 
 Required checks:
+
 - Same as main branch
 
 Reviews required: 1
@@ -92,6 +98,7 @@ Reviews required: 1
 Enforce branch naming conventions:
 
 Pattern examples:
+
 - `feat/*` - New features
 - `fix/*` - Bug fixes
 - `docs/*` - Documentation
@@ -156,7 +163,7 @@ Set up protected environments for deployments:
 #!/bin/bash
 # setup-branch-protection.sh
 
-REPO="DeborahOlaboye/Zali"
+REPO="DeborahOlaboye/reui"
 BRANCH="main"
 
 gh api repos/$REPO/branches/$BRANCH/protection \
@@ -172,7 +179,7 @@ gh api repos/$REPO/branches/$BRANCH/protection \
 
 ```hcl
 resource "github_branch_protection" "main" {
-  repository_id = "DeborahOlaboye/Zali"
+  repository_id = "DeborahOlaboye/reui"
   pattern       = "main"
 
   required_status_checks {

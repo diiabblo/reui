@@ -1,21 +1,24 @@
 # Architecture Documentation Index
 
-Complete guide to all architecture diagrams and system documentation for the Zali project.
+Complete guide to all architecture diagrams and system documentation for the reui project.
 
 ---
 
 ## 📚 Quick Navigation
 
 ### System Overview
+
 - **[ARCHITECTURE_DIAGRAMS.md](ARCHITECTURE_DIAGRAMS.md)** - Main system architecture, components, and relationships
 - **[DATA_FLOW_ARCHITECTURE.md](DATA_FLOW_ARCHITECTURE.md)** - Data flow, deployment, and CI/CD pipeline
 - **[This file](ARCHITECTURE_INDEX.md)** - Navigation guide (you are here)
 
 ### Component Details
+
 - **[FRONTEND_COMPONENTS.md](FRONTEND_COMPONENTS.md)** - React component hierarchy and organization
 - **[CONTRACT_ARCHITECTURE.md](CONTRACT_ARCHITECTURE.md)** - Smart contract structure and interactions
 
 ### Other Documentation
+
 - **[VERSION_COMPARISON.md](VERSION_COMPARISON.md)** - SimpleTriviaGame v1.0 vs TriviaGameV2 v2.0
 - **[SIMPLE_TRIVIA_GAME_SPEC.md](contracts/SIMPLE_TRIVIA_GAME_SPEC.md)** - Contract API specification
 - **[INTEGRATION_EXAMPLES.md](INTEGRATION_EXAMPLES.md)** - Code examples for integration
@@ -42,55 +45,55 @@ graph LR
 
 ### All Diagrams Reference
 
-| # | Diagram | Location | Purpose |
-|---|---------|----------|---------|
-| 1 | System Architecture | ARCHITECTURE_DIAGRAMS.md | Overall app structure |
-| 2 | Data Flow | ARCHITECTURE_DIAGRAMS.md | How data moves |
-| 3 | Smart Contract Interactions | ARCHITECTURE_DIAGRAMS.md | Web3 flow |
-| 4 | Component Hierarchy | ARCHITECTURE_DIAGRAMS.md | Frontend tree |
-| 5 | State Management | ARCHITECTURE_DIAGRAMS.md | Zustand store |
-| 6 | API & Data Layer | ARCHITECTURE_DIAGRAMS.md | Services & data sources |
-| 7 | Authentication Flow | ARCHITECTURE_DIAGRAMS.md | User auth |
-| 8 | Error Handling | ARCHITECTURE_DIAGRAMS.md | Error boundaries |
-| 9 | Request/Response Cycle | ARCHITECTURE_DIAGRAMS.md | Complete transaction |
-| 10 | File Structure | ARCHITECTURE_DIAGRAMS.md | Project organization |
-| 11 | Component Communication | ARCHITECTURE_DIAGRAMS.md | Props & events |
-| 12 | Dependencies | ARCHITECTURE_DIAGRAMS.md | External packages |
-| 13 | Route Structure | FRONTEND_COMPONENTS.md | Next.js routes |
-| 14 | Play Page Components | FRONTEND_COMPONENTS.md | Game UI structure |
-| 15 | Leaderboard Components | FRONTEND_COMPONENTS.md | Rankings UI |
-| 16 | Profile Page | FRONTEND_COMPONENTS.md | User profile |
-| 17 | Admin Dashboard | FRONTEND_COMPONENTS.md | Admin interface |
-| 18 | Shared Components | FRONTEND_COMPONENTS.md | 40+ reusable components |
-| 19 | Error Boundaries | FRONTEND_COMPONENTS.md | Error handling |
-| 20 | Custom Hooks | FRONTEND_COMPONENTS.md | React hooks |
-| 21 | Services Layer | FRONTEND_COMPONENTS.md | Business logic |
-| 22 | Component Reusability | FRONTEND_COMPONENTS.md | Component patterns |
-| 23 | Contract Structure | CONTRACT_ARCHITECTURE.md | Solidity code |
-| 24 | Function Call Flow | CONTRACT_ARCHITECTURE.md | Function interactions |
-| 25 | State Modification | CONTRACT_ARCHITECTURE.md | Transaction flow |
-| 26 | Access Control | CONTRACT_ARCHITECTURE.md | Permissions |
-| 27 | Data Structures | CONTRACT_ARCHITECTURE.md | Mappings & structs |
-| 28 | Events | CONTRACT_ARCHITECTURE.md | Event emissions |
-| 29 | Gas Optimization | CONTRACT_ARCHITECTURE.md | Performance |
-| 30 | Error Handling | CONTRACT_ARCHITECTURE.md | Contract errors |
-| 31 | Integration Points | CONTRACT_ARCHITECTURE.md | External contracts |
-| 32 | Upgrade Path | CONTRACT_ARCHITECTURE.md | V1 → V2 upgrade |
-| 33 | Testing Strategy | CONTRACT_ARCHITECTURE.md | Test organization |
-| 34 | Security Audit | CONTRACT_ARCHITECTURE.md | Security points |
-| 35 | User Flow | DATA_FLOW_ARCHITECTURE.md | Complete user journey |
-| 36 | Transaction Lifecycle | DATA_FLOW_ARCHITECTURE.md | TX from UI to chain |
-| 37 | State Synchronization | DATA_FLOW_ARCHITECTURE.md | State coordination |
-| 38 | Data Request Patterns | DATA_FLOW_ARCHITECTURE.md | Read/write patterns |
-| 39 | Error Recovery | DATA_FLOW_ARCHITECTURE.md | Error handling |
-| 40 | Dev Environment | DATA_FLOW_ARCHITECTURE.md | Local development |
-| 41 | Production Deployment | DATA_FLOW_ARCHITECTURE.md | Mainnet setup |
-| 42 | CI/CD Pipeline | DATA_FLOW_ARCHITECTURE.md | GitHub Actions |
-| 43 | Frontend Data Fetching | DATA_FLOW_ARCHITECTURE.md | React Query |
-| 44 | Real-Time Events | DATA_FLOW_ARCHITECTURE.md | Event subscriptions |
-| 45 | Error Boundaries | DATA_FLOW_ARCHITECTURE.md | Error strategy |
-| 46 | Performance | DATA_FLOW_ARCHITECTURE.md | Optimization flows |
-| 47 | State Persistence | DATA_FLOW_ARCHITECTURE.md | Storage strategy |
+| #   | Diagram                     | Location                  | Purpose                 |
+| --- | --------------------------- | ------------------------- | ----------------------- |
+| 1   | System Architecture         | ARCHITECTURE_DIAGRAMS.md  | Overall app structure   |
+| 2   | Data Flow                   | ARCHITECTURE_DIAGRAMS.md  | How data moves          |
+| 3   | Smart Contract Interactions | ARCHITECTURE_DIAGRAMS.md  | Web3 flow               |
+| 4   | Component Hierarchy         | ARCHITECTURE_DIAGRAMS.md  | Frontend tree           |
+| 5   | State Management            | ARCHITECTURE_DIAGRAMS.md  | Zustand store           |
+| 6   | API & Data Layer            | ARCHITECTURE_DIAGRAMS.md  | Services & data sources |
+| 7   | Authentication Flow         | ARCHITECTURE_DIAGRAMS.md  | User auth               |
+| 8   | Error Handling              | ARCHITECTURE_DIAGRAMS.md  | Error boundaries        |
+| 9   | Request/Response Cycle      | ARCHITECTURE_DIAGRAMS.md  | Complete transaction    |
+| 10  | File Structure              | ARCHITECTURE_DIAGRAMS.md  | Project organization    |
+| 11  | Component Communication     | ARCHITECTURE_DIAGRAMS.md  | Props & events          |
+| 12  | Dependencies                | ARCHITECTURE_DIAGRAMS.md  | External packages       |
+| 13  | Route Structure             | FRONTEND_COMPONENTS.md    | Next.js routes          |
+| 14  | Play Page Components        | FRONTEND_COMPONENTS.md    | Game UI structure       |
+| 15  | Leaderboard Components      | FRONTEND_COMPONENTS.md    | Rankings UI             |
+| 16  | Profile Page                | FRONTEND_COMPONENTS.md    | User profile            |
+| 17  | Admin Dashboard             | FRONTEND_COMPONENTS.md    | Admin interface         |
+| 18  | Shared Components           | FRONTEND_COMPONENTS.md    | 40+ reusable components |
+| 19  | Error Boundaries            | FRONTEND_COMPONENTS.md    | Error handling          |
+| 20  | Custom Hooks                | FRONTEND_COMPONENTS.md    | React hooks             |
+| 21  | Services Layer              | FRONTEND_COMPONENTS.md    | Business logic          |
+| 22  | Component Reusability       | FRONTEND_COMPONENTS.md    | Component patterns      |
+| 23  | Contract Structure          | CONTRACT_ARCHITECTURE.md  | Solidity code           |
+| 24  | Function Call Flow          | CONTRACT_ARCHITECTURE.md  | Function interactions   |
+| 25  | State Modification          | CONTRACT_ARCHITECTURE.md  | Transaction flow        |
+| 26  | Access Control              | CONTRACT_ARCHITECTURE.md  | Permissions             |
+| 27  | Data Structures             | CONTRACT_ARCHITECTURE.md  | Mappings & structs      |
+| 28  | Events                      | CONTRACT_ARCHITECTURE.md  | Event emissions         |
+| 29  | Gas Optimization            | CONTRACT_ARCHITECTURE.md  | Performance             |
+| 30  | Error Handling              | CONTRACT_ARCHITECTURE.md  | Contract errors         |
+| 31  | Integration Points          | CONTRACT_ARCHITECTURE.md  | External contracts      |
+| 32  | Upgrade Path                | CONTRACT_ARCHITECTURE.md  | V1 → V2 upgrade         |
+| 33  | Testing Strategy            | CONTRACT_ARCHITECTURE.md  | Test organization       |
+| 34  | Security Audit              | CONTRACT_ARCHITECTURE.md  | Security points         |
+| 35  | User Flow                   | DATA_FLOW_ARCHITECTURE.md | Complete user journey   |
+| 36  | Transaction Lifecycle       | DATA_FLOW_ARCHITECTURE.md | TX from UI to chain     |
+| 37  | State Synchronization       | DATA_FLOW_ARCHITECTURE.md | State coordination      |
+| 38  | Data Request Patterns       | DATA_FLOW_ARCHITECTURE.md | Read/write patterns     |
+| 39  | Error Recovery              | DATA_FLOW_ARCHITECTURE.md | Error handling          |
+| 40  | Dev Environment             | DATA_FLOW_ARCHITECTURE.md | Local development       |
+| 41  | Production Deployment       | DATA_FLOW_ARCHITECTURE.md | Mainnet setup           |
+| 42  | CI/CD Pipeline              | DATA_FLOW_ARCHITECTURE.md | GitHub Actions          |
+| 43  | Frontend Data Fetching      | DATA_FLOW_ARCHITECTURE.md | React Query             |
+| 44  | Real-Time Events            | DATA_FLOW_ARCHITECTURE.md | Event subscriptions     |
+| 45  | Error Boundaries            | DATA_FLOW_ARCHITECTURE.md | Error strategy          |
+| 46  | Performance                 | DATA_FLOW_ARCHITECTURE.md | Optimization flows      |
+| 47  | State Persistence           | DATA_FLOW_ARCHITECTURE.md | Storage strategy        |
 
 ---
 
@@ -228,6 +231,7 @@ Want to understand deployment?
 ## 🔍 Diagram Types & Uses
 
 ### Flowcharts (How things move)
+
 - User Flow Diagram
 - Transaction Lifecycle
 - Request/Response Cycle
@@ -237,6 +241,7 @@ Want to understand deployment?
 **Best for:** Understanding sequences and processes
 
 ### Hierarchy Diagrams (Structure & organization)
+
 - Component Hierarchy
 - Route Structure
 - Custom Hooks Organization
@@ -245,6 +250,7 @@ Want to understand deployment?
 **Best for:** Understanding structure and relationships
 
 ### Architecture Diagrams (System design)
+
 - System Architecture
 - File Structure
 - Data Flow
@@ -253,6 +259,7 @@ Want to understand deployment?
 **Best for:** Getting the big picture
 
 ### State Diagrams (Data management)
+
 - State Management Architecture
 - State Persistence Strategy
 - Error Boundary Strategy
@@ -260,6 +267,7 @@ Want to understand deployment?
 **Best for:** Understanding state flow
 
 ### Matrix Tables (Quick reference)
+
 - Function Specifications
 - Component Reusability Matrix
 - Diagrams Reference Table
@@ -273,34 +281,34 @@ Want to understand deployment?
 ```mermaid
 graph TB
     ArchIndex["ARCHITECTURE_INDEX.md<br/>(You are here)"]
-    
+
     MainArch["ARCHITECTURE_DIAGRAMS.md<br/>Main system"]
     FrontendComp["FRONTEND_COMPONENTS.md<br/>React components"]
     ContractArch["CONTRACT_ARCHITECTURE.md<br/>Solidity code"]
     DataFlow["DATA_FLOW_ARCHITECTURE.md<br/>Data & deployment"]
-    
+
     VersionComp["VERSION_COMPARISON.md<br/>v1 vs v2"]
     Spec["SIMPLE_TRIVIA_GAME_SPEC.md<br/>API reference"]
     Examples["INTEGRATION_EXAMPLES.md<br/>Code samples"]
     Roadmap["ROADMAP.md<br/>Future plans"]
-    
+
     ArchIndex -->|index| MainArch
     ArchIndex -->|index| FrontendComp
     ArchIndex -->|index| ContractArch
     ArchIndex -->|index| DataFlow
-    
+
     MainArch -->|references| FrontendComp
     MainArch -->|references| ContractArch
     MainArch -->|references| DataFlow
-    
+
     FrontendComp -->|uses| ContractArch
     ContractArch -->|used by| FrontendComp
-    
+
     MainArch -->|linked to| VersionComp
     MainArch -->|linked to| Spec
     MainArch -->|linked to| Examples
     MainArch -->|linked to| Roadmap
-    
+
     style ArchIndex fill:#ffe0b2
     style MainArch fill:#e1f5ff
     style FrontendComp fill:#f3e5f5
@@ -313,6 +321,7 @@ graph TB
 ## ✅ Quick Checklist for New Contributors
 
 ### Before Your First Commit
+
 - [ ] Read ARCHITECTURE_INDEX.md (this file) - 5 min
 - [ ] Choose a learning path based on your role
 - [ ] Review relevant diagrams
@@ -320,6 +329,7 @@ graph TB
 - [ ] Set up development environment
 
 ### Before Implementing a Feature
+
 - [ ] Understand how data flows through system
 - [ ] Identify which components need changes
 - [ ] Check if error handling is needed
@@ -327,6 +337,7 @@ graph TB
 - [ ] Plan testing approach
 
 ### Before Deploying Code
+
 - [ ] All tests passing (local + CI/CD)
 - [ ] Code reviewed by team
 - [ ] Changes documented

@@ -11,7 +11,7 @@ import type {
   AnswerSubmittedEvent,
   EventStatistics,
   EventFilterOptions,
-} from '@/types/events';
+} from "@/types/events";
 import type {
   EventStorage as IEventStorage,
   PlayerStatsUpdate,
@@ -19,7 +19,7 @@ import type {
   GlobalStatsUpdate,
   EventFilter,
   LeaderboardEntry,
-} from './EventHandlers';
+} from "./EventHandlers";
 
 // Player data model
 export interface PlayerData {
@@ -55,14 +55,14 @@ export interface GlobalStatsData {
 }
 
 // IndexedDB database name and stores
-const DB_NAME = 'ZaliEventsIndexer';
+const DB_NAME = "reuiEventsIndexer";
 const DB_VERSION = 1;
 
 const STORES = {
-  EVENTS: 'events',
-  PLAYERS: 'players',
-  QUESTIONS: 'questions',
-  GLOBAL_STATS: 'globalStats',
+  EVENTS: "events",
+  PLAYERS: "players",
+  QUESTIONS: "questions",
+  GLOBAL_STATS: "globalStats",
 } as const;
 
 /**
@@ -92,8 +92,8 @@ export class EventStorageImpl implements IEventStorage {
     if (this.isInitialized) return;
 
     // Check if IndexedDB is available
-    if (typeof indexedDB === 'undefined') {
-      console.log('[EventStorage] IndexedDB not available, using memory only');
+    if (typeof indexedDB === "undefined") {
+      console.log("[EventStorage] IndexedDB not available, using memory only");
       this.isInitialized = true;
       return;
     }
@@ -102,7 +102,7 @@ export class EventStorageImpl implements IEventStorage {
       const request = indexedDB.open(DB_NAME, DB_VERSION);
 
       request.onerror = () => {
-        console.error('[EventStorage] Failed to open database:', request.error);
+        console.error("[EventStorage] Failed to open database:", request.error);
         // Fall back to memory-only mode
         this.isInitialized = true;
         resolve();
@@ -119,23 +119,29 @@ export class EventStorageImpl implements IEventStorage {
 
         // Create object stores
         if (!db.objectStoreNames.contains(STORES.EVENTS)) {
-          const eventsStore = db.createObjectStore(STORES.EVENTS, { keyPath: 'id' });
-          eventsStore.createIndex('eventName', 'eventName', { unique: false });
-          eventsStore.createIndex('blockNumber', 'blockNumber', { unique: false });
-          eventsStore.createIndex('user', 'user', { unique: false });
+          const eventsStore = db.createObjectStore(STORES.EVENTS, {
+            keyPath: "id",
+          });
+          eventsStore.createIndex("eventName", "eventName", { unique: false });
+          eventsStore.createIndex("blockNumber", "blockNumber", {
+            unique: false,
+          });
+          eventsStore.createIndex("user", "user", { unique: false });
         }
 
         if (!db.objectStoreNames.contains(STORES.PLAYERS)) {
-          const playersStore = db.createObjectStore(STORES.PLAYERS, { keyPath: 'address' });
-          playersStore.createIndex('score', 'score', { unique: false });
+          const playersStore = db.createObjectStore(STORES.PLAYERS, {
+            keyPath: "address",
+          });
+          playersStore.createIndex("score", "score", { unique: false });
         }
 
         if (!db.objectStoreNames.contains(STORES.QUESTIONS)) {
-          db.createObjectStore(STORES.QUESTIONS, { keyPath: 'questionId' });
+          db.createObjectStore(STORES.QUESTIONS, { keyPath: "questionId" });
         }
 
         if (!db.objectStoreNames.contains(STORES.GLOBAL_STATS)) {
-          db.createObjectStore(STORES.GLOBAL_STATS, { keyPath: 'id' });
+          db.createObjectStore(STORES.GLOBAL_STATS, { keyPath: "id" });
         }
       };
     });
@@ -148,7 +154,9 @@ export class EventStorageImpl implements IEventStorage {
     if (!this.db) return;
 
     // Load events
-    const events = await this.getAllFromStore<ContractEvent & { id: string }>(STORES.EVENTS);
+    const events = await this.getAllFromStore<ContractEvent & { id: string }>(
+      STORES.EVENTS,
+    );
     for (const event of events) {
       this.eventsCache.set(event.id, event);
     }
@@ -160,18 +168,23 @@ export class EventStorageImpl implements IEventStorage {
     }
 
     // Load questions
-    const questions = await this.getAllFromStore<QuestionData>(STORES.QUESTIONS);
+    const questions = await this.getAllFromStore<QuestionData>(
+      STORES.QUESTIONS,
+    );
     for (const question of questions) {
       this.questionsCache.set(question.questionId.toString(), question);
     }
 
     // Load global stats
-    const stats = await this.getFromStore<GlobalStatsData & { id: string }>(STORES.GLOBAL_STATS, 'global');
+    const stats = await this.getFromStore<GlobalStatsData & { id: string }>(
+      STORES.GLOBAL_STATS,
+      "global",
+    );
     if (stats) {
       this.globalStats = stats;
     }
 
-    console.log('[EventStorage] Loaded from database:', {
+    console.log("[EventStorage] Loaded from database:", {
       events: this.eventsCache.size,
       players: this.playersCache.size,
       questions: this.questionsCache.size,
@@ -193,9 +206,9 @@ export class EventStorageImpl implements IEventStorage {
     this.eventsCache.set(id, event);
 
     // Handle specific event types
-    if (event.eventName === 'QuestionAdded') {
+    if (event.eventName === "QuestionAdded") {
       await this.handleQuestionAdded(event as QuestionAddedEvent);
-    } else if (event.eventName === 'AnswerSubmitted') {
+    } else if (event.eventName === "AnswerSubmitted") {
       await this.handleAnswerSubmitted(event as AnswerSubmittedEvent);
     }
 
@@ -234,7 +247,9 @@ export class EventStorageImpl implements IEventStorage {
   /**
    * Handle AnswerSubmitted event
    */
-  private async handleAnswerSubmitted(event: AnswerSubmittedEvent): Promise<void> {
+  private async handleAnswerSubmitted(
+    event: AnswerSubmittedEvent,
+  ): Promise<void> {
     const address = event.args.user.toLowerCase();
 
     // Get or create player
@@ -300,15 +315,21 @@ export class EventStorageImpl implements IEventStorage {
     if (filter.user) {
       const userLower = filter.user.toLowerCase();
       events = events.filter((e) => {
-        const eventUser = 'user' in e.args ? (e.args as { user: string }).user : undefined;
+        const eventUser =
+          "user" in e.args ? (e.args as { user: string }).user : undefined;
         return eventUser && eventUser.toLowerCase() === userLower;
       });
     }
 
     if (filter.questionId !== undefined) {
       events = events.filter((e) => {
-        const eventQuestionId = 'questionId' in e.args ? (e.args as { questionId: bigint }).questionId : undefined;
-        return eventQuestionId !== undefined && eventQuestionId === filter.questionId;
+        const eventQuestionId =
+          "questionId" in e.args
+            ? (e.args as { questionId: bigint }).questionId
+            : undefined;
+        return (
+          eventQuestionId !== undefined && eventQuestionId === filter.questionId
+        );
       });
     }
 
@@ -326,7 +347,10 @@ export class EventStorageImpl implements IEventStorage {
   /**
    * Update player stats
    */
-  async updatePlayerStats(address: string, updates: PlayerStatsUpdate): Promise<void> {
+  async updatePlayerStats(
+    address: string,
+    updates: PlayerStatsUpdate,
+  ): Promise<void> {
     const addressLower = address.toLowerCase();
     let player = this.playersCache.get(addressLower);
 
@@ -370,12 +394,17 @@ export class EventStorageImpl implements IEventStorage {
   /**
    * Update question stats
    */
-  async updateQuestionStats(questionId: bigint, updates: QuestionStatsUpdate): Promise<void> {
+  async updateQuestionStats(
+    questionId: bigint,
+    updates: QuestionStatsUpdate,
+  ): Promise<void> {
     const questionIdStr = questionId.toString();
     const question = this.questionsCache.get(questionIdStr);
 
     if (!question) {
-      console.warn(`[EventStorage] Question ${questionIdStr} not found for stats update`);
+      console.warn(
+        `[EventStorage] Question ${questionIdStr} not found for stats update`,
+      );
       return;
     }
 
@@ -412,7 +441,8 @@ export class EventStorageImpl implements IEventStorage {
     }
 
     if (updates.totalRewardsDistributed !== undefined) {
-      this.globalStats.totalRewardsDistributed += updates.totalRewardsDistributed;
+      this.globalStats.totalRewardsDistributed +=
+        updates.totalRewardsDistributed;
     }
 
     if (updates.uniquePlayers !== undefined) {
@@ -422,14 +452,20 @@ export class EventStorageImpl implements IEventStorage {
     this.globalStats.lastUpdatedAt = Date.now();
 
     if (this.db) {
-      await this.putInStore(STORES.GLOBAL_STATS, { ...this.globalStats, id: 'global' });
+      await this.putInStore(STORES.GLOBAL_STATS, {
+        ...this.globalStats,
+        id: "global",
+      });
     }
   }
 
   /**
    * Get leaderboard
    */
-  async getLeaderboard(limit: number = 10, offset: number = 0): Promise<LeaderboardEntry[]> {
+  async getLeaderboard(
+    limit: number = 10,
+    offset: number = 0,
+  ): Promise<LeaderboardEntry[]> {
     const players = Array.from(this.playersCache.values());
 
     // Sort by score descending
@@ -501,7 +537,7 @@ export class EventStorageImpl implements IEventStorage {
       }
 
       // Count answer results
-      if (event.eventName === 'AnswerSubmitted') {
+      if (event.eventName === "AnswerSubmitted") {
         const answerEvent = event as AnswerSubmittedEvent;
         if (answerEvent.args.isCorrect) {
           correctAnswers++;
@@ -541,7 +577,10 @@ export class EventStorageImpl implements IEventStorage {
     };
 
     if (this.db) {
-      const transaction = this.db.transaction(Object.values(STORES), 'readwrite');
+      const transaction = this.db.transaction(
+        Object.values(STORES),
+        "readwrite",
+      );
       for (const storeName of Object.values(STORES)) {
         transaction.objectStore(storeName).clear();
       }
@@ -550,11 +589,14 @@ export class EventStorageImpl implements IEventStorage {
 
   // IndexedDB helper methods
 
-  private async getFromStore<T>(storeName: string, key: string): Promise<T | null> {
+  private async getFromStore<T>(
+    storeName: string,
+    key: string,
+  ): Promise<T | null> {
     if (!this.db) return null;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(storeName, 'readonly');
+      const transaction = this.db!.transaction(storeName, "readonly");
       const store = transaction.objectStore(storeName);
       const request = store.get(key);
 
@@ -567,7 +609,7 @@ export class EventStorageImpl implements IEventStorage {
     if (!this.db) return [];
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(storeName, 'readonly');
+      const transaction = this.db!.transaction(storeName, "readonly");
       const store = transaction.objectStore(storeName);
       const request = store.getAll();
 
@@ -580,7 +622,7 @@ export class EventStorageImpl implements IEventStorage {
     if (!this.db) return;
 
     return new Promise((resolve, reject) => {
-      const transaction = this.db!.transaction(storeName, 'readwrite');
+      const transaction = this.db!.transaction(storeName, "readwrite");
       const store = transaction.objectStore(storeName);
       const request = store.put(data);
 

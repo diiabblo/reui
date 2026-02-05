@@ -5,11 +5,11 @@
  * for the event indexer service.
  */
 
-import { RPC_CONFIG, INDEXER_CONFIG, FEATURE_FLAGS } from '@/config/indexer';
-import type { IndexerStatus, EventStatistics } from '@/types/events';
+import { RPC_CONFIG, INDEXER_CONFIG, FEATURE_FLAGS } from "@/config/indexer";
+import type { IndexerStatus, EventStatistics } from "@/types/events";
 
 // Health check status
-export type HealthStatus = 'healthy' | 'degraded' | 'unhealthy';
+export type HealthStatus = "healthy" | "degraded" | "unhealthy";
 
 // Component health
 export interface ComponentHealth {
@@ -70,7 +70,7 @@ export class HealthCheckService {
       try {
         await this.runHealthCheck();
       } catch (error) {
-        console.error('[HealthCheck] Periodic check failed:', error);
+        console.error("[HealthCheck] Periodic check failed:", error);
       }
     }, intervalMs);
 
@@ -120,8 +120,8 @@ export class HealthCheckService {
     this.lastHealthCheck = report;
 
     // Log if not healthy
-    if (status !== 'healthy') {
-      console.warn('[HealthCheck] System status:', status, components);
+    if (status !== "healthy") {
+      console.warn("[HealthCheck] System status:", status, components);
     }
 
     return report;
@@ -134,11 +134,11 @@ export class HealthCheckService {
     const startTime = Date.now();
     try {
       const response = await fetch(RPC_CONFIG.httpUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'eth_blockNumber',
+          jsonrpc: "2.0",
+          method: "eth_blockNumber",
           params: [],
           id: 1,
         }),
@@ -150,8 +150,8 @@ export class HealthCheckService {
 
       if (data.result) {
         return {
-          name: 'RPC Connection',
-          status: responseTime < 1000 ? 'healthy' : 'degraded',
+          name: "RPC Connection",
+          status: responseTime < 1000 ? "healthy" : "degraded",
           message: `Block: ${parseInt(data.result, 16)}`,
           lastChecked: Date.now(),
           responseTime,
@@ -159,17 +159,17 @@ export class HealthCheckService {
       }
 
       return {
-        name: 'RPC Connection',
-        status: 'unhealthy',
-        message: 'Invalid response',
+        name: "RPC Connection",
+        status: "unhealthy",
+        message: "Invalid response",
         lastChecked: Date.now(),
         responseTime,
       };
     } catch (error) {
       return {
-        name: 'RPC Connection',
-        status: 'unhealthy',
-        message: error instanceof Error ? error.message : 'Connection failed',
+        name: "RPC Connection",
+        status: "unhealthy",
+        message: error instanceof Error ? error.message : "Connection failed",
         lastChecked: Date.now(),
         responseTime: Date.now() - startTime,
       };
@@ -180,18 +180,18 @@ export class HealthCheckService {
    * Check IndexedDB health
    */
   private async checkIndexedDB(): Promise<ComponentHealth> {
-    if (typeof indexedDB === 'undefined') {
+    if (typeof indexedDB === "undefined") {
       return {
-        name: 'IndexedDB',
-        status: 'degraded',
-        message: 'Not available (SSR)',
+        name: "IndexedDB",
+        status: "degraded",
+        message: "Not available (SSR)",
         lastChecked: Date.now(),
       };
     }
 
     const startTime = Date.now();
     try {
-      const request = indexedDB.open('ZaliEventsIndexer', 1);
+      const request = indexedDB.open("reuiEventsIndexer", 1);
 
       await new Promise<void>((resolve, reject) => {
         request.onsuccess = () => {
@@ -200,21 +200,21 @@ export class HealthCheckService {
         };
         request.onerror = () => reject(request.error);
         // Set timeout
-        setTimeout(() => reject(new Error('Timeout')), 3000);
+        setTimeout(() => reject(new Error("Timeout")), 3000);
       });
 
       return {
-        name: 'IndexedDB',
-        status: 'healthy',
-        message: 'Connected',
+        name: "IndexedDB",
+        status: "healthy",
+        message: "Connected",
         lastChecked: Date.now(),
         responseTime: Date.now() - startTime,
       };
     } catch (error) {
       return {
-        name: 'IndexedDB',
-        status: 'unhealthy',
-        message: error instanceof Error ? error.message : 'Connection failed',
+        name: "IndexedDB",
+        status: "unhealthy",
+        message: error instanceof Error ? error.message : "Connection failed",
         lastChecked: Date.now(),
         responseTime: Date.now() - startTime,
       };
@@ -227,9 +227,9 @@ export class HealthCheckService {
   private checkSSEService(): ComponentHealth {
     // SSE is always "healthy" from server perspective if the endpoint exists
     return {
-      name: 'SSE Service',
-      status: 'healthy',
-      message: 'Available',
+      name: "SSE Service",
+      status: "healthy",
+      message: "Available",
       lastChecked: Date.now(),
     };
   }
@@ -238,29 +238,33 @@ export class HealthCheckService {
    * Check memory usage
    */
   private checkMemoryUsage(): ComponentHealth {
-    if (typeof performance === 'undefined' || !('memory' in performance)) {
+    if (typeof performance === "undefined" || !("memory" in performance)) {
       return {
-        name: 'Memory',
-        status: 'healthy',
-        message: 'Monitoring not available',
+        name: "Memory",
+        status: "healthy",
+        message: "Monitoring not available",
         lastChecked: Date.now(),
       };
     }
 
-    const memory = (performance as unknown as { memory: { usedJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
+    const memory = (
+      performance as unknown as {
+        memory: { usedJSHeapSize: number; jsHeapSizeLimit: number };
+      }
+    ).memory;
     const usedMB = Math.round(memory.usedJSHeapSize / 1024 / 1024);
     const limitMB = Math.round(memory.jsHeapSizeLimit / 1024 / 1024);
     const usagePercent = (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100;
 
-    let status: HealthStatus = 'healthy';
+    let status: HealthStatus = "healthy";
     if (usagePercent > 90) {
-      status = 'unhealthy';
+      status = "unhealthy";
     } else if (usagePercent > 70) {
-      status = 'degraded';
+      status = "degraded";
     }
 
     return {
-      name: 'Memory',
+      name: "Memory",
       status,
       message: `${usedMB}MB / ${limitMB}MB (${usagePercent.toFixed(1)}%)`,
       lastChecked: Date.now(),
@@ -271,12 +275,12 @@ export class HealthCheckService {
    * Determine overall system status
    */
   private determineOverallStatus(components: ComponentHealth[]): HealthStatus {
-    const hasUnhealthy = components.some((c) => c.status === 'unhealthy');
-    const hasDegraded = components.some((c) => c.status === 'degraded');
+    const hasUnhealthy = components.some((c) => c.status === "unhealthy");
+    const hasDegraded = components.some((c) => c.status === "degraded");
 
-    if (hasUnhealthy) return 'unhealthy';
-    if (hasDegraded) return 'degraded';
-    return 'healthy';
+    if (hasUnhealthy) return "unhealthy";
+    if (hasDegraded) return "degraded";
+    return "healthy";
   }
 
   /**
@@ -288,29 +292,33 @@ export class HealthCheckService {
 
     // Clean old entries
     this.performanceEntries = this.performanceEntries.filter(
-      (e) => e.timestamp > now - 300000 // Keep last 5 minutes
+      (e) => e.timestamp > now - 300000, // Keep last 5 minutes
     );
 
     const recentEntries = this.performanceEntries.filter(
-      (e) => e.timestamp > oneMinuteAgo
+      (e) => e.timestamp > oneMinuteAgo,
     );
 
     const eventsPerMinute = recentEntries.length;
     const averageProcessingTime =
       recentEntries.length > 0
-        ? recentEntries.reduce((sum, e) => sum + e.duration, 0) / recentEntries.length
+        ? recentEntries.reduce((sum, e) => sum + e.duration, 0) /
+          recentEntries.length
         : 0;
 
     const totalRequests = this.successCount + this.errorCount;
-    const errorRate = totalRequests > 0 ? (this.errorCount / totalRequests) * 100 : 0;
+    const errorRate =
+      totalRequests > 0 ? (this.errorCount / totalRequests) * 100 : 0;
 
     const totalCacheRequests = this.cacheHits + this.cacheMisses;
     const cacheHitRate =
       totalCacheRequests > 0 ? (this.cacheHits / totalCacheRequests) * 100 : 0;
 
     let memoryUsage = 0;
-    if (typeof performance !== 'undefined' && 'memory' in performance) {
-      const memory = (performance as unknown as { memory: { usedJSHeapSize: number } }).memory;
+    if (typeof performance !== "undefined" && "memory" in performance) {
+      const memory = (
+        performance as unknown as { memory: { usedJSHeapSize: number } }
+      ).memory;
       memoryUsage = Math.round(memory.usedJSHeapSize / 1024 / 1024);
     }
 

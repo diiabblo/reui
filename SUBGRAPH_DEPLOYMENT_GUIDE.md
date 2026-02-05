@@ -1,6 +1,6 @@
 # Subgraph Deployment Guide
 
-This guide walks you through deploying the Zali Trivia Game subgraph to The Graph Network.
+This guide walks you through deploying the reui Trivia Game subgraph to The Graph Network.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ npm install
 1. Visit [The Graph Studio](https://thegraph.com/studio/)
 2. Connect your wallet
 3. Click "Create a Subgraph"
-4. Name it: "Zali Trivia Game" or "zali-trivia"
+4. Name it: "reui Trivia Game" or "reui-trivia"
 5. Select network: "Base"
 6. Copy your **Deploy Key** and **Subgraph Slug**
 
@@ -58,7 +58,7 @@ npm run deploy
 Or use the full command:
 
 ```bash
-graph deploy --studio zali-trivia
+graph deploy --studio reui-trivia
 ```
 
 Enter a version label when prompted (e.g., `v1.0.0`, `v1.0.1`, etc.)
@@ -77,14 +77,14 @@ After testing in Studio:
 After deployment, you'll receive a query URL:
 
 ```
-https://api.studio.thegraph.com/query/<YOUR_ID>/zali-trivia/<VERSION>
+https://api.studio.thegraph.com/query/<YOUR_ID>/reui-trivia/<VERSION>
 ```
 
 Update the frontend environment variable:
 
 ```bash
 # frontend/.env.local
-NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/<YOUR_ID>/zali-trivia/v1.0.0
+NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/<YOUR_ID>/reui-trivia/v1.0.0
 ```
 
 ## Step 9: Install Frontend Dependencies
@@ -132,6 +132,7 @@ mv frontend/src/app/leaderboard/subgraph-page.tsx frontend/src/app/leaderboard/p
 ### Check Subgraph Status
 
 Visit The Graph Studio dashboard to monitor:
+
 - Indexing progress
 - Sync status
 - Query count
@@ -211,14 +212,14 @@ To run a local Graph Node:
 
 Expected improvements over direct blockchain queries:
 
-| Metric | Before (RPC) | After (Subgraph) |
-|--------|--------------|------------------|
-| Query Time | 2-5 seconds | 50-200ms |
-| RPC Calls | 10-50 per page | 1 GraphQL query |
-| Data Freshness | Real-time | ~10-30s delay |
-| Filtering | Limited | Full GraphQL |
-| Sorting | Manual | Built-in |
-| Pagination | Complex | Simple |
+| Metric         | Before (RPC)   | After (Subgraph) |
+| -------------- | -------------- | ---------------- |
+| Query Time     | 2-5 seconds    | 50-200ms         |
+| RPC Calls      | 10-50 per page | 1 GraphQL query  |
+| Data Freshness | Real-time      | ~10-30s delay    |
+| Filtering      | Limited        | Full GraphQL     |
+| Sorting        | Manual         | Built-in         |
+| Pagination     | Complex        | Simple           |
 
 ## Costs
 

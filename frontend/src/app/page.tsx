@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 sm:py-32" aria-label="Hero">
+      <section
+        className="relative overflow-hidden py-20 sm:py-32"
+        aria-label="Hero"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <motion.div
@@ -16,13 +19,15 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-green-600 to-yellow-500 bg-clip-text text-transparent mb-6">
-                Zali: Learn, Play, Earn
+                reui: Learn, Play, Earn
               </h1>
               <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 mb-4 max-w-3xl mx-auto">
-                Learn about Celo & DeFi while earning real cUSD rewards via MiniPay
+                Learn about Celo & DeFi while earning real cUSD rewards via
+                MiniPay
               </p>
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-                Mobile-first trivia game optimized for MiniPay with seamless cUSD rewards
+                Mobile-first trivia game optimized for MiniPay with seamless
+                cUSD rewards
               </p>
             </motion.div>
 
@@ -56,19 +61,39 @@ export default function Home() {
               aria-label="Key game statistics"
             >
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-green-600 mb-2" aria-label="Entry Fee amount">0.05 cUSD</div>
+                <div
+                  className="text-3xl font-bold text-green-600 mb-2"
+                  aria-label="Entry Fee amount"
+                >
+                  0.05 cUSD
+                </div>
                 <div className="text-gray-600">Entry Fee</div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-yellow-600 mb-2" aria-label="Maximum rewards amount">0.17 cUSD</div>
+                <div
+                  className="text-3xl font-bold text-yellow-600 mb-2"
+                  aria-label="Maximum rewards amount"
+                >
+                  0.17 cUSD
+                </div>
                 <div className="text-gray-600">Max Rewards</div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-blue-600 mb-2" aria-label="Optimized for MiniPay wallet">MiniPay</div>
+                <div
+                  className="text-3xl font-bold text-blue-600 mb-2"
+                  aria-label="Optimized for MiniPay wallet"
+                >
+                  MiniPay
+                </div>
                 <div className="text-gray-600">Optimized</div>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <div className="text-3xl font-bold text-purple-600 mb-2" aria-label="Number of questions">80+</div>
+                <div
+                  className="text-3xl font-bold text-purple-600 mb-2"
+                  aria-label="Number of questions"
+                >
+                  80+
+                </div>
                 <div className="text-gray-600">Questions</div>
               </div>
             </motion.div>
@@ -85,24 +110,26 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: '🪙',
-                title: 'Claim Tokens',
-                description: 'Get free cUSD from our faucet via MiniPay',
+                icon: "🪙",
+                title: "Claim Tokens",
+                description: "Get free cUSD from our faucet via MiniPay",
               },
               {
-                icon: '🎮',
-                title: 'Play Trivia',
-                description: 'Answer 10 questions about Celo & DeFi for 0.05 cUSD',
+                icon: "🎮",
+                title: "Play Trivia",
+                description:
+                  "Answer 10 questions about Celo & DeFi for 0.05 cUSD",
               },
               {
-                icon: '💰',
-                title: 'Win cUSD',
-                description: 'Earn up to 0.17 cUSD per game with instant payouts',
+                icon: "💰",
+                title: "Win cUSD",
+                description:
+                  "Earn up to 0.17 cUSD per game with instant payouts",
               },
               {
-                icon: '📱',
-                title: 'MiniPay Ready',
-                description: 'Seamless experience with cUSD gas payments',
+                icon: "📱",
+                title: "MiniPay Ready",
+                description: "Seamless experience with cUSD gas payments",
               },
             ].map((feature, index) => (
               <motion.article
@@ -113,8 +140,12 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="text-center p-4"
               >
-                <div className="text-6xl mb-4" aria-hidden="true">{feature.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-gray-900">{feature.title}</h3>
+                <div className="text-6xl mb-4" aria-hidden="true">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900">
+                  {feature.title}
+                </h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.article>
             ))}
@@ -123,7 +154,10 @@ export default function Home() {
       </section>
 
       {/* What Makes Us Different */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-yellow-50" aria-label="What makes us different">
+      <section
+        className="py-20 bg-gradient-to-br from-green-50 to-yellow-50"
+        aria-label="What makes us different"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">
             What Makes Us Different
@@ -131,19 +165,22 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: '📚',
-                title: 'Educational',
-                description: 'Learn about Celo, DeFi, and MiniPay while earning cUSD rewards',
+                icon: "📚",
+                title: "Educational",
+                description:
+                  "Learn about Celo, DeFi, and MiniPay while earning cUSD rewards",
               },
               {
-                icon: '💰',
-                title: 'cUSD Rewards',
-                description: 'Earn real cUSD stablecoin rewards with instant MiniPay payouts',
+                icon: "💰",
+                title: "cUSD Rewards",
+                description:
+                  "Earn real cUSD stablecoin rewards with instant MiniPay payouts",
               },
               {
-                icon: '📱',
-                title: 'MiniPay Optimized',
-                description: 'Built specifically for Celo MiniPay with seamless mobile experience',
+                icon: "📱",
+                title: "MiniPay Optimized",
+                description:
+                  "Built specifically for Celo MiniPay with seamless mobile experience",
               },
             ].map((item, index) => (
               <motion.article
@@ -154,8 +191,12 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="bg-white rounded-xl p-8 shadow-lg"
               >
-                <div className="text-4xl mb-3" aria-hidden="true">{item.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">{item.title}</h3>
+                <div className="text-4xl mb-3" aria-hidden="true">
+                  {item.icon}
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                  {item.title}
+                </h3>
                 <p className="text-gray-600 text-lg">{item.description}</p>
               </motion.article>
             ))}
@@ -164,7 +205,10 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-yellow-500" aria-label="Call to action">
+      <section
+        className="py-20 bg-gradient-to-r from-green-600 to-yellow-500"
+        aria-label="Call to action"
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
             Ready to Start Learning and Earning?

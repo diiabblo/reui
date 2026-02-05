@@ -1,9 +1,9 @@
-# Qodo Configuration for Zali Frontend
+# Qodo Configuration for reui Frontend
 # This configuration file defines how Qodo interacts with your Next.js + Web3 project
 
 # Project Information
 project:
-  name: "Zali Frontend"
+  name: "reui Frontend"
   description: "Next.js frontend application with Celo and Web3 integration"
   type: "nextjs"
   language: "typescript"
@@ -12,7 +12,7 @@ project:
 code_review:
   # Enable automatic code review on commits
   auto_review: true
-  
+
   # Review focus areas
   focus:
     - security
@@ -20,7 +20,7 @@ code_review:
     - best_practices
     - web3_patterns
     - react_patterns
-    
+
   # Ignore patterns for code review
   ignore:
     - "node_modules/**"
@@ -35,11 +35,11 @@ code_review:
 testing:
   # Test framework (can be updated when tests are added)
   framework: "jest"
-  
+
   # Test coverage thresholds
   coverage:
     minimum: 70
-    
+
   # Test file patterns
   patterns:
     - "**/*.test.ts"
@@ -51,16 +51,16 @@ testing:
 documentation:
   # Auto-generate documentation
   auto_generate: true
-  
+
   # Documentation style
   style: "jsdoc"
-  
+
   # Include in documentation
   include:
     - "src/**/*.ts"
     - "src/**/*.tsx"
     - "README.md"
-    
+
   # Exclude from documentation
   exclude:
     - "**/*.test.ts"
@@ -74,12 +74,12 @@ quality:
   linting:
     enabled: true
     config: "eslint.config.mjs"
-    
+
   # Enable type checking
   type_checking:
     enabled: true
     config: "tsconfig.json"
-    
+
   # Code complexity thresholds
   complexity:
     max_function_length: 50
@@ -92,7 +92,7 @@ web3:
   contract_patterns:
     - "src/config/**"
     - "src/hooks/**"
-    
+
   # Security checks for Web3
   security:
     - check_private_key_exposure
@@ -104,10 +104,10 @@ web3:
 build:
   # Build command
   command: "npm run build"
-  
+
   # Output directory
   output: ".next"
-  
+
   # Environment files
   env_files:
     - ".env.local"
@@ -120,7 +120,7 @@ git:
     - "main"
     - "master"
     - "production"
-    
+
   # Commit message format
   commit_format:
     enabled: true
@@ -136,7 +136,7 @@ ai:
     - "Uses Wagmi and RainbowKit for wallet connections"
     - "Uses Tailwind CSS for styling"
     - "Uses Framer Motion for animations"
-    
+
   # Coding standards
   standards:
     - "Follow React best practices and hooks rules"
@@ -154,13 +154,13 @@ files:
   source:
     - "src/**/*.ts"
     - "src/**/*.tsx"
-    
+
   # Configuration files
   config:
     - "*.config.*"
     - "tsconfig.json"
     - "package.json"
-    
+
   # Ignore patterns
   ignore:
     - "node_modules/**"
@@ -177,7 +177,7 @@ performance:
   bundle_size:
     max_initial: 500
     max_total: 2000
-    
+
   # Performance budgets
   budgets:
     - metric: "first-contentful-paint"
@@ -191,7 +191,7 @@ security:
   dependency_scan:
     enabled: true
     severity: "medium"
-    
+
   # Secret detection
   secret_detection:
     enabled: true
@@ -201,7 +201,7 @@ security:
       - "password"
       - "api.*key"
       - "mnemonic"
-      
+
   # Security headers check
   headers:
     - "Content-Security-Policy"
@@ -212,7 +212,7 @@ security:
 notifications:
   # Enable notifications
   enabled: true
-  
+
   # Notification channels
   channels:
     - type: "console"
@@ -226,12 +226,12 @@ custom_rules:
     exclude:
       - "**/*.test.ts"
       - "**/*.test.tsx"
-      
+
   - name: "Use environment variables for RPC URLs"
     pattern: "https?://.*rpc.*"
     severity: "warning"
     message: "Consider using environment variables for RPC URLs"
-    
+
   - name: "Proper error handling in async functions"
     pattern: "async.*=>.*{[^}]*(?!try)[^}]*await"
     severity: "info"

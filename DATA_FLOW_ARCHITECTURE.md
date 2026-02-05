@@ -1,6 +1,6 @@
 # Data Flow & Deployment Architecture
 
-Comprehensive data flow diagrams and deployment architecture for the Zali application.
+Comprehensive data flow diagrams and deployment architecture for the reui application.
 
 ---
 
@@ -9,57 +9,57 @@ Comprehensive data flow diagrams and deployment architecture for the Zali applic
 ```mermaid
 graph TD
     Start["🟢 START:<br/>User visits app"]
-    
+
     Connect["🔗 Connect Wallet"]
     SignMessage["📝 Sign message<br/>(Authentication)"]
-    
+
     NavMenu["📍 Navigate to<br/>Play page"]
-    
+
     ViewQuestion["👀 View Question"]
     SelectAnswer["✓ Select Answer"]
     SubmitTx["📤 Submit<br/>Transaction"]
-    
+
     WalletApprove["👛 Wallet approves<br/>transaction"]
     BlockchainExec["⛓️ Contract<br/>executes"]
-    
+
     CheckAnswer["🔍 Check if<br/>correct"]
-    
+
     subgraph Correct["✅ Answer Correct"]
         TransferReward["💰 Transfer USDC<br/>reward"]
         UpdateScore["📊 Increment<br/>user score"]
         ShowSuccess["✨ Show success<br/>message"]
     end
-    
+
     subgraph Incorrect["❌ Answer Incorrect"]
         ShowFail["😕 Show failure<br/>message"]
     end
-    
+
     EventEmit["📢 Contract emits<br/>AnswerSubmitted"]
     FrontendUpdate["🔄 Frontend<br/>updates UI"]
-    
+
     NextAction["⚡ User can:<br/>Next question or<br/>View profile"]
-    
+
     Start --> Connect
     Connect --> SignMessage
     SignMessage -->|User authenticated| NavMenu
-    
+
     NavMenu --> ViewQuestion
     ViewQuestion --> SelectAnswer
     SelectAnswer --> SubmitTx
-    
+
     SubmitTx --> WalletApprove
     WalletApprove --> BlockchainExec
     BlockchainExec --> CheckAnswer
-    
+
     CheckAnswer -->|Correct| Correct
     CheckAnswer -->|Incorrect| Incorrect
-    
+
     TransferReward --> UpdateScore
     UpdateScore --> ShowSuccess
     ShowSuccess --> EventEmit
-    
+
     ShowFail --> EventEmit
-    
+
     EventEmit --> FrontendUpdate
     FrontendUpdate --> NextAction
 
@@ -83,7 +83,7 @@ sequenceDiagram
     participant Contract as Contract
     participant USDC as USDC Token
     participant Blockchain as Blockchain<br/>Base Network
-    
+
     User->>UI: User selects answer
     UI->>UI: Update UI (loading state)
     UI->>Wagmi: Call submitAnswer hook
@@ -92,14 +92,14 @@ sequenceDiagram
     Contract->>USDC: Check balance (if correct)
     USDC-->>Node: Return balance
     Node-->>Wagmi: Return simulation result
-    
+
     Wagmi->>User: Request signature
     User->>Wagmi: Approve & sign
-    
+
     Wagmi->>Node: Send transaction
     Node->>Blockchain: Add to mempool
     Blockchain->>Blockchain: Mine transaction
-    
+
     Blockchain->>Contract: Execute submitAnswer
     Contract->>Contract: Verify answer
     alt Answer Correct
@@ -109,7 +109,7 @@ sequenceDiagram
     Contract->>Blockchain: Update score mapping
     Contract->>Contract: Emit AnswerSubmitted
     Blockchain-->>Node: Transaction confirmed
-    
+
     Node-->>Wagmi: Receipt with event logs
     Wagmi->>UI: Return receipt
     UI->>UI: Parse event
@@ -127,44 +127,44 @@ graph TB
     subgraph UserAction["User Action"]
         Action["User interacts<br/>with UI"]
     end
-    
+
     subgraph FrontendState["Frontend State"]
         UIComponent["React Component"]
         ZustandStore["Zustand Store"]
         LocalStorage["localStorage"]
     end
-    
+
     subgraph BlockchainState["Blockchain State"]
         SmartContract["Contract State"]
         Mapping["Mappings:<br/>questions,<br/>userScores"]
     end
-    
+
     subgraph EventSync["Event Synchronization"]
         EventListener["Event Listener"]
         EventCallback["Callback Handler"]
         StateUpdate["Update Store"]
     end
-    
+
     subgraph DataSource["Data Sources"]
         RpcRead["RPC Read Call"]
         ReactQuery["React Query<br/>Cache"]
         Cache["Client Cache"]
     end
-    
+
     Action -->|setState| UIComponent
     UIComponent -->|dispatch| ZustandStore
     ZustandStore -->|write| LocalStorage
     ZustandStore -->|trigger| SmartContract
-    
+
     SmartContract -->|execute| Mapping
     Mapping -->|emit| EventSync
-    
+
     EventListener -->|listen for| SmartContract
     EventListener -->|trigger| EventCallback
     EventCallback -->|update| StateUpdate
     StateUpdate -->|update| ZustandStore
     ZustandStore -->|notify| UIComponent
-    
+
     UIComponent -->|query| ReactQuery
     ReactQuery -->|check| Cache
     Cache -->|miss| RpcRead
@@ -193,7 +193,7 @@ graph TB
         CacheResult["Cache result<br/>for next 5min"]
         ReturnData1["Return data<br/>to UI"]
     end
-    
+
     subgraph Pattern2["Pattern 2: State-Modifying"]
         direction LR
         UserAction2["User<br/>takes action"]
@@ -205,10 +205,10 @@ graph TB
         ParseEvents["Parse events"]
         UpdateState["Update local<br/>state"]
     end
-    
+
     Pattern1 --> Flow1["Read Flow"]
     Pattern2 --> Flow2["Write Flow"]
-    
+
     UserRequests1 --> CheckCache1
     CheckCache1 --> IsCached1
     IsCached1 -->|yes| UseCached
@@ -216,7 +216,7 @@ graph TB
     UseCached --> ReturnData1
     QueryRPC --> CacheResult
     CacheResult --> ReturnData1
-    
+
     UserAction2 --> ValidateInput
     ValidateInput --> EstimateGas
     EstimateGas --> RequestSig
@@ -244,36 +244,36 @@ graph TB
         ContractErr["Contract Error<br/>Revert"]
         GasErr["Gas Error<br/>Out of gas"]
     end
-    
+
     subgraph Detection["Error Detection"]
         CatchErr["Catch error<br/>from try-catch"]
         ClassifyErr["Classify error<br/>type"]
         FindHandler["Find error<br/>handler"]
     end
-    
+
     subgraph Recovery["Recovery Actions"]
         RetryErr["Retry operation"]
         ShowErr["Show user<br/>message"]
         LogErr["Log error<br/>to service"]
         SuggestFix["Suggest fix<br/>to user"]
     end
-    
+
     subgraph Outcome["Outcome"]
         Success["✅ Recovered"]
         Fallback["⚠️ Fallback UI"]
         Manual["🆘 Manual<br/>intervention"]
     end
-    
+
     ErrorTypes --> Detection
     Detection --> Recovery
     Recovery --> Outcome
-    
+
     NetworkErr -->|automatic| RetryErr
     UserReject -->|manual| ShowErr
     ValidErr -->|automatic| SuggestFix
     ContractErr -->|display| ShowErr
     GasErr -->|suggest| SuggestFix
-    
+
     RetryErr -->|success| Success
     RetryErr -->|fail| LogErr
     ShowErr --> Manual
@@ -297,39 +297,39 @@ graph TB
         LocalContracts["Contracts<br/>Local copy"]
         LocalFrontend["Frontend<br/>localhost:3000"]
     end
-    
+
     subgraph BaseTestnet["Base Testnet"]
         direction LR
         TestRPC["Base Testnet<br/>RPC"]
         TestContracts["Test Contracts<br/>Deployed"]
         TestFaucet["Test Faucet<br/>Free USDC"]
     end
-    
+
     subgraph Dev["Dev Environment"]
         TestFrontend["Frontend<br/>dev.example.com"]
         TestAnalytics["Analytics<br/>Separate"]
     end
-    
+
     subgraph Staging["Staging Environment"]
         StagingRPC["Base Testnet<br/>RPC"]
         StagingContracts["Contracts<br/>Test version"]
         StagingFrontend["Frontend<br/>staging.example.com"]
     end
-    
+
     Developer["👨‍💻 Developer"]
     CI["GitHub Actions<br/>CI/CD"]
-    
+
     Developer -->|code| LocalDev
     LocalDev -->|test| LocalNode
     LocalDev -->|verify| LocalContracts
-    
+
     Developer -->|push to git| CI
     CI -->|run tests| BaseTestnet
     CI -->|build| TestFrontend
-    
+
     CI -->|release branch| Staging
     Staging -->|manual test| StagingFrontend
-    
+
     style LocalDev fill:#c8e6c9
     style BaseTestnet fill:#fff9c4
     style Dev fill:#f3e5f5
@@ -347,37 +347,37 @@ graph TB
         BaseMainnet["Base Mainnet<br/>Network"]
         ProdContract["SimpleTriviaGame<br/>v1.0<br/>0x7409Cbcb..."]
         USDC["USDC Token<br/>0x833589fC..."]
-        
-        ProdFrontend["Frontend<br/>app.zali.example"]
+
+        ProdFrontend["Frontend<br/>app.reui.example"]
         CDN["CDN<br/>Cloudflare"]
         DNS["DNS<br/>Domain"]
     end
-    
+
     subgraph Monitoring["📊 Monitoring"]
         Logs["Logs<br/>CloudWatch"]
         Analytics["Analytics<br/>Google Analytics"]
         Alerts["Alerts<br/>PagerDuty"]
     end
-    
+
     subgraph Backup["🔒 Backup & Security"]
         IPFS["IPFS<br/>Data storage"]
         Backup["Database<br/>Backup"]
         Security["Security<br/>Audits"]
     end
-    
+
     Users["👥 Users"]
-    
+
     Users -->|visit| DNS
     DNS -->|resolve| CDN
     CDN -->|serve| ProdFrontend
     ProdFrontend -->|interact| ProdContract
     ProdContract -->|transfer| USDC
     ProdContract -->|on| BaseMainnet
-    
+
     BaseMainnet -->|emit events| Logs
     ProdFrontend -->|track| Analytics
     Logs -->|alert on error| Alerts
-    
+
     ProdFrontend -->|store| IPFS
     BaseMainnet -->|data to| Backup
     ProdContract -->|audited| Security
@@ -394,40 +394,40 @@ graph TB
 ```mermaid
 graph LR
     Developer["👨‍💻 Developer<br/>Push to GitHub"]
-    
+
     GitHub["GitHub<br/>Repository"]
-    
+
     Trigger["GitHub Actions<br/>Triggered"]
-    
+
     subgraph Tests["Testing Stage"]
         ContractTests["Contract Tests<br/>Foundry"]
         LintTests["Lint Tests<br/>ESLint"]
         TypeTests["Type Tests<br/>TypeScript"]
         E2ETests["E2E Tests<br/>Playwright"]
     end
-    
+
     Results["✅ All Pass?"]
-    
+
     Fail["❌ Build Failed<br/>Notify Developer"]
-    
+
     Pass["✅ Build Passed"]
-    
+
     subgraph Build["Build Stage"]
         BuildContracts["Build Contracts<br/>ABI generation"]
         BuildFrontend["Build Frontend<br/>Next.js"]
     end
-    
+
     Artifacts["📦 Build Artifacts<br/>Ready"]
-    
+
     Deploy["🚀 Deploy to<br/>Staging"]
-    
+
     Verify["🔍 Verify<br/>Deployment"]
-    
+
     Ready["✨ Ready for<br/>Production"]
-    
+
     Developer --> GitHub
     GitHub -->|on push| Trigger
-    
+
     Trigger --> Tests
     Tests --> Results
     Results -->|failed| Fail
@@ -452,38 +452,38 @@ graph LR
 ```mermaid
 graph TB
     Component["React Component<br/>needs data"]
-    
+
     Hook["useQuery Hook<br/>React Query"]
-    
+
     CacheCheck["Check TanStack<br/>Query Cache"]
-    
+
     IsCached{"In<br/>cache?"}
-    
+
     Cached["Return cached<br/>data"]
-    
+
     NoCache["Call Service"]
-    
+
     Service["Service Function<br/>e.g. getQuestion()"]
-    
+
     Web3Call["Web3 Call<br/>Wagmi hook"]
-    
+
     RPC["RPC Node<br/>Base Network"]
-    
+
     Contract["Smart<br/>Contract"]
-    
+
     Result["Parse result"]
-    
+
     CacheStore["Store in<br/>React Query cache"]
-    
+
     Return["Return data<br/>to component"]
-    
+
     Component --> Hook
     Hook --> CacheCheck
     CacheCheck --> IsCached
-    
+
     IsCached -->|yes| Cached
     IsCached -->|no| NoCache
-    
+
     NoCache --> Service
     Service --> Web3Call
     Web3Call --> RPC
@@ -491,7 +491,7 @@ graph TB
     Contract -->|returns data| Result
     Result --> CacheStore
     CacheStore --> Return
-    
+
     Cached --> Return
 
     style Component fill:#e1f5ff
@@ -509,27 +509,27 @@ graph TB
 ```mermaid
 graph TB
     ContractEvents["Smart Contract<br/>Events"]
-    
+
     EventListener["Event Listener<br/>Web3.js"]
-    
+
     Filter["Event Filter<br/>Watch for<br/>specific event"]
-    
+
     EventFires["Event fires<br/>on blockchain"]
-    
+
     ListenerCatch["Listener detects<br/>new event"]
-    
+
     ParseEvent["Parse event<br/>data"]
-    
+
     Callback["Trigger callback<br/>function"]
-    
+
     UpdateStore["Update<br/>Zustand store"]
-    
+
     Rerender["Component<br/>re-renders"]
-    
+
     UIUpdate["UI shows<br/>new data"]
-    
+
     User["User sees<br/>update"]
-    
+
     ContractEvents -->|emit| EventFires
     EventListener --> Filter
     Filter -->|matches| EventFires
@@ -554,28 +554,28 @@ graph TB
 ```mermaid
 graph TB
     RootErrorBoundary["RootErrorBoundary<br/>Catches all errors"]
-    
+
     L1["Level 1: Wallet Errors"]
     L2["Level 2: Query Errors"]
     L3["Level 3: Contract Errors"]
     L4A["Level 4a: Transaction Errors"]
     L4B["Level 4b: Form Errors"]
     L4C["Level 4c: Component Errors"]
-    
+
     RootErrorBoundary --> L1
     L1 --> L2
     L2 --> L3
     L3 --> L4A
     L3 --> L4B
     L3 --> L4C
-    
+
     L1 -->|catches| WalletErr["Wallet rejected<br/>User not connected"]
     L2 -->|catches| QueryErr["Query failed<br/>Network error"]
     L3 -->|catches| ContractErr["Contract revert<br/>Invalid input"]
     L4A -->|catches| TxErr["Transaction failed<br/>Gas error"]
     L4B -->|catches| FormErr["Form invalid<br/>Validation error"]
     L4C -->|catches| ComponentErr["Component crash<br/>Rendering error"]
-    
+
     L1 -->|fallback| FallbackL1["Show wallet<br/>connection UI"]
     L2 -->|fallback| FallbackL2["Show retry<br/>button"]
     L3 -->|fallback| FallbackL3["Show error<br/>message"]
@@ -600,14 +600,14 @@ graph TB
 graph TB
     subgraph Optimization["Performance Optimizations"]
         direction TB
-        
+
         CachingOpt["Caching Layer<br/>React Query"]
         BatchOpt["Batch Requests<br/>Multiple calls"]
         MemoOpt["Memoization<br/>React.memo"]
         LazyOpt["Code Splitting<br/>Dynamic imports"]
         ImageOpt["Image Optimization<br/>Next.js Image"]
     end
-    
+
     subgraph Metrics["Key Metrics"]
         direction TB
         FCP["First Contentful Paint"]
@@ -615,20 +615,20 @@ graph TB
         CLS["Cumulative Layout Shift"]
         TTI["Time to Interactive"]
     end
-    
+
     subgraph Monitoring["Monitoring"]
         direction TB
         Lighthouse["Lighthouse scores"]
         WebVitals["Web Vitals"]
         APM["Application Performance<br/>Monitoring"]
     end
-    
+
     Optimization --> Metrics
     Metrics --> Monitoring
-    
+
     CachingOpt -->|improves| LCP
     CachingOpt -->|reduces| TTI
-    
+
     BatchOpt -->|fewer| NetworkRequests["Network requests"]
     MemoOpt -->|reduces| ReRenders["Component re-renders"]
     LazyOpt -->|improves| FCP
@@ -651,25 +651,25 @@ graph TB
         LoadingState["Loading State"]
         Errors["Current Errors"]
     end
-    
+
     subgraph PersistentData["Persistent Data"]
         UserProfile["User Profile"]
         Theme["Theme Preference"]
         Cache["API Cache"]
     end
-    
+
     subgraph Storage["Storage Options"]
         Memory["Memory<br/>(Session only)"]
         LocalStorage["LocalStorage<br/>(Browser)"]
         SessionStorage["SessionStorage<br/>(Tab only)"]
         IndexedDB["IndexedDB<br/>(Large data)"]
     end
-    
+
     SessionData -->|no save| Memory
     PersistentData -->|save to| LocalStorage
     PersistentData -->|fallback| SessionStorage
     Cache -->|large data| IndexedDB
-    
+
     LocalStorage -->|restore on| PageLoad["Page load"]
     Memory -->|cleared on| Refresh["Page refresh"]
     IndexedDB -->|persist across| Sessions["Browser sessions"]

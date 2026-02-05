@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Branch Protection Setup Script
-# This script automates the setup of branch protection rules for the Zali repository
+# This script automates the setup of branch protection rules for the reui repository
 # using the GitHub CLI (gh).
 #
 # Prerequisites:
@@ -13,8 +13,8 @@
 #   ./scripts/setup-branch-protection.sh [REPO] [BRANCH]
 #
 # Examples:
-#   ./scripts/setup-branch-protection.sh DeborahOlaboye/Zali main
-#   ./scripts/setup-branch-protection.sh DeborahOlaboye/Zali develop
+#   ./scripts/setup-branch-protection.sh DeborahOlaboye/reui main
+#   ./scripts/setup-branch-protection.sh DeborahOlaboye/reui develop
 
 set -e  # Exit on error
 
@@ -25,10 +25,10 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO="${1:-DeborahOlaboye/Zali}"
+REPO="${1:-DeborahOlaboye/reui}"
 BRANCH="${2:-main}"
 
-echo -e "${GREEN}Branch Protection Setup for Zali${NC}"
+echo -e "${GREEN}Branch Protection Setup for reui${NC}"
 echo "============================================"
 echo "Repository: $REPO"
 echo "Branch: $BRANCH"

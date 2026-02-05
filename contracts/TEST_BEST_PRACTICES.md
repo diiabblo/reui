@@ -1,10 +1,11 @@
 # Contract Testing Best Practices
 
-This document outlines best practices for writing and maintaining contract tests in the Zali project.
+This document outlines best practices for writing and maintaining contract tests in the reui project.
 
 ## Test Organization
 
 ### File Structure
+
 ```
 contracts/test/
 ├── Faucet.t.sol          # Faucet contract tests
@@ -16,11 +17,13 @@ contracts/test/
 ### Naming Conventions
 
 **Test Functions:**
+
 - Use the prefix `test_` for all test functions
 - Use descriptive names: `test_ClaimTokens()`, `test_RevertWhen_AlreadyClaimed()`
 - For error cases, use `test_RevertWhen_` prefix
 
 **Test Contracts:**
+
 - Suffix contracts with `Test`: `FaucetTest`, `TriviaGameTest`
 - Integration tests: `IntegrationTest`
 
@@ -38,11 +41,11 @@ function test_FeatureName() public {
     options[1] = "B";
     options[2] = "C";
     options[3] = "D";
-    
+
     // ACT: Perform the action being tested
     vm.prank(owner);
     triviaGame.addQuestion("Test", options, 0, 1e18, Category.Celo, Difficulty.Easy);
-    
+
     // ASSERT: Verify results
     assertEq(triviaGame.questionId(), 1);
 }
@@ -51,6 +54,7 @@ function test_FeatureName() public {
 ### setUp() Function
 
 Each test contract should have a `setUp()` function that:
+
 - Initializes all contracts
 - Creates test addresses
 - Funds test accounts
@@ -107,11 +111,11 @@ vm.stopPrank();
 ```solidity
 function test_StateChange() public {
     uint256 initialBalance = token.balanceOf(user);
-    
+
     // Perform action
     vm.prank(owner);
     faucet.claim();
-    
+
     // Verify state changed
     uint256 finalBalance = token.balanceOf(user);
     assertEq(finalBalance, initialBalance + claimAmount);
@@ -189,7 +193,7 @@ import "./TestUtils.sol";
 
 contract MyTest is TestHelper {
     MockERC20Token public token;
-    
+
     function setUp() public {
         token = new MockERC20Token("Test", "TST", 18);
         token.mint(user, 100e18);
@@ -230,6 +234,7 @@ Aim for the following coverage levels:
 - **Lines:** >90%
 
 Run coverage analysis:
+
 ```bash
 forge coverage
 ```
@@ -280,6 +285,7 @@ function test_Debug() public {
 ## Continuous Integration
 
 Tests run automatically on:
+
 - Every push to main/develop branches
 - Every pull request
 - When contracts are modified
@@ -289,6 +295,7 @@ See `.github/workflows/contract-tests.yml` for CI configuration.
 ## Common Mistakes to Avoid
 
 1. **Forgetting vm.stopPrank():** Always stop prank context
+
    ```solidity
    vm.startPrank(user);
    function();
@@ -296,10 +303,11 @@ See `.github/workflows/contract-tests.yml` for CI configuration.
    ```
 
 2. **Not resetting state between tests:** Use setUp() instead
+
    ```solidity
    // Bad: modifying state in test
    faucet = new Faucet(...); // Don't do this
-   
+
    // Good: use setUp()
    function setUp() public {
        faucet = new Faucet(...);
@@ -307,20 +315,22 @@ See `.github/workflows/contract-tests.yml` for CI configuration.
    ```
 
 3. **Testing implementation instead of interface:** Test contract behavior, not internals
+
    ```solidity
    // Bad: testing internal function
    triviaGame.internalFunction();
-   
+
    // Good: test public interface
    triviaGame.addQuestion(...);
    ```
 
 4. **Ignoring error messages:** Always verify the correct error is thrown
+
    ```solidity
    // Bad: any revert is acceptable
    vm.expectRevert();
    function();
-   
+
    // Good: specific error verification
    vm.expectRevert(CustomError.selector);
    function();

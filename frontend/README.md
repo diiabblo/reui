@@ -1,6 +1,6 @@
-# Zali Frontend
+# reui Frontend
 
-This is the frontend application for Zali, a Web3 trivia game built on Base network.
+This is the frontend application for reui, a Web3 trivia game built on Base network.
 
 ## Features
 
@@ -76,13 +76,15 @@ The application features a comprehensive mobile responsiveness system for buildi
 ### Quick Example
 
 ```tsx
-import { LoadingButton, useLoading } from '@/components/loading';
+import { LoadingButton, useLoading } from "@/components/loading";
 
 function MyComponent() {
-  const { setLoading, clearLoading } = useLoading({ component: 'my-component' });
+  const { setLoading, clearLoading } = useLoading({
+    component: "my-component",
+  });
 
   const handleAction = async () => {
-    setLoading(true, 'Processing...', 0);
+    setLoading(true, "Processing...", 0);
     try {
       await someAsyncOperation();
       clearLoading();
@@ -91,11 +93,7 @@ function MyComponent() {
     }
   };
 
-  return (
-    <LoadingButton onClick={handleAction}>
-      Click Me
-    </LoadingButton>
-  );
+  return <LoadingButton onClick={handleAction}>Click Me</LoadingButton>;
 }
 ```
 

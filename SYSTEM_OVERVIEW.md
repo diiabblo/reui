@@ -1,18 +1,20 @@
 # System Overview & Architecture Summary
 
-High-level visual summary of the Zali system architecture and how all components work together.
+High-level visual summary of the reui system architecture and how all components work together.
 
 ---
 
 ## 📋 Executive Summary
 
-**Zali** is a Web3 trivia game on Base Network where:
+**reui** is a Web3 trivia game on Base Network where:
+
 - Users connect wallets and play trivia questions
 - Earn USDC rewards for correct answers
 - View rankings on leaderboard
 - Smart contracts manage questions and rewards
 
 **Tech Stack:**
+
 - Frontend: Next.js + React + TypeScript
 - State: Zustand + React Query
 - Blockchain: Solidity + Base Network
@@ -29,53 +31,53 @@ graph TB
         Player2["Player 2<br/>Wallet: 0xdef..."]
         Owner["Owner<br/>Wallet: 0x123..."]
     end
-    
-    subgraph Frontend["🖥️ Frontend (Next.js)<br/>app.zali.example"]
+
+    subgraph Frontend["🖥️ Frontend (Next.js)<br/>app.reui.example"]
         Browser["Browser/Device"]
         ReactApp["React App<br/>Components"]
         Zustand["Zustand Store<br/>Global State"]
         RQ["React Query<br/>Cache"]
     end
-    
+
     subgraph Web3Stack["🔗 Web3 Integration<br/>Wagmi + AppKit"]
         Wagmi["Wagmi<br/>React Hooks"]
         AppKit["AppKit<br/>Wallet Connect"]
         Wallets["Wallets<br/>MetaMask, etc"]
     end
-    
+
     subgraph Blockchain["⛓️ Base Network"]
         STG["SimpleTriviaGame<br/>Contract"]
         USDC["USDC Token<br/>0x833589fC..."]
         State["Blockchain State<br/>questions,<br/>userScores"]
     end
-    
+
     subgraph External["🌍 External Services"]
         Faucet["USDC Faucet<br/>Testnet only"]
         Analytics["Analytics<br/>User tracking"]
         Storage["IPFS<br/>Media storage"]
     end
-    
+
     Users -->|access via| Browser
     Browser -->|renders| ReactApp
-    
+
     ReactApp -->|manages| Zustand
     ReactApp -->|caches with| RQ
-    
+
     ReactApp -->|calls| Wagmi
     Wagmi -->|via| AppKit
     AppKit -->|manages| Wallets
-    
+
     Wallets -->|sign TX| Wagmi
     Wagmi -->|interact| STG
-    
+
     STG -->|read/write| USDC
     STG -->|update| State
     STG -->|emit events| RQ
-    
+
     RQ -->|listen to events| ReactApp
-    
+
     External -->|optional| ReactApp
-    
+
     Owner -->|admin functions| STG
     Player1 -->|play game| ReactApp
     Player2 -->|play game| ReactApp
@@ -92,6 +94,7 @@ graph TB
 ## 🎮 The Game Flow (Step by Step)
 
 ### Step 1: User Connection
+
 ```
 User connects wallet
   ↓
@@ -109,6 +112,7 @@ App verifies network (Base)
 ```
 
 ### Step 2: View Game
+
 ```
 User navigates to /play
   ↓
@@ -128,6 +132,7 @@ React Query caches result
 ```
 
 ### Step 3: Submit Answer
+
 ```
 User selects answer option
   ↓
@@ -155,6 +160,7 @@ Contract emits AnswerSubmitted event
 ```
 
 ### Step 4: Update UI
+
 ```
 Event listener catches AnswerSubmitted
   ↓
@@ -427,7 +433,7 @@ Event listener:
              │ DNS
              ↓
 ┌─────────────────────────────┐
-│  app.zali.example           │
+│  app.reui.example           │
 │  (Domain & Certificate)     │
 └────────────┬────────────────┘
              │ JSON-RPC
@@ -475,21 +481,25 @@ Future (TriviaGameV2 v2.0 - Q2 2026)
 ## 🔗 Key Connections
 
 **Frontend ↔ Blockchain:**
+
 - Wagmi provides React hooks
 - AppKit handles wallet connections
 - Automatically reconnects on page load
 
 **State ↔ UI:**
+
 - Zustand holds global state
 - Components subscribe to store
 - Auto-rerender on state change
 
 **Events ↔ State:**
+
 - Contract emits events
 - Frontend listens for events
 - Updates state when event fires
 
 **Cache ↔ Fresh Data:**
+
 - React Query caches for 5 minutes
 - Can invalidate manually
 - Automatic refetch on focus
@@ -499,6 +509,7 @@ Future (TriviaGameV2 v2.0 - Q2 2026)
 ## ⚙️ Configuration
 
 ### Environment Variables (Frontend)
+
 ```
 NEXT_PUBLIC_CONTRACT_ADDRESS=0x7409Cbcb...
 NEXT_PUBLIC_USDC_ADDRESS=0x833589fC...
@@ -507,6 +518,7 @@ NEXT_PUBLIC_RPC_URL=https://base.llamarpc.com
 ```
 
 ### Environment Variables (Contract)
+
 ```
 BASE_RPC_URL=https://base.llamarpc.com
 PRIVATE_KEY=0x...
@@ -551,15 +563,15 @@ ETHERSCAN_API_KEY=...
 
 ## 📞 How to Find Things
 
-| What | Where |
-|------|-------|
-| Pages/routes | `frontend/src/app/` |
-| Components | `frontend/src/components/` |
-| Global state | `frontend/src/store/` |
-| API calls | `frontend/src/services/` |
-| Contracts | `contracts/src/` |
-| Types | `frontend/src/types/` |
-| Utilities | `frontend/src/utils/` |
+| What         | Where                      |
+| ------------ | -------------------------- |
+| Pages/routes | `frontend/src/app/`        |
+| Components   | `frontend/src/components/` |
+| Global state | `frontend/src/store/`      |
+| API calls    | `frontend/src/services/`   |
+| Contracts    | `contracts/src/`           |
+| Types        | `frontend/src/types/`      |
+| Utilities    | `frontend/src/utils/`      |
 
 ---
 

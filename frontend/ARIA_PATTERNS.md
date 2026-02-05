@@ -1,17 +1,17 @@
 # ARIA Patterns and Examples
 
-Common ARIA patterns used throughout Zali for accessibility.
+Common ARIA patterns used throughout reui for accessibility.
 
 ## Buttons and Controls
 
 ### Standard Button
+
 ```tsx
-<button aria-label="Delete item">
-  🗑️
-</button>
+<button aria-label="Delete item">🗑️</button>
 ```
 
 ### Toggle Button
+
 ```tsx
 <button
   aria-pressed={isActive}
@@ -23,6 +23,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Button with Busy State
+
 ```tsx
 <button
   aria-busy={isLoading}
@@ -36,6 +37,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Form Elements
 
 ### Text Input with Validation
+
 ```tsx
 <div>
   <label htmlFor="username">Username</label>
@@ -49,15 +51,12 @@ Common ARIA patterns used throughout Zali for accessibility.
       ✗ {errorMessage}
     </p>
   )}
-  {!hasError && (
-    <p id="username-help">
-      3-20 characters
-    </p>
-  )}
+  {!hasError && <p id="username-help">3-20 characters</p>}
 </div>
 ```
 
 ### Form Group with Fieldset
+
 ```tsx
 <fieldset>
   <legend>Choose a payment method</legend>
@@ -75,6 +74,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Dynamic Content
 
 ### Live Region - Polite
+
 ```tsx
 <div role="status" aria-live="polite" aria-atomic="true">
   {statusMessage}
@@ -82,6 +82,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Live Region - Assertive (Alert)
+
 ```tsx
 <div role="alert" aria-live="assertive" aria-atomic="true">
   {errorMessage}
@@ -89,6 +90,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Loading Indicator
+
 ```tsx
 <div aria-busy="true" aria-label="Loading content...">
   <div className="spinner">Loading...</div>
@@ -98,6 +100,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Navigation
 
 ### Landmark Navigation
+
 ```tsx
 <nav aria-label="Main navigation">
   <ul>
@@ -112,6 +115,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Skip Link
+
 ```tsx
 <a href="#main-content" className="sr-only focus:not-sr-only">
   Skip to main content
@@ -119,6 +123,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Mobile Menu
+
 ```tsx
 <button
   aria-expanded={menuOpen}
@@ -127,18 +132,21 @@ Common ARIA patterns used throughout Zali for accessibility.
   onClick={() => setMenuOpen(!menuOpen)}
 >
   Menu
-</button>
+</button>;
 
-{menuOpen && (
-  <nav id="mobile-menu" aria-label="Mobile navigation">
-    {/* menu items */}
-  </nav>
-)}
+{
+  menuOpen && (
+    <nav id="mobile-menu" aria-label="Mobile navigation">
+      {/* menu items */}
+    </nav>
+  );
+}
 ```
 
 ## Lists
 
 ### Ordered List
+
 ```tsx
 <ol>
   <li>First step</li>
@@ -148,15 +156,14 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Leaderboard List
+
 ```tsx
 <section aria-label="Game leaderboard">
   <h2>Top Players</h2>
   <ol role="list" aria-label="Top 10 players ranking">
     {players.map((player, index) => (
       <li key={player.id} role="listitem">
-        <span aria-label={`Rank ${player.rank}`}>
-          {player.rank}
-        </span>
+        <span aria-label={`Rank ${player.rank}`}>{player.rank}</span>
         <span>{player.name}</span>
         <span aria-label={`Score: ${player.score} points`}>
           {player.score} pts
@@ -170,6 +177,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Dialogs and Modals
 
 ### Modal Dialog
+
 ```tsx
 <div
   role="dialog"
@@ -187,6 +195,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Expandable Content
 
 ### Accordion Item
+
 ```tsx
 <div>
   <button
@@ -196,15 +205,12 @@ Common ARIA patterns used throughout Zali for accessibility.
   >
     Section Title
   </button>
-  {isOpen && (
-    <div id="accordion-content">
-      Content goes here
-    </div>
-  )}
+  {isOpen && <div id="accordion-content">Content goes here</div>}
 </div>
 ```
 
 ### Tooltip
+
 ```tsx
 <div>
   <button
@@ -226,6 +232,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Tables
 
 ### Data Table
+
 ```tsx
 <table>
   <caption>Player Statistics</caption>
@@ -251,59 +258,47 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Images
 
 ### Meaningful Image
+
 ```tsx
-<img
-  src="/player-avatar.png"
-  alt="Profile picture for John Doe"
-/>
+<img src="/player-avatar.png" alt="Profile picture for John Doe" />
 ```
 
 ### Decorative Image
+
 ```tsx
-<img
-  src="/decorative-border.png"
-  alt=""
-  aria-hidden="true"
-/>
+<img src="/decorative-border.png" alt="" aria-hidden="true" />
 ```
 
 ### Complex Image with Description
+
 ```tsx
 <figure>
-  <img
-    src="/chart.png"
-    alt="Sales chart showing quarterly results"
-  />
-  <figcaption>
-    Q1 showed a 25% increase in sales.
-  </figcaption>
+  <img src="/chart.png" alt="Sales chart showing quarterly results" />
+  <figcaption>Q1 showed a 25% increase in sales.</figcaption>
 </figure>
 ```
 
 ## Labels and Descriptions
 
 ### Label Association
+
 ```tsx
 <label htmlFor="email">Email Address</label>
 <input id="email" type="email" />
 ```
 
 ### Hidden Label (Icon Button)
+
 ```tsx
-<button aria-label="Close menu">
-  ✕
-</button>
+<button aria-label="Close menu">✕</button>
 ```
 
 ### Description Text
+
 ```tsx
 <div>
   <label htmlFor="password">Password</label>
-  <input
-    id="password"
-    type="password"
-    aria-describedby="password-hint"
-  />
+  <input id="password" type="password" aria-describedby="password-hint" />
   <p id="password-hint">
     At least 8 characters with uppercase, lowercase, and number
   </p>
@@ -313,17 +308,22 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Loading States
 
 ### Skeleton Screens
+
 ```tsx
 <div aria-hidden="true">
-  <div className="bg-gray-300 animate-pulse">
-    {/* Skeleton shape */}
-  </div>
+  <div className="bg-gray-300 animate-pulse">{/* Skeleton shape */}</div>
 </div>
 ```
 
 ### Progress Indicator
+
 ```tsx
-<div role="progressbar" aria-valuenow={75} aria-valuemin={0} aria-valuemax={100}>
+<div
+  role="progressbar"
+  aria-valuenow={75}
+  aria-valuemin={0}
+  aria-valuemax={100}
+>
   75% complete
 </div>
 ```
@@ -331,6 +331,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Error Handling
 
 ### Form Validation
+
 ```tsx
 <div>
   <input
@@ -346,15 +347,14 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Error Summary
+
 ```tsx
 <section role="region" aria-label="Form errors">
   <h2>Please fix these errors:</h2>
   <ul>
     {errors.map((error) => (
       <li key={error.field}>
-        <a href={`#${error.field}`}>
-          {error.message}
-        </a>
+        <a href={`#${error.field}`}>{error.message}</a>
       </li>
     ))}
   </ul>
@@ -364,6 +364,7 @@ Common ARIA patterns used throughout Zali for accessibility.
 ## Common Patterns
 
 ### Icon Button
+
 ```tsx
 <button aria-label="Delete">
   <TrashIcon aria-hidden="true" />
@@ -371,26 +372,33 @@ Common ARIA patterns used throughout Zali for accessibility.
 ```
 
 ### Badge/Label
+
 ```tsx
-<span aria-label="Difficulty: Hard">
-  Hard
-</span>
+<span aria-label="Difficulty: Hard">Hard</span>
 ```
 
 ### Status Indicator
+
 ```tsx
 <div role="status" aria-live="polite">
-  <span className="text-green-600" aria-hidden="true">●</span>
+  <span className="text-green-600" aria-hidden="true">
+    ●
+  </span>
   Connected
 </div>
 ```
 
 ### Breadcrumb Navigation
+
 ```tsx
 <nav aria-label="Breadcrumb">
   <ol>
-    <li><a href="/">Home</a></li>
-    <li><a href="/products">Products</a></li>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/products">Products</a>
+    </li>
     <li>
       <span aria-current="page">Product Name</span>
     </li>

@@ -1,6 +1,6 @@
 # Code Splitting Implementation Examples
 
-Real-world code examples for implementing dynamic imports and code splitting across the Zali application.
+Real-world code examples for implementing dynamic imports and code splitting across the reui application.
 
 ---
 
@@ -68,7 +68,7 @@ const Modal = dynamic(
 
 export function GameHeader() {
   const [showModal, setShowModal] = useState(false);
-  
+
   return (
     <>
       <button onClick={() => setShowModal(true)}>Show Modal</button>
@@ -104,11 +104,11 @@ const AdminUsers = dynamic(
 
 export default function AdminPage() {
   const { isAdmin } = useAuth();
-  
+
   if (!isAdmin) {
     return <Unauthorized />;
   }
-  
+
   return (
     <div>
       <AdminCharts />
@@ -148,15 +148,15 @@ export async function initializeMonitoring() {
   if (process.env.NEXT_PUBLIC_ENV !== 'production') {
     return;
   }
-  
+
   // Only import Sentry in production
   const Sentry = await import('@sentry/react');
-  
+
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     environment: process.env.NEXT_PUBLIC_ENV,
   });
-  
+
   // Wrap error boundary if in browser
   if (typeof window !== 'undefined') {
     window.ErrorBoundary = Sentry.ErrorBoundary;
@@ -168,7 +168,7 @@ export default function RootLayout() {
   useEffect(() => {
     initializeMonitoring();
   }, []);
-  
+
   return <div>App</div>;
 }
 
@@ -191,7 +191,7 @@ export async function loadFeature(feature: keyof typeof FEATURES) {
   if (!FEATURES[feature]) {
     return null;
   }
-  
+
   switch (feature) {
     case 'ANALYTICS':
       return import('@/lib/analytics');
@@ -207,11 +207,11 @@ export async function loadFeature(feature: keyof typeof FEATURES) {
 // Usage in component
 export function Dashboard() {
   const [Analytics, setAnalytics] = useState(null);
-  
+
   useEffect(() => {
     loadFeature('ANALYTICS').then(mod => setAnalytics(mod?.Analytics));
   }, []);
-  
+
   return (
     <>
       {Analytics && <Analytics />}
@@ -238,7 +238,7 @@ export async function loadWeb3() {
     import('viem'),
     import('@reown/appkit'),
   ]);
-  
+
   return {
     wagmi: wagmi.default,
     viem: viem.default,
@@ -334,10 +334,10 @@ export async function trackEvent(eventName: string, data?: any) {
   if (typeof window === 'undefined') {
     return;
   }
-  
+
   // Dynamically import analytics library
   const gtag = (await import('@/lib/gtag')).default;
-  
+
   gtag.event(eventName, data);
 }
 
@@ -386,10 +386,10 @@ export function Dashboard() {
 ```typescript
 // src/components/index.ts - Document which components are heavy
 
-export { default as Modal } from './Modal'; // 15KB (framer-motion)
-export { default as Charts } from './Charts'; // 80KB (chart.js)
-export { default as Editor } from './Editor'; // 40KB (monaco-editor)
-export { default as GameEngine } from './GameEngine'; // 50KB (babylon.js)
+export { default as Modal } from "./Modal"; // 15KB (framer-motion)
+export { default as Charts } from "./Charts"; // 80KB (chart.js)
+export { default as Editor } from "./Editor"; // 40KB (monaco-editor)
+export { default as GameEngine } from "./GameEngine"; // 50KB (babylon.js)
 
 // Components to lazy load:
 // - Modal (only show on action)
@@ -469,22 +469,22 @@ echo "After: $AFTER"
 ```typescript
 // __tests__/lazy-loading.test.tsx
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-describe('Lazy Loaded Components', () => {
-  it('should lazy load Modal on demand', async () => {
-    const Modal = dynamic(() => import('@/components/Modal'));
-    
+describe("Lazy Loaded Components", () => {
+  it("should lazy load Modal on demand", async () => {
+    const Modal = dynamic(() => import("@/components/Modal"));
+
     // Component should render
     expect(Modal).toBeDefined();
   });
-  
-  it('should load admin features only for admins', () => {
-    const { render, screen } = require('@testing-library/react');
-    
+
+  it("should load admin features only for admins", () => {
+    const { render, screen } = require("@testing-library/react");
+
     // Admin page should be code split
-    const AdminPage = require('@/app/admin/page').default;
-    
+    const AdminPage = require("@/app/admin/page").default;
+
     expect(AdminPage).toBeDefined();
   });
 });
@@ -494,18 +494,18 @@ describe('Lazy Loaded Components', () => {
 
 ```typescript
 // Test actual bundle splitting
-it('should not include framer-motion in main chunk', () => {
-  const bundleContent = fs.readFileSync('.next/static/chunks/main*.js', 'utf8');
-  
+it("should not include framer-motion in main chunk", () => {
+  const bundleContent = fs.readFileSync(".next/static/chunks/main*.js", "utf8");
+
   // Framer motion should NOT be in main chunk
-  expect(bundleContent).not.toContain('framer-motion');
-  
+  expect(bundleContent).not.toContain("framer-motion");
+
   // It should exist in separate chunk
-  const chunks = fs.readdirSync('.next/static/chunks');
-  const hasFramerMotionChunk = chunks.some(c => 
-    c.includes('motion') && c.endsWith('.js')
+  const chunks = fs.readdirSync(".next/static/chunks");
+  const hasFramerMotionChunk = chunks.some(
+    (c) => c.includes("motion") && c.endsWith(".js"),
   );
-  
+
   expect(hasFramerMotionChunk).toBe(true);
 });
 ```
@@ -516,14 +516,14 @@ it('should not include framer-motion in main chunk', () => {
 
 After implementing all levels:
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Initial JS | 220KB | 140KB | **-36%** |
-| TTI on 3G | 4.2s | 2.1s | **-50%** |
-| Admin Page Size | 120KB | 180KB* | Better UX |
-| Game Page Size | 150KB | 120KB | **-20%** |
+| Metric          | Before | After   | Improvement |
+| --------------- | ------ | ------- | ----------- |
+| Initial JS      | 220KB  | 140KB   | **-36%**    |
+| TTI on 3G       | 4.2s   | 2.1s    | **-50%**    |
+| Admin Page Size | 120KB  | 180KB\* | Better UX   |
+| Game Page Size  | 150KB  | 120KB   | **-20%**    |
 
-*Admin page is heavier but initial load is much lighter for regular users.
+\*Admin page is heavier but initial load is much lighter for regular users.
 
 ---
 

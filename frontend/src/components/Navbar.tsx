@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAccount, useDisconnect } from 'wagmi';
-import { AnimatePresence, motion } from 'framer-motion';
-import { NavbarProps, NavLinkProps } from '@/types/components';
-import { Address } from '@/types/web3';
-import { WalletErrorBoundary } from '@/components/WalletErrorBoundary';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useAccount, useDisconnect } from "wagmi";
+import { AnimatePresence, motion } from "framer-motion";
+import { NavbarProps, NavLinkProps } from "@/types/components";
+import { Address } from "@/types/web3";
+import { WalletErrorBoundary } from "@/components/WalletErrorBoundary";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 /**
  * Navbar component for site navigation and wallet connection
- * 
+ *
  * Main navigation bar with responsive mobile menu, wallet connection,
  * and user account menu. Features adaptive layout for mobile/desktop.
- * 
+ *
  * @component
  * @example
  * <Navbar />
@@ -40,14 +40,14 @@ function useClientAppKit(): UseClientAppKitReturn {
   const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const { useAppKit } = require('@reown/appkit/react');
+        const { useAppKit } = require("@reown/appkit/react");
         const kit: AppKitInstance = useAppKit();
         setAppKit(kit);
         setIsReady(true);
       } catch (error: unknown) {
-        console.warn('AppKit not available:', error);
+        console.warn("AppKit not available:", error);
         setIsReady(true); // Still set ready to avoid infinite loading
       }
     }
@@ -58,14 +58,17 @@ function useClientAppKit(): UseClientAppKitReturn {
       if (appKit?.open) {
         appKit.open();
       } else {
-        console.warn('AppKit not ready');
+        console.warn("AppKit not ready");
       }
     },
-    isReady
+    isReady,
   };
 }
 
-export default function Navbar({ className = '', 'data-testid': testId }: NavbarProps = {}) {
+export default function Navbar({
+  className = "",
+  "data-testid": testId,
+}: NavbarProps = {}) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const { isConnected, address } = useAccount();
@@ -83,10 +86,10 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
     const handleRouteChange = () => {
       setMobileMenuOpen(false);
     };
-    
+
     // Close menu when pathname changes
     handleRouteChange();
-    
+
     // Cleanup function
     return () => {};
   }, [pathname]); // Re-run when pathname changes
@@ -95,7 +98,7 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        mobileMenuRef.current && 
+        mobileMenuRef.current &&
         !mobileMenuRef.current.contains(event.target as Node) &&
         menuButtonRef.current &&
         !menuButtonRef.current.contains(event.target as Node)
@@ -105,38 +108,41 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
     };
 
     const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && mobileMenuOpen) {
+      if (event.key === "Escape" && mobileMenuOpen) {
         setMobileMenuOpen(false);
         menuButtonRef.current?.focus();
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscapeKey);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscapeKey);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscapeKey);
     };
   }, [mobileMenuOpen]);
 
   const navLinks: readonly NavLink[] = [
-    { name: 'Home', href: '/' },
-    { name: 'Play', href: '/play' },
-    { name: 'Rewards', href: '/rewards' },
-    { name: 'Leaderboard', href: '/leaderboard' },
-    { name: 'Achievements', href: '/achievements' },
-    { name: 'Submit Question', href: '/submit-question' },
+    { name: "Home", href: "/" },
+    { name: "Play", href: "/play" },
+    { name: "Rewards", href: "/rewards" },
+    { name: "Leaderboard", href: "/leaderboard" },
+    { name: "Achievements", href: "/achievements" },
+    { name: "Submit Question", href: "/submit-question" },
   ];
 
   return (
-    <nav className={`border-b border-border bg-card shadow-sm transition-colors duration-300 ${className}`} data-testid={testId}>
+    <nav
+      className={`border-b border-border bg-card shadow-sm transition-colors duration-300 ${className}`}
+      data-testid={testId}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" aria-label="Zali Home">
+            <Link href="/" aria-label="reui Home">
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-green-600 to-yellow-500 bg-clip-text text-transparent cursor-pointer">
-                🎓 Zali
+                🎓 reui
               </h1>
             </Link>
           </div>
@@ -149,8 +155,8 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                 href={link.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
                   pathname === link.href
-                    ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300'
-                    : 'text-card-foreground hover:bg-accent hover:text-accent-foreground'
+                    ? "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300"
+                    : "text-card-foreground hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
                 {link.name}
@@ -170,7 +176,8 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                       className="px-3 py-2 text-sm bg-green-100 text-green-700 hover:bg-green-200 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
                       aria-label={`Connected wallet: ${formattedAddress?.slice(0, 6)}...${formattedAddress?.slice(-4)}`}
                     >
-                      {formattedAddress?.slice(0, 6)}...{formattedAddress?.slice(-4)}
+                      {formattedAddress?.slice(0, 6)}...
+                      {formattedAddress?.slice(-4)}
                     </button>
                     <button
                       onClick={() => disconnect()}
@@ -209,7 +216,8 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                       className="px-2 py-1 text-xs bg-green-100 text-green-700 hover:bg-green-200 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-green-600"
                       aria-label={`Connected wallet: ${formattedAddress?.slice(0, 4)}...${formattedAddress?.slice(-2)}`}
                     >
-                      {formattedAddress?.slice(0, 4)}...{formattedAddress?.slice(-2)}
+                      {formattedAddress?.slice(0, 4)}...
+                      {formattedAddress?.slice(-2)}
                     </button>
                     <button
                       onClick={() => disconnect()}
@@ -239,7 +247,7 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
               aria-haspopup="true"
             >
               <span className="sr-only">
-                {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
+                {mobileMenuOpen ? "Close main menu" : "Open main menu"}
               </span>
               {!mobileMenuOpen ? (
                 <svg
@@ -292,14 +300,14 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
               className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
-            
+
             {/* Menu Panel */}
             <motion.div
               ref={mobileMenuRef}
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.2 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.2 }}
               className="fixed top-0 right-0 bottom-0 w-64 bg-white shadow-lg z-30 md:hidden overflow-y-auto"
             >
               <div className="flex justify-end p-4">
@@ -308,12 +316,22 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                   className="p-2 text-gray-500 hover:text-gray-700 focus:outline-none"
                   aria-label="Close menu"
                 >
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
-              
+
               <nav className="px-4 pt-2 pb-4">
                 <div className="space-y-1">
                   {navLinks.map((link, index) => (
@@ -327,8 +345,8 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                         href={link.href}
                         className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-inset ${
                           pathname === link.href
-                            ? 'bg-green-100 text-green-700'
-                            : 'text-gray-700 hover:bg-green-50 hover:text-green-600'
+                            ? "bg-green-100 text-green-700"
+                            : "text-gray-700 hover:bg-green-50 hover:text-green-600"
                         }`}
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -337,10 +355,12 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                     </motion.div>
                   ))}
                 </div>
-                
+
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   {!isReady ? (
-                    <div className="px-4 py-2 text-sm text-gray-500">Loading wallet...</div>
+                    <div className="px-4 py-2 text-sm text-gray-500">
+                      Loading wallet...
+                    </div>
                   ) : isConnected ? (
                     <div className="space-y-2">
                       <button
@@ -351,7 +371,8 @@ export default function Navbar({ className = '', 'data-testid': testId }: Navbar
                         className="w-full px-4 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-inset"
                         aria-label={`Connected wallet: ${formattedAddress?.slice(0, 6)}...${formattedAddress?.slice(-4)}`}
                       >
-                        Wallet: {formattedAddress?.slice(0, 6)}...{formattedAddress?.slice(-4)}
+                        Wallet: {formattedAddress?.slice(0, 6)}...
+                        {formattedAddress?.slice(-4)}
                       </button>
                       <button
                         onClick={() => {

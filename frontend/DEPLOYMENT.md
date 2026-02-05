@@ -1,6 +1,6 @@
-# Zali Frontend Deployment Guide
+# reui Frontend Deployment Guide
 
-This guide provides comprehensive instructions for deploying the Zali frontend application to production.
+This guide provides comprehensive instructions for deploying the reui frontend application to production.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ This guide provides comprehensive instructions for deploying the Zali frontend a
 
 ## Overview
 
-The Zali frontend is a Next.js 14 application built with React 18 and TypeScript. It features:
+The reui frontend is a Next.js 14 application built with React 18 and TypeScript. It features:
 
 - **Framework**: Next.js 14.1.0 with App Router
 - **Blockchain Integration**: Web3 functionality via WalletConnect and Wagmi
@@ -27,6 +27,7 @@ The Zali frontend is a Next.js 14 application built with React 18 and TypeScript
 ### Deployment Options
 
 This guide covers deployment to:
+
 1. **Vercel** (Recommended) - Optimized for Next.js applications
 2. **Netlify** - Alternative serverless platform
 3. **Custom Server** - Self-hosted deployment options
@@ -37,6 +38,7 @@ This guide covers deployment to:
 Before deploying, ensure you have:
 
 ### Required Accounts
+
 - [ ] Git repository (GitHub, GitLab, or Bitbucket)
 - [ ] Deployment platform account (Vercel, Netlify, etc.)
 - [ ] WalletConnect Project ID ([Get one here](https://cloud.walletconnect.com))
@@ -44,17 +46,20 @@ Before deploying, ensure you have:
 - [ ] Mixpanel account for analytics ([Sign up](https://mixpanel.com))
 
 ### Required Services
+
 - [ ] The Graph subgraph deployed and accessible
 - [ ] Smart contracts deployed on Base network
 - [ ] RPC endpoint (Alchemy, Infura, or custom)
 - [ ] Domain name (for custom domains)
 
 ### Development Tools
+
 - Node.js 18.x or later
 - npm or yarn package manager
 - Git CLI
 
 ### Build Verification
+
 Before deploying, verify the build locally:
 
 ```bash
@@ -76,9 +81,9 @@ All environment variables must be set in your deployment platform. Variables pre
 
 ```bash
 # The Graph Subgraph URL for querying blockchain data
-NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/your-subgraph-id/zali-trivia/v1.0.0
+NEXT_PUBLIC_SUBGRAPH_URL=https://api.studio.thegraph.com/query/your-subgraph-id/reui-trivia/v1.0.0
 
-# Main Zali contract address on Base network
+# Main reui contract address on Base network
 NEXT_PUBLIC_CONTRACT_ADDRESS=0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d
 
 # USDC token contract address on Base
@@ -153,6 +158,7 @@ Vercel is the recommended platform as it's built by the Next.js team and offers 
 #### Quick Deploy
 
 1. **Connect Repository**
+
    ```bash
    # Install Vercel CLI (optional)
    npm install -g vercel
@@ -216,6 +222,7 @@ Netlify is an alternative serverless platform with excellent Next.js support.
    - Connect your Git provider and select repository
 
 2. **Configure Build Settings**
+
    ```
    Base directory: frontend
    Build command: npm run build
@@ -224,6 +231,7 @@ Netlify is an alternative serverless platform with excellent Next.js support.
 
 3. **Add netlify.toml Configuration**
    Create `frontend/netlify.toml`:
+
    ```toml
    [build]
      command = "npm run build"
@@ -274,6 +282,7 @@ Deploy using Docker containers for maximum portability.
 1. **Create Dockerfile** (see `frontend/Dockerfile`)
 
 2. **Create .dockerignore**
+
    ```
    node_modules
    .next
@@ -283,34 +292,38 @@ Deploy using Docker containers for maximum portability.
    ```
 
 3. **Build Docker Image**
+
    ```bash
    cd frontend
-   docker build -t zali-frontend:latest .
+   docker build -t reui-frontend:latest .
    ```
 
 4. **Run Container Locally**
+
    ```bash
    docker run -p 3000:3000 \
      -e NEXT_PUBLIC_SUBGRAPH_URL=your_value \
      -e NEXT_PUBLIC_CONTRACT_ADDRESS=your_value \
      -e NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_value \
-     zali-frontend:latest
+     reui-frontend:latest
    ```
 
 5. **Push to Container Registry**
+
    ```bash
    # Tag for registry
-   docker tag zali-frontend:latest your-registry.com/zali-frontend:latest
+   docker tag reui-frontend:latest your-registry.com/reui-frontend:latest
 
    # Push to registry
-   docker push your-registry.com/zali-frontend:latest
+   docker push your-registry.com/reui-frontend:latest
    ```
 
 #### Docker Compose
 
 Create `docker-compose.yml`:
+
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   frontend:
     build: ./frontend
@@ -322,6 +335,7 @@ services:
 ```
 
 Run with:
+
 ```bash
 docker-compose up -d
 ```
@@ -336,6 +350,7 @@ Configure your domain's DNS records to point to your deployment:
 
 1. Add domain in Vercel dashboard
 2. Configure DNS records:
+
    ```
    Type: A
    Name: @ (or subdomain)
@@ -350,6 +365,7 @@ Configure your domain's DNS records to point to your deployment:
 
 1. Add domain in Netlify dashboard
 2. Configure DNS records:
+
    ```
    Type: A
    Name: @ (or subdomain)
@@ -363,6 +379,7 @@ Configure your domain's DNS records to point to your deployment:
 #### For Custom Server
 
 1. Point A record to your server IP:
+
    ```
    Type: A
    Name: @
@@ -379,6 +396,7 @@ Configure your domain's DNS records to point to your deployment:
 ### SSL/TLS Certificate
 
 #### Automatic (Vercel/Netlify)
+
 - SSL certificates are automatically provisioned and renewed
 - No manual configuration required
 
@@ -430,6 +448,7 @@ Sentry is already integrated in the application for error monitoring.
    - Copy your DSN
 
 2. **Configure Environment Variables**
+
    ```bash
    NEXT_PUBLIC_SENTRY_DSN=https://your-key@sentry.io/your-project-id
    SENTRY_ENVIRONMENT=production
@@ -459,6 +478,7 @@ Track user behavior and engagement.
    - Copy your project token
 
 2. **Configure Environment Variable**
+
    ```bash
    NEXT_PUBLIC_MIXPANEL_TOKEN=your_mixpanel_token
    ```
@@ -510,6 +530,7 @@ For production logging:
 **Issue**: Build fails with "Module not found" errors
 
 **Solution**:
+
 ```bash
 # Clear cache and reinstall dependencies
 rm -rf node_modules .next package-lock.json
@@ -520,6 +541,7 @@ npm run build
 **Issue**: TypeScript errors during build
 
 **Solution**:
+
 ```bash
 # Check TypeScript configuration
 npm run lint
@@ -535,6 +557,7 @@ npx tsc --noEmit
 **Issue**: "Cannot connect to WalletConnect"
 
 **Solution**:
+
 - Verify `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` is set correctly
 - Check WalletConnect dashboard for project status
 - Ensure project ID matches the one from cloud.walletconnect.com
@@ -542,6 +565,7 @@ npx tsc --noEmit
 **Issue**: "Subgraph query failed"
 
 **Solution**:
+
 - Verify `NEXT_PUBLIC_SUBGRAPH_URL` is accessible
 - Test subgraph endpoint with curl:
   ```bash
@@ -554,6 +578,7 @@ npx tsc --noEmit
 **Issue**: "Contract interaction failed"
 
 **Solution**:
+
 - Verify contract addresses are correct for the network
 - Check `NEXT_PUBLIC_CHAIN_ID` matches your target network (8453 for Base)
 - Ensure RPC endpoint is responsive:
@@ -568,6 +593,7 @@ npx tsc --noEmit
 **Issue**: Slow page load times
 
 **Solution**:
+
 - Enable image optimization
 - Implement code splitting
 - Use Vercel Analytics to identify bottlenecks
@@ -592,6 +618,7 @@ npx tsc --noEmit
 **Issue**: High server costs
 
 **Solution**:
+
 - Use edge functions for static content
 - Implement ISR (Incremental Static Regeneration)
 - Enable caching at CDN level
@@ -601,6 +628,7 @@ npx tsc --noEmit
 **Issue**: Environment variables not loading
 
 **Solution**:
+
 - Verify variables are prefixed with `NEXT_PUBLIC_` for client-side access
 - Rebuild application after changing environment variables
 - For Vercel/Netlify: Check that variables are set in the correct environment (Production/Preview)
@@ -611,6 +639,7 @@ npx tsc --noEmit
 **Issue**: SSL certificate not provisioning
 
 **Solution**:
+
 - Wait 24-48 hours for DNS propagation
 - Verify DNS records are correctly configured
 - Check nameservers are pointing to deployment platform
@@ -619,6 +648,7 @@ npx tsc --noEmit
 **Issue**: "Mixed content" warnings
 
 **Solution**:
+
 - Ensure all external resources use HTTPS
 - Update RPC URLs to use HTTPS
 - Check for hardcoded HTTP URLs in code
@@ -693,19 +723,19 @@ netlify api restoreSiteDeploy --deploy_id=<deploy-id>
 
 ```bash
 # List available tags
-docker images zali-frontend
+docker images reui-frontend
 
 # Stop current container
-docker stop zali-frontend-container
+docker stop reui-frontend-container
 
 # Run previous version
-docker run -d --name zali-frontend-container \
+docker run -d --name reui-frontend-container \
   -p 3000:3000 \
-  zali-frontend:previous-tag
+  reui-frontend:previous-tag
 
 # Or use docker-compose with specific tag
 docker-compose down
-docker-compose up -d zali-frontend:previous-tag
+docker-compose up -d reui-frontend:previous-tag
 ```
 
 ### Git-based Rollback
@@ -798,11 +828,11 @@ on:
   push:
     branches: [main, staging]
     paths:
-      - 'frontend/**'
+      - "frontend/**"
   pull_request:
     branches: [main]
     paths:
-      - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   test:
@@ -817,8 +847,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
@@ -857,7 +887,7 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./frontend
-          vercel-args: '--prod'
+          vercel-args: "--prod"
 ```
 
 ### GitLab CI/CD
@@ -918,11 +948,13 @@ deploy:
 Configure these secrets in your CI/CD platform:
 
 #### For Vercel Deployment
+
 - `VERCEL_TOKEN`: Personal access token from Vercel
 - `VERCEL_ORG_ID`: Organization ID from Vercel
 - `VERCEL_PROJECT_ID`: Project ID from Vercel
 
 #### Environment Variables
+
 - `NEXT_PUBLIC_SUBGRAPH_URL`
 - `NEXT_PUBLIC_CONTRACT_ADDRESS`
 - `NEXT_PUBLIC_USDC_ADDRESS`
@@ -953,12 +985,13 @@ Ensure all tests pass before deployment:
 
 ```yaml
 # Example test script in package.json
-"scripts": {
-  "test:ci": "jest --ci --coverage --maxWorkers=2",
-  "test:e2e:ci": "playwright test --reporter=github",
-  "lint": "next lint",
-  "type-check": "tsc --noEmit"
-}
+"scripts":
+  {
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "test:e2e:ci": "playwright test --reporter=github",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+  }
 ```
 
 ## Security Best Practices
@@ -976,6 +1009,7 @@ Ensure all tests pass before deployment:
    - Update Sentry DSN if exposed
 
 3. **Use Environment-Specific Variables**
+
    ```bash
    # Development
    .env.local
@@ -993,36 +1027,36 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
           },
           {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
           },
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
           {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
           },
           {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin'
-          }
-        ]
-      }
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
+          },
+        ],
+      },
     ];
-  }
+  },
 };
 ```
 
@@ -1065,11 +1099,11 @@ If using API routes, implement rate limiting and authentication:
 
 ```typescript
 // Example middleware for API routes
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
 });
 
 export default limiter;
@@ -1116,20 +1150,20 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/static/:path*',
+        source: "/static/:path*",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },
       {
-        source: '/:path*.{jpg,jpeg,png,gif,ico,svg,webp}',
+        source: "/:path*.{jpg,jpeg,png,gif,ico,svg,webp}",
         headers: [
           {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },
@@ -1141,6 +1175,7 @@ const nextConfig = {
 ### Bundle Size Optimization
 
 1. **Analyze Bundle**
+
    ```bash
    # Install bundle analyzer
    npm install @next/bundle-analyzer
@@ -1151,12 +1186,13 @@ const nextConfig = {
 
 2. **Tree Shaking**
    - Import only what you need
+
    ```typescript
    // Good
-   import { useState } from 'react';
+   import { useState } from "react";
 
    // Bad
-   import * as React from 'react';
+   import * as React from "react";
    ```
 
 3. **Remove Unused Dependencies**
@@ -1183,7 +1219,7 @@ Use Vercel Analytics or custom performance monitoring:
 ```typescript
 // Example: Custom performance monitoring
 export function reportWebVitals(metric) {
-  if (metric.label === 'web-vital') {
+  if (metric.label === "web-vital") {
     console.log(metric); // Send to analytics
   }
 }
@@ -1192,12 +1228,14 @@ export function reportWebVitals(metric) {
 ### Lighthouse Score Optimization
 
 Target scores:
+
 - Performance: 90+
 - Accessibility: 100
 - Best Practices: 100
 - SEO: 90+
 
 Run lighthouse:
+
 ```bash
 npx lighthouse https://your-domain.com --view
 ```
@@ -1207,6 +1245,7 @@ npx lighthouse https://your-domain.com --view
 Before deploying to production, verify all items:
 
 ### Code Quality
+
 - [ ] All tests passing (unit, integration, E2E)
 - [ ] No TypeScript errors
 - [ ] Linting passes with no errors
@@ -1215,6 +1254,7 @@ Before deploying to production, verify all items:
 - [ ] All TODO comments addressed or documented
 
 ### Configuration
+
 - [ ] All environment variables set correctly
 - [ ] Production environment variables configured
 - [ ] Database connections verified (if applicable)
@@ -1222,6 +1262,7 @@ Before deploying to production, verify all items:
 - [ ] Contract addresses verified on block explorer
 
 ### Security
+
 - [ ] No secrets committed to repository
 - [ ] Security headers configured
 - [ ] HTTPS enabled and enforced
@@ -1231,6 +1272,7 @@ Before deploying to production, verify all items:
 - [ ] CORS properly configured
 
 ### Performance
+
 - [ ] Bundle size optimized
 - [ ] Images optimized
 - [ ] Lazy loading implemented for heavy components
@@ -1238,6 +1280,7 @@ Before deploying to production, verify all items:
 - [ ] Lighthouse score meets targets (90+ performance)
 
 ### Monitoring
+
 - [ ] Sentry error tracking configured
 - [ ] Analytics tracking implemented (Mixpanel)
 - [ ] Performance monitoring enabled
@@ -1246,6 +1289,7 @@ Before deploying to production, verify all items:
 - [ ] Log aggregation configured
 
 ### Blockchain Integration
+
 - [ ] Contract addresses verified
 - [ ] Network configuration correct (Base mainnet)
 - [ ] RPC endpoints reliable and fast
@@ -1254,6 +1298,7 @@ Before deploying to production, verify all items:
 - [ ] Transaction error handling implemented
 
 ### User Experience
+
 - [ ] All pages responsive on mobile/tablet/desktop
 - [ ] Loading states implemented
 - [ ] Error states handled gracefully
@@ -1262,6 +1307,7 @@ Before deploying to production, verify all items:
 - [ ] Transaction flows tested end-to-end
 
 ### Documentation
+
 - [ ] README updated with deployment info
 - [ ] API documentation current
 - [ ] Environment variables documented
@@ -1269,12 +1315,14 @@ Before deploying to production, verify all items:
 - [ ] Runbook created for common operations
 
 ### Backup & Recovery
+
 - [ ] Rollback procedure documented and tested
 - [ ] Backup strategy in place
 - [ ] Disaster recovery plan documented
 - [ ] Team trained on emergency procedures
 
 ### Legal & Compliance
+
 - [ ] Privacy policy in place
 - [ ] Terms of service updated
 - [ ] Cookie consent implemented (if needed)
@@ -1282,6 +1330,7 @@ Before deploying to production, verify all items:
 - [ ] Analytics opt-out available
 
 ### Post-Deployment
+
 - [ ] Production deployment verified
 - [ ] All critical user flows tested in production
 - [ ] Monitoring dashboards checked
@@ -1332,7 +1381,7 @@ vercel promote <previous-deployment-url>
 
 ## Conclusion
 
-This deployment guide covers all aspects of deploying the Zali frontend application to production. Key takeaways:
+This deployment guide covers all aspects of deploying the reui frontend application to production. Key takeaways:
 
 1. **Use Vercel for simplest deployment** - It's optimized for Next.js and requires minimal configuration
 
@@ -1354,4 +1403,4 @@ For questions or issues not covered in this guide, refer to the troubleshooting 
 
 **Last Updated**: 2026-01-29
 **Version**: 1.0.0
-**Maintained By**: Zali Development Team
+**Maintained By**: reui Development Team

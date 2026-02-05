@@ -1,6 +1,6 @@
 # Issue #147: TODO Comment Resolution Guide
 
-Complete guide to resolving all 9 TODO comments found in the Zali codebase.
+Complete guide to resolving all 9 TODO comments found in the reui codebase.
 
 ---
 
@@ -8,6 +8,7 @@ Complete guide to resolving all 9 TODO comments found in the Zali codebase.
 
 **Total TODOs Found:** 9 across 6 files  
 **Priority Distribution:**
+
 - High Priority (Blocking features): 3
 - Medium Priority (Nice to have): 4
 - Low Priority (Type improvements): 2
@@ -93,16 +94,18 @@ if (showNotifications) {
 **Reason:** Same as above - pending notification system setup
 
 **Consolidated GitHub Issue:**
+
 ```markdown
 Title: Implement Toast Notification System for Contract Operations
 Priority: Medium
 Labels: enhancement, notifications, contracts
 
 Description:
-The contract hooks (useContractRead, useContractWrite, useContractUtils) 
+The contract hooks (useContractRead, useContractWrite, useContractUtils)
 have disabled toast notifications pending implementation of a notification system.
 
 This issue should:
+
 1. Choose notification library (react-hot-toast, sonner, or custom)
 2. Implement NotificationProvider wrapper
 3. Integrate with useContractRead error handling
@@ -111,6 +114,7 @@ This issue should:
 6. Add tests for notification display
 
 Files affected:
+
 - src/hooks/useContractUtils.ts
 - src/hooks/useContractRead.ts
 - src/hooks/useContractWrite.ts (2 locations)
@@ -130,15 +134,16 @@ Files affected:
 chain: any; // TODO: Import proper chain type from wagmi
 
 // Solution:
-import type { Chain } from 'viem';
+import type { Chain } from "viem";
 // Or from wagmi:
-import { type Chain } from '@wagmi/core';
+import { type Chain } from "@wagmi/core";
 
 // Fixed:
 chain: Chain | undefined;
 ```
 
 **Implementation:**
+
 - Import proper `Chain` type from wagmi
 - Replace `any` with correct type
 - No functional changes needed
@@ -155,6 +160,7 @@ chain: undefined, // TODO: Get from public client if needed
 ```
 
 **Analysis:**
+
 - Currently undefined is correct - chain is not always available
 - Already has getChainId() available
 - Type hint comment is clear enough
@@ -190,12 +196,14 @@ loadGameSession: async (sessionId) => {
 ```
 
 **Analysis:**
+
 - Function is implemented but disabled (commented code path)
 - Requires API integration (`api.getGameSession`)
 - Affects game state management
 - Currently returns without loading data
 
 **Implementation Steps:**
+
 1. Verify API endpoint exists: `GET /api/sessions/:sessionId`
 2. Uncomment API call
 3. Add error handling
@@ -203,6 +211,7 @@ loadGameSession: async (sessionId) => {
 5. Verify state updates correctly
 
 **Suggested GitHub Issue:**
+
 ```markdown
 Title: Implement Game Session Loading from API
 Priority: High
@@ -213,6 +222,7 @@ The loadGameSession action in gameSlice is currently disabled.
 This needs to be implemented to load saved game sessions.
 
 Requirements:
+
 1. API endpoint: GET /api/sessions/:sessionId
 2. Response should include: {id, questions, currentQuestion, score, etc.}
 3. Update gameSlice state with loaded session
@@ -231,10 +241,10 @@ Requirements:
 ```typescript
 // Current:
 try {
-  if (!trustedData || typeof trustedData !== 'object') {
+  if (!trustedData || typeof trustedData !== "object") {
     return {
       valid: false,
-      error: 'Invalid trusted data format',
+      error: "Invalid trusted data format",
     };
   }
 
@@ -246,21 +256,23 @@ try {
     valid: true,
   };
 } catch (error) {
-  console.error('Frame validation error:', error);
+  console.error("Frame validation error:", error);
   return {
     valid: false,
-    error: 'Validation failed',
+    error: "Validation failed",
   };
 }
 ```
 
 **Analysis:**
+
 - Currently returns `valid: true` for all inputs
 - Security issue: all frames would be accepted
 - Requires Farcaster hub client setup
 - Should verify Farcaster frame signatures
 
 **Implementation Steps:**
+
 1. Install `@farcaster/hub-nodejs` package
 2. Setup hub client
 3. Implement proper signature verification
@@ -268,6 +280,7 @@ try {
 5. Test with real frames
 
 **Suggested GitHub Issue:**
+
 ```markdown
 Title: Implement Farcaster Frame Signature Verification
 Priority: High
@@ -278,6 +291,7 @@ Frame validation in frameUtils.ts currently accepts all frames without verificat
 This is a security issue and needs proper signature verification.
 
 Requirements:
+
 1. Use @farcaster/hub-nodejs for verification
 2. Validate frame signature against Farcaster public key
 3. Validate message with validateMessage API
@@ -304,12 +318,14 @@ return {
 ```
 
 **Analysis:**
+
 - Currently hardcoded empty array
 - Should query API for unclaimed game sessions
 - Part of reward/incentive system
 - Affects user experience on rewards page
 
 **Implementation Steps:**
+
 1. Add query hook for unclaimed sessions
 2. Call API to fetch sessions with unclaimed rewards
 3. Filter and format response
@@ -318,6 +334,7 @@ return {
 6. Test with mock data
 
 **Suggested GitHub Issue:**
+
 ```markdown
 Title: Implement Unclaimed Game Sessions Tracking
 Priority: Medium
@@ -328,6 +345,7 @@ The useRewardManagement hook returns an empty array for unclaimedSessions.
 This should fetch and return actual unclaimed game sessions from the API.
 
 Requirements:
+
 1. Create query hook for unclaimed sessions
 2. API endpoint: GET /api/rewards/unclaimed-sessions
 3. Response should include session details, reward amounts, etc.
@@ -340,35 +358,39 @@ Requirements:
 
 ## 📊 Resolution Summary
 
-| TODO | File | Priority | Type | Action | Est. Effort |
-|------|------|----------|------|--------|-------------|
-| 1-4 | Notification System | Medium | Code | Remove comments, create issue | 1 hour |
-| 5 | useEnhancedContract chain type | Low | Type | Add type import | 15 min |
-| 6 | useEnhancedContract chain init | Low | Comment | Remove comment | 5 min |
-| 7 | Game session loading | High | Feature | Implement, create issue | 2-3 hours |
-| 8 | Frame signature verification | High | Security | Implement, create issue | 2-3 hours |
-| 9 | Unclaimed sessions | Medium | Feature | Implement, create issue | 1-2 hours |
+| TODO | File                           | Priority | Type     | Action                        | Est. Effort |
+| ---- | ------------------------------ | -------- | -------- | ----------------------------- | ----------- |
+| 1-4  | Notification System            | Medium   | Code     | Remove comments, create issue | 1 hour      |
+| 5    | useEnhancedContract chain type | Low      | Type     | Add type import               | 15 min      |
+| 6    | useEnhancedContract chain init | Low      | Comment  | Remove comment                | 5 min       |
+| 7    | Game session loading           | High     | Feature  | Implement, create issue       | 2-3 hours   |
+| 8    | Frame signature verification   | High     | Security | Implement, create issue       | 2-3 hours   |
+| 9    | Unclaimed sessions             | Medium   | Feature  | Implement, create issue       | 1-2 hours   |
 
 ---
 
 ## ✅ Resolution Plan
 
 ### Phase 1: Quick Fixes (15-20 minutes)
+
 - [ ] Remove notification system TODOs (keep disabled code)
 - [ ] Add chain type import
 - [ ] Remove chain initialization comment
 
 ### Phase 2: Code Improvements (30-40 minutes)
+
 - [ ] Improve gameSlice session loading placeholder
 - [ ] Document disabled features
 
 ### Phase 3: Create GitHub Issues (30-45 minutes)
+
 - [ ] Issue #148: Implement Toast Notification System
 - [ ] Issue #149: Implement Game Session Loading
 - [ ] Issue #150: Implement Farcaster Frame Signature Verification
 - [ ] Issue #151: Implement Unclaimed Sessions Query
 
 ### Phase 4: Documentation (30-45 minutes)
+
 - [ ] Update TODO documentation
 - [ ] Create issue templates
 - [ ] Update developer guide
@@ -408,7 +430,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const addToast = useCallback((toast: Toast) => {
     setToasts(prev => [...prev, toast]);
-    
+
     if (toast.duration !== Infinity) {
       setTimeout(() => {
         setToasts(prev => prev.filter(t => t.id !== toast.id));
@@ -439,21 +461,25 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 ## 📚 GitHub Issues to Create
 
 ### Issue #148: Toast Notification System Implementation
+
 - Priority: Medium
 - Labels: enhancement, notifications, ui
 - Affects: 3 files (useContractRead, useContractWrite, useContractUtils)
 
 ### Issue #149: Game Session Loading from API
+
 - Priority: High
 - Labels: feature, game, backend
 - Affects: gameSlice.ts
 
 ### Issue #150: Farcaster Frame Signature Verification
+
 - Priority: High
 - Labels: security, farcaster, frames
 - Affects: frameUtils.ts
 
 ### Issue #151: Unclaimed Game Sessions Query
+
 - Priority: Medium
 - Labels: feature, rewards, queries
 - Affects: useRewardManagement.ts
@@ -465,6 +491,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 ### 1. Remove Notification TODOs
 
 Replace in 4 files:
+
 - `useContractUtils.ts`: Line 55
 - `useContractRead.ts`: Line 75
 - `useContractWrite.ts`: Lines 85, 209
@@ -474,12 +501,14 @@ Action: Remove `// TODO:` comment, keep disabled code
 ### 2. Fix Type Imports
 
 In `useEnhancedContract.ts`:
+
 - Line 79: Add type import for `Chain`
 - Line 294: Remove TODO comment or update
 
 ### 3. Create Documentation
 
 Create `TODOS_RESOLVED.md` documenting:
+
 - What was removed and why
 - What was created as GitHub issues
 - Reference to new issues
@@ -492,12 +521,14 @@ Create `TODOS_RESOLVED.md` documenting:
 **Policy:** No TODO comments in code
 
 **Instead:**
+
 1. ✅ Create GitHub issue for any pending work
 2. ✅ Link issue number in PR comments if needed
 3. ✅ Use issue labels for tracking
 4. ✅ Reference issues in commit messages
 
 **Workflow:**
+
 ```
 Issue Found → Create GitHub Issue → Reference in PR → Resolve → Close Issue
 ```

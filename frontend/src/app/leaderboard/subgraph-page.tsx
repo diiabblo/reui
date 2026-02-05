@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { useLeaderboardSubgraph, useGlobalStats } from '@/hooks/useSubgraph';
-import { LeaderboardSkeleton, StatsCardSkeleton } from '@/components/skeletons';
-import { formatUnits } from 'viem';
+import { motion } from "framer-motion";
+import { useLeaderboardSubgraph, useGlobalStats } from "@/hooks/useSubgraph";
+import { LeaderboardSkeleton, StatsCardSkeleton } from "@/components/skeletons";
+import { formatUnits } from "viem";
 
 export default function LeaderboardPageSubgraph() {
   const { players, loading, error, refetch } = useLeaderboardSubgraph(10);
@@ -22,7 +22,7 @@ export default function LeaderboardPageSubgraph() {
             🏆 Leaderboard
           </h1>
           <p className="text-gray-600 text-lg">
-            Top players in Zali Trivia Game
+            Top players in reui Trivia Game
           </p>
           <p className="text-sm text-gray-500 mt-2">
             ⚡ Powered by The Graph - Lightning fast queries
@@ -64,25 +64,40 @@ export default function LeaderboardPageSubgraph() {
                   <div
                     key={player.id}
                     className={`flex items-center justify-between p-4 rounded-xl border-2 ${
-                      index === 0 ? 'bg-yellow-50 border-yellow-200' :
-                      index === 1 ? 'bg-gray-50 border-gray-200' :
-                      index === 2 ? 'bg-orange-50 border-orange-200' :
-                      'bg-white border-gray-100'
+                      index === 0
+                        ? "bg-yellow-50 border-yellow-200"
+                        : index === 1
+                          ? "bg-gray-50 border-gray-200"
+                          : index === 2
+                            ? "bg-orange-50 border-orange-200"
+                            : "bg-white border-gray-100"
                     }`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
-                        index === 0 ? 'bg-yellow-500 text-white' :
-                        index === 1 ? 'bg-gray-400 text-white' :
-                        index === 2 ? 'bg-orange-500 text-white' :
-                        'bg-blue-500 text-white'
-                      }`}>
-                        {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : index + 1}
+                      <div
+                        className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
+                          index === 0
+                            ? "bg-yellow-500 text-white"
+                            : index === 1
+                              ? "bg-gray-400 text-white"
+                              : index === 2
+                                ? "bg-orange-500 text-white"
+                                : "bg-blue-500 text-white"
+                        }`}
+                      >
+                        {index === 0
+                          ? "🥇"
+                          : index === 1
+                            ? "🥈"
+                            : index === 2
+                              ? "🥉"
+                              : index + 1}
                       </div>
 
                       <div>
                         <h3 className="font-bold text-gray-900">
-                          {player.address.slice(0, 6)}...{player.address.slice(-4)}
+                          {player.address.slice(0, 6)}...
+                          {player.address.slice(-4)}
                         </h3>
                         <div className="flex gap-4 text-xs text-gray-600">
                           <span>{player.correctAnswers} correct</span>
@@ -106,10 +121,14 @@ export default function LeaderboardPageSubgraph() {
             ) : (
               <div className="text-center py-12">
                 <div className="text-6xl mb-4">🎮</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">No Players Yet</h3>
-                <p className="text-gray-600 mb-6">Be the first to play and claim the top spot!</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  No Players Yet
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Be the first to play and claim the top spot!
+                </p>
                 <button
-                  onClick={() => window.location.href = '/play'}
+                  onClick={() => (window.location.href = "/play")}
                   className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all"
                 >
                   Start Playing

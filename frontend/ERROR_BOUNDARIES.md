@@ -1,6 +1,6 @@
 # Error Boundary System
 
-This document describes the comprehensive error boundary system implemented in the Zali application.
+This document describes the comprehensive error boundary system implemented in the reui application.
 
 ## Overview
 
@@ -19,20 +19,21 @@ The error boundary system provides:
 The main error boundary component with comprehensive error handling features.
 
 ```tsx
-import { ErrorBoundary } from '@/components/errorBoundaries';
+import { ErrorBoundary } from "@/components/errorBoundaries";
 
 <ErrorBoundary
   name="MyComponent"
   level="component"
   enableAutoRecovery={true}
   showDetails={false}
-  onError={(error, errorInfo) => console.log('Error caught:', error)}
+  onError={(error, errorInfo) => console.log("Error caught:", error)}
 >
   <MyComponent />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 **Props:**
+
 - `name`: Component identifier for logging
 - `level`: Error level ('page' | 'section' | 'component')
 - `enableAutoRecovery`: Enable automatic recovery attempts
@@ -45,14 +46,15 @@ import { ErrorBoundary } from '@/components/errorBoundaries';
 Full-screen error boundary for page-level errors.
 
 ```tsx
-import { RouteErrorBoundary } from '@/components/errorBoundaries';
+import { RouteErrorBoundary } from "@/components/errorBoundaries";
 
 <RouteErrorBoundary routeName="Dashboard">
   <DashboardPage />
-</RouteErrorBoundary>
+</RouteErrorBoundary>;
 ```
 
 **Features:**
+
 - Full-screen error UI
 - Navigation options (back, home, refresh, retry)
 - Route-specific error context
@@ -63,17 +65,15 @@ import { RouteErrorBoundary } from '@/components/errorBoundaries';
 Specialized error boundary for form components.
 
 ```tsx
-import { FormErrorBoundary } from '@/components/errorBoundaries';
+import { FormErrorBoundary } from "@/components/errorBoundaries";
 
-<FormErrorBoundary 
-  formName="Registration"
-  onReset={() => form.reset()}
->
+<FormErrorBoundary formName="Registration" onReset={() => form.reset()}>
   <RegistrationForm />
-</FormErrorBoundary>
+</FormErrorBoundary>;
 ```
 
 **Features:**
+
 - Form-specific error messaging
 - Form reset functionality
 - Compact error UI
@@ -84,14 +84,15 @@ import { FormErrorBoundary } from '@/components/errorBoundaries';
 Error boundary for React Query data fetching errors.
 
 ```tsx
-import { QueryErrorBoundary } from '@/components/errorBoundaries';
+import { QueryErrorBoundary } from "@/components/errorBoundaries";
 
 <QueryErrorBoundary>
   <DataComponent />
-</QueryErrorBoundary>
+</QueryErrorBoundary>;
 ```
 
 **Features:**
+
 - Integration with React Query error reset
 - Data loading error UI
 - Automatic retry functionality
@@ -102,17 +103,15 @@ import { QueryErrorBoundary } from '@/components/errorBoundaries';
 Combines React Suspense with error boundary functionality.
 
 ```tsx
-import { SuspenseErrorBoundary } from '@/components/errorBoundaries';
+import { SuspenseErrorBoundary } from "@/components/errorBoundaries";
 
-<SuspenseErrorBoundary 
-  fallback={<LoadingSpinner />}
-  name="LazyComponent"
->
+<SuspenseErrorBoundary fallback={<LoadingSpinner />} name="LazyComponent">
   <LazyLoadedComponent />
-</SuspenseErrorBoundary>
+</SuspenseErrorBoundary>;
 ```
 
 **Features:**
+
 - Loading state management
 - Error state handling
 - Lazy component support
@@ -125,15 +124,15 @@ import { SuspenseErrorBoundary } from '@/components/errorBoundaries';
 The system includes automatic error recovery with configurable strategies:
 
 ```tsx
-import { useErrorRecovery } from '@/components/errorBoundaries';
+import { useErrorRecovery } from "@/components/errorBoundaries";
 
 function MyComponent() {
   const { attemptRecovery, addRecoveryStrategy } = useErrorRecovery();
 
   // Add custom recovery strategy
   addRecoveryStrategy({
-    name: 'CustomRecovery',
-    canRecover: (error) => error.message.includes('custom'),
+    name: "CustomRecovery",
+    canRecover: (error) => error.message.includes("custom"),
     recover: async (error) => {
       // Custom recovery logic
       return true; // Return true if recovered
@@ -153,12 +152,12 @@ function MyComponent() {
 ### Recovery Manager
 
 ```tsx
-import { globalRecoveryManager } from '@/components/errorBoundaries';
+import { globalRecoveryManager } from "@/components/errorBoundaries";
 
 // Add global recovery strategy
 globalRecoveryManager.addStrategy({
-  name: 'DatabaseRecovery',
-  canRecover: (error) => error.message.includes('database'),
+  name: "DatabaseRecovery",
+  canRecover: (error) => error.message.includes("database"),
   recover: async () => {
     // Attempt database reconnection
     return await reconnectDatabase();
@@ -173,7 +172,7 @@ globalRecoveryManager.addStrategy({
 Handles unhandled errors and promise rejections globally:
 
 ```tsx
-import { useGlobalErrorHandler } from '@/components/errorBoundaries';
+import { useGlobalErrorHandler } from "@/components/errorBoundaries";
 
 function App() {
   useGlobalErrorHandler({
@@ -190,6 +189,7 @@ function App() {
 ```
 
 **Features:**
+
 - Catches unhandled promise rejections
 - Handles global JavaScript errors
 - Configurable logging options
@@ -200,9 +200,9 @@ function App() {
 ### Error Analysis
 
 ```tsx
-import { analyzeError, getErrorMessage } from '@/components/errorBoundaries';
+import { analyzeError, getErrorMessage } from "@/components/errorBoundaries";
 
-const error = new Error('Network timeout');
+const error = new Error("Network timeout");
 const analysis = analyzeError(error);
 
 console.log(analysis.severity); // 'warning' | 'critical' | 'info'
@@ -213,13 +213,17 @@ console.log(getErrorMessage(error)); // User-friendly message
 ### Error Logging
 
 ```tsx
-import { errorLogger } from '@/components/errorBoundaries';
+import { errorLogger } from "@/components/errorBoundaries";
 
-errorLogger.logError(error, {
-  component: 'UserProfile',
-  level: 'component',
-  context: { userId: '123' },
-}, 'warning');
+errorLogger.logError(
+  error,
+  {
+    component: "UserProfile",
+    level: "component",
+    context: { userId: "123" },
+  },
+  "warning",
+);
 ```
 
 ## Usage Examples
@@ -228,7 +232,7 @@ errorLogger.logError(error, {
 
 ```tsx
 // app/dashboard/page.tsx
-import { RouteErrorBoundary } from '@/components/errorBoundaries';
+import { RouteErrorBoundary } from "@/components/errorBoundaries";
 
 export default function DashboardPage() {
   return (
@@ -243,19 +247,14 @@ export default function DashboardPage() {
 
 ```tsx
 // components/RegistrationForm.tsx
-import { FormErrorBoundary } from '@/components/errorBoundaries';
+import { FormErrorBoundary } from "@/components/errorBoundaries";
 
 export function RegistrationForm() {
   const form = useForm();
 
   return (
-    <FormErrorBoundary 
-      formName="Registration"
-      onReset={() => form.reset()}
-    >
-      <form onSubmit={form.handleSubmit}>
-        {/* Form fields */}
-      </form>
+    <FormErrorBoundary formName="Registration" onReset={() => form.reset()}>
+      <form onSubmit={form.handleSubmit}>{/* Form fields */}</form>
     </FormErrorBoundary>
   );
 }
@@ -265,7 +264,7 @@ export function RegistrationForm() {
 
 ```tsx
 // components/UserList.tsx
-import { QueryErrorBoundary } from '@/components/errorBoundaries';
+import { QueryErrorBoundary } from "@/components/errorBoundaries";
 
 export function UserList() {
   return (
@@ -276,10 +275,10 @@ export function UserList() {
 }
 
 function UserListContent() {
-  const { data, error } = useQuery('users', fetchUsers);
-  
+  const { data, error } = useQuery("users", fetchUsers);
+
   if (error) throw error; // Will be caught by QueryErrorBoundary
-  
+
   return <div>{/* Render users */}</div>;
 }
 ```
@@ -288,14 +287,14 @@ function UserListContent() {
 
 ```tsx
 // components/LazyDashboard.tsx
-import { SuspenseErrorBoundary } from '@/components/errorBoundaries';
-import { lazy } from 'react';
+import { SuspenseErrorBoundary } from "@/components/errorBoundaries";
+import { lazy } from "react";
 
-const LazyDashboard = lazy(() => import('./Dashboard'));
+const LazyDashboard = lazy(() => import("./Dashboard"));
 
 export function LazyDashboardWrapper() {
   return (
-    <SuspenseErrorBoundary 
+    <SuspenseErrorBoundary
       fallback={<DashboardSkeleton />}
       name="LazyDashboard"
     >
@@ -313,15 +312,15 @@ export function ComplexPage() {
   return (
     <RouteErrorBoundary routeName="ComplexPage">
       <Header />
-      
+
       <QueryErrorBoundary>
         <DataSection />
       </QueryErrorBoundary>
-      
+
       <FormErrorBoundary formName="Settings">
         <SettingsForm />
       </FormErrorBoundary>
-      
+
       <SuspenseErrorBoundary>
         <LazyWidget />
       </SuspenseErrorBoundary>
@@ -335,7 +334,11 @@ export function ComplexPage() {
 ### Custom Error Fallback
 
 ```tsx
-const CustomErrorFallback = (error: Error, errorInfo: ErrorInfo, reset: () => void) => (
+const CustomErrorFallback = (
+  error: Error,
+  errorInfo: ErrorInfo,
+  reset: () => void,
+) => (
   <div className="custom-error-container">
     <h2>Oops! Something went wrong</h2>
     <details>
@@ -348,13 +351,13 @@ const CustomErrorFallback = (error: Error, errorInfo: ErrorInfo, reset: () => vo
 
 <ErrorBoundary fallback={CustomErrorFallback}>
   <MyComponent />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ### Themed Error UI
 
 ```tsx
-const ThemedErrorBoundary = ({ children, theme = 'light' }) => (
+const ThemedErrorBoundary = ({ children, theme = "light" }) => (
   <ErrorBoundary
     fallback={(error, errorInfo, reset) => (
       <div className={`error-boundary ${theme}`}>
@@ -418,8 +421,8 @@ const ThemedErrorBoundary = ({ children, theme = 'light' }) => (
 const { addRecoveryStrategy } = useErrorRecovery();
 
 addRecoveryStrategy({
-  name: 'AuthRecovery',
-  canRecover: (error) => error.message.includes('unauthorized'),
+  name: "AuthRecovery",
+  canRecover: (error) => error.message.includes("unauthorized"),
   recover: async () => {
     await refreshAuthToken();
     return true;
@@ -433,7 +436,7 @@ addRecoveryStrategy({
 <ErrorBoundary
   onError={(error, errorInfo) => {
     // Log to external service in production
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       logToExternalService(error, errorInfo);
     }
   }}
@@ -447,18 +450,18 @@ addRecoveryStrategy({
 ### Unit Tests
 
 ```tsx
-import { render, screen } from '@testing-library/react';
-import { ErrorBoundary } from '@/components/errorBoundaries';
+import { render, screen } from "@testing-library/react";
+import { ErrorBoundary } from "@/components/errorBoundaries";
 
 const ThrowError = () => {
-  throw new Error('Test error');
+  throw new Error("Test error");
 };
 
-test('should catch and display error', () => {
+test("should catch and display error", () => {
   render(
     <ErrorBoundary>
       <ThrowError />
-    </ErrorBoundary>
+    </ErrorBoundary>,
   );
 
   expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
@@ -468,16 +471,16 @@ test('should catch and display error', () => {
 ### Integration Tests
 
 ```tsx
-test('should recover from network errors', async () => {
+test("should recover from network errors", async () => {
   const { rerender } = render(
     <ErrorBoundary enableAutoRecovery={true}>
       <NetworkComponent shouldFail={true} />
-    </ErrorBoundary>
+    </ErrorBoundary>,
   );
 
   // Wait for auto-recovery
   await waitFor(() => {
-    expect(screen.getByText('Recovered')).toBeInTheDocument();
+    expect(screen.getByText("Recovered")).toBeInTheDocument();
   });
 });
 ```
@@ -509,7 +512,7 @@ test('should recover from network errors', async () => {
 ### 2. Use Lazy Loading for Error UI
 
 ```tsx
-const LazyErrorFallback = lazy(() => import('./ErrorFallback'));
+const LazyErrorFallback = lazy(() => import("./ErrorFallback"));
 
 <ErrorBoundary
   fallback={(error, errorInfo, reset) => (
@@ -519,7 +522,7 @@ const LazyErrorFallback = lazy(() => import('./ErrorFallback'));
   )}
 >
   <Component />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ### 3. Debounce Error Logging
@@ -531,7 +534,7 @@ const debouncedLogger = debounce((error) => {
 
 <ErrorBoundary onError={debouncedLogger}>
   <Component />
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ## Troubleshooting
@@ -556,7 +559,7 @@ Enable detailed error logging:
 
 ```tsx
 <ErrorBoundary
-  showDetails={process.env.NODE_ENV === 'development'}
+  showDetails={process.env.NODE_ENV === "development"}
   enableLogging={true}
 >
   <Component />

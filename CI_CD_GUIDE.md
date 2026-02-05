@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the CI/CD pipeline setup for the Zali project, including automated testing, code quality checks, and deployment processes.
+This document describes the CI/CD pipeline setup for the reui project, including automated testing, code quality checks, and deployment processes.
 
 ## Workflows
 
@@ -11,12 +11,14 @@ This document describes the CI/CD pipeline setup for the Zali project, including
 Runs on every PR and push to `main`/`develop` branches when frontend code changes.
 
 **Jobs:**
+
 - **Lint**: ESLint and TypeScript checks
 - **Test**: Unit tests with Jest
 - **E2E**: End-to-end tests with Playwright
 - **Build**: Next.js production build
 
 **Artifacts:**
+
 - Test coverage reports
 - Playwright test reports
 - Build output
@@ -26,12 +28,14 @@ Runs on every PR and push to `main`/`develop` branches when frontend code change
 Runs on every PR and push to `main`/`develop` branches when contract code changes.
 
 **Jobs:**
+
 - **Test**: Foundry unit tests
 - **Lint**: Solidity formatting checks
 - **Gas Report**: Gas usage analysis
 - **Slither**: Security analysis
 
 **Artifacts:**
+
 - Coverage reports
 - Gas snapshots
 - Security scan results
@@ -41,6 +45,7 @@ Runs on every PR and push to `main`/`develop` branches when contract code change
 Runs on push to `main` branch or manually via workflow dispatch.
 
 **Jobs:**
+
 - **Deploy**: Build and deploy to Vercel
   - Runs tests before deployment
   - Creates Sentry release
@@ -51,6 +56,7 @@ Runs on push to `main` branch or manually via workflow dispatch.
 Runs on all PRs and pushes.
 
 **Jobs:**
+
 - **Coverage**: Generate and upload code coverage
 - **Bundle Size**: Check bundle size against budget
 - **Dependency Review**: Security check for dependencies
@@ -62,6 +68,7 @@ Runs on all PRs and pushes.
 Runs on PR open, edit, or synchronize.
 
 **Jobs:**
+
 - **Label**: Auto-label PRs based on changed files
 - **Size**: Add size labels
 - **Lint PR Title**: Enforce conventional commit format
@@ -75,12 +82,14 @@ Runs on PR open, edit, or synchronize.
 Configure these in GitHub repository settings:
 
 ### Deployment
+
 - `VERCEL_TOKEN`: Vercel authentication token
 - `VERCEL_ORG_ID`: Vercel organization ID
 - `VERCEL_PROJECT_ID`: Vercel project ID
 - `VERCEL_SCOPE`: Vercel team scope
 
 ### Environment Variables
+
 - `NEXT_PUBLIC_SUBGRAPH_URL`
 - `NEXT_PUBLIC_CONTRACT_ADDRESS`
 - `NEXT_PUBLIC_USDC_ADDRESS`
@@ -93,14 +102,17 @@ Configure these in GitHub repository settings:
 - `NEXT_PUBLIC_MIXPANEL_TOKEN`
 
 ### Monitoring
+
 - `SENTRY_AUTH_TOKEN`: Sentry API token
 - `SENTRY_ORG`: Sentry organization
 - `SENTRY_PROJECT`: Sentry project name
 
 ### Notifications
+
 - `SLACK_WEBHOOK`: Slack webhook URL for notifications
 
 ### Code Coverage
+
 - `CODECOV_TOKEN`: Codecov upload token
 
 ## Branch Protection Rules
@@ -200,6 +212,7 @@ Trigger manual deployment via GitHub Actions:
 ### Failed CI Checks
 
 1. **Linting Failures**
+
    ```bash
    npm run lint --fix
    ```
@@ -246,6 +259,7 @@ Trigger manual deployment via GitHub Actions:
 ## Continuous Improvement
 
 The CI/CD pipeline is continuously improved based on:
+
 - Build times
 - Test reliability
 - Developer feedback
@@ -262,6 +276,7 @@ Suggest improvements by opening an issue or PR!
 ## Support
 
 For CI/CD issues:
+
 1. Check this documentation
 2. Review GitHub Actions logs
 3. Contact the maintainers

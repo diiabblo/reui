@@ -1,6 +1,6 @@
-# Contributing to Zali
+# Contributing to reui
 
-Thank you for your interest in contributing to Zali! This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to reui! This document provides guidelines and instructions for contributing to the project.
 
 ## Table of Contents
 
@@ -32,17 +32,20 @@ By participating in this project, you agree to maintain a respectful and inclusi
 
 1. Fork the repository on GitHub
 2. Clone your fork locally:
+
    ```bash
-   git clone https://github.com/YOUR_USERNAME/Zali.git
-   cd Zali
+   git clone https://github.com/YOUR_USERNAME/reui.git
+   cd reui
    ```
 
 3. Add the upstream repository:
+
    ```bash
-   git remote add upstream https://github.com/DeborahOlaboye/Zali.git
+   git remote add upstream https://github.com/DeborahOlaboye/reui.git
    ```
 
 4. Install dependencies:
+
    ```bash
    # Frontend dependencies
    cd frontend
@@ -64,12 +67,14 @@ By participating in this project, you agree to maintain a respectful and inclusi
 ## Development Workflow
 
 1. **Sync with upstream**:
+
    ```bash
    git checkout main
    git pull upstream main
    ```
 
 2. **Create a feature branch**:
+
    ```bash
    git checkout -b feat/your-feature-name
    ```
@@ -79,6 +84,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
 4. **Commit your changes** following our commit guidelines
 
 5. **Push to your fork**:
+
    ```bash
    git push origin feat/your-feature-name
    ```
@@ -107,6 +113,7 @@ Use the following prefixes for branch names:
   - Example: `perf/optimize-queries`
 
 For issue-specific branches, use:
+
 - `issue-{number}-{description}`
   - Example: `issue-137-cicd-pipeline`
 
@@ -181,6 +188,7 @@ setup, configuration, and troubleshooting for multiple platforms.
 ### Before Opening a PR
 
 1. **Update your branch** with the latest changes from main:
+
    ```bash
    git checkout main
    git pull upstream main
@@ -189,6 +197,7 @@ setup, configuration, and troubleshooting for multiple platforms.
    ```
 
 2. **Run all tests** and ensure they pass:
+
    ```bash
    # Frontend tests
    cd frontend
@@ -272,11 +281,13 @@ All pull requests must pass the following automated checks:
 ### Frontend Testing
 
 1. **Unit Tests**: Test individual components and functions
+
    ```bash
    npm run test
    ```
 
 2. **Integration Tests**: Test component interactions
+
    ```bash
    npm run test:integration
    ```
@@ -289,16 +300,19 @@ All pull requests must pass the following automated checks:
 ### Smart Contract Testing
 
 1. **Unit Tests**: Test individual contract functions
+
    ```bash
    forge test
    ```
 
 2. **Integration Tests**: Test contract interactions
+
    ```bash
    forge test --match-path test/integration/**
    ```
 
 3. **Coverage**: Generate coverage report
+
    ```bash
    forge coverage
    ```
@@ -381,16 +395,17 @@ All pull requests must pass the following automated checks:
 ## Recognition
 
 Contributors will be recognized in:
+
 - GitHub contributors page
 - Release notes for significant contributions
 - Project documentation
 
 ## License
 
-By contributing to Zali, you agree that your contributions will be licensed under the same license as the project.
+By contributing to reui, you agree that your contributions will be licensed under the same license as the project.
 
 ---
 
-**Thank you for contributing to Zali!** 🎉
+**Thank you for contributing to reui!** 🎉
 
 For questions or clarifications, please open an issue or reach out to the maintainers.

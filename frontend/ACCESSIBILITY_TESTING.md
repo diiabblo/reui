@@ -1,6 +1,6 @@
 # Accessibility Testing Guide
 
-Comprehensive guide for testing Zali's accessibility features.
+Comprehensive guide for testing reui's accessibility features.
 
 ## Automated Testing
 
@@ -13,6 +13,7 @@ npm test -- accessibility.test.tsx
 ```
 
 Tests verify:
+
 - No axe violations
 - Proper semantic HTML
 - ARIA attributes present
@@ -87,11 +88,13 @@ Tests verify:
 ### NVDA (Windows)
 
 **Installation**:
+
 ```bash
 # Download from https://www.nvaccess.org/
 ```
 
 **Basic Commands**:
+
 - `Insert+Arrow Down`: Read full page
 - `Insert+Arrow Up`: Speak previous
 - `H`: Jump to next heading
@@ -102,6 +105,7 @@ Tests verify:
 - `B`: Jump to button
 
 **Testing**:
+
 1. Start NVDA
 2. Navigate with NVDA commands
 3. Verify all content readable
@@ -111,6 +115,7 @@ Tests verify:
 ### JAWS (Windows)
 
 Similar to NVDA. Key commands:
+
 - `Insert+H`: Jump to heading
 - `Insert+F3`: Open find dialog
 - `Insert+F5`: List landmarks
@@ -120,6 +125,7 @@ Similar to NVDA. Key commands:
 ### VoiceOver (Mac/iOS)
 
 **Mac**:
+
 - `Cmd+F5`: Enable VoiceOver
 - `VO+Right Arrow`: Next item
 - `VO+Left Arrow`: Previous item
@@ -127,6 +133,7 @@ Similar to NVDA. Key commands:
 - `VO+Space`: Activate
 
 **iOS**:
+
 - Settings > Accessibility > VoiceOver
 - Swipe right: Next element
 - Swipe left: Previous element
@@ -228,7 +235,7 @@ Similar to NVDA. Key commands:
 3. **Required Fields**:
    - Indicated visually
    - Announced by screen reader
-   - * or "required" text
+   - - or "required" text
 
 4. **Input Types**:
    - Correct type used
@@ -291,42 +298,50 @@ Use this template to document accessibility testing:
 **Component**: Component Name
 
 ## Automated Testing
+
 - [ ] Axe: PASS/FAIL
-- [ ] Lighthouse: Score ___/100
+- [ ] Lighthouse: Score \_\_\_/100
 - [ ] ESLint: PASS/FAIL
 
 ## Manual Testing
 
 ### Keyboard Navigation
+
 - [ ] All elements reachable
 - [ ] No traps
 - [ ] Focus visible
 - [ ] Logical order
 
 ### Screen Reader
+
 - [x] NVDA: PASS/FAIL
 - [ ] JAWS: PASS/FAIL
 - [ ] VoiceOver: PASS/FAIL
 
 ### Color Contrast
+
 - [ ] Text: ✓ WCAG AA
 - [ ] Graphics: ✓ WCAG AA
 
 ### Issues Found
+
 1. Issue 1
 2. Issue 2
 
 ### Recommendations
+
 1. Recommendation 1
 2. Recommendation 2
 
 ## Conclusion
+
 PASS/FAIL - Overall accessibility status
 ```
 
 ## Quick Testing Checklist
 
 **Before Merging PR**:
+
 - [ ] Run jest-axe tests
 - [ ] Manual keyboard test
 - [ ] Screen reader spot check
@@ -334,6 +349,7 @@ PASS/FAIL - Overall accessibility status
 - [ ] Mobile responsive test
 
 **Before Release**:
+
 - [ ] Full keyboard test
 - [ ] Full screen reader test (≥2)
 - [ ] Lighthouse audit (≥90)

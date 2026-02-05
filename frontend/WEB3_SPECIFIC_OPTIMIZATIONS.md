@@ -1,6 +1,6 @@
-# Web3-Specific & Frontend Performance Optimizations for Zali
+# Web3-Specific & Frontend Performance Optimizations for reui
 
-Tailored optimization strategies for Zali's Web3 trivia game architecture and specific use cases.
+Tailored optimization strategies for reui's Web3 trivia game architecture and specific use cases.
 
 ---
 
@@ -31,7 +31,7 @@ Gzipped: ~75KB
 
 ---
 
-## ⚡ Optimization Strategy for Zali
+## ⚡ Optimization Strategy for reui
 
 ### Strategy 1: Load Web3 Only When Needed
 
@@ -45,13 +45,13 @@ Gzipped: ~75KB
 export async function loadWeb3Libraries() {
   // Only load when actually needed
   if (typeof window === 'undefined') return null;
-  
+
   const [wagmi, viem, appkit] = await Promise.all([
     import('wagmi'),
     import('viem'),
     import('@reown/appkit'),
   ]);
-  
+
   return { wagmi, viem, appkit };
 }
 
@@ -77,6 +77,7 @@ export default function Home() {
 ```
 
 **Impact:**
+
 - Home page initial JS: 220KB → 140KB (-36%)
 - Web3 loads only on `/game` route
 
@@ -96,16 +97,16 @@ const nextConfig = {
         // Separate Web3 libraries into their own chunk
         web3: {
           test: /[\\/]node_modules[\\/](wagmi|viem|@reown|@wagmi|@tanstack)[\\/]/,
-          name: 'web3',
-          priority: 20,    // High priority
+          name: "web3",
+          priority: 20, // High priority
           reuseExistingChunk: true,
-          enforce: true,   // Force into this chunk
+          enforce: true, // Force into this chunk
         },
-        
+
         // React and core deps
         react: {
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'react',
+          name: "react",
           priority: 10,
         },
       };
@@ -118,6 +119,7 @@ export default nextConfig;
 ```
 
 **Result:**
+
 ```
 Before:
 - main.js: 220KB (includes everything)
@@ -149,15 +151,15 @@ const WalletModal = dynamic(
 export function WalletButton() {
   const { connect } = useConnect();
   const [showModal, setShowModal] = useState(false);
-  
+
   return (
     <>
       <button onClick={() => setShowModal(true)}>
         Connect Wallet
       </button>
-      
+
       {showModal && (
-        <WalletModal 
+        <WalletModal
           onConnect={() => setShowModal(false)}
         />
       )}
@@ -182,7 +184,7 @@ export function WalletButton() {
 export default function Layout() {
   useEffect(() => {
     // Prefetch Web3 chunk if user is on game page
-    if (typeof window !== 'undefined' && 
+    if (typeof window !== 'undefined' &&
         window.location.pathname === '/game') {
       // Tell browser to load web3 chunk soon
       const link = document.createElement('link');
@@ -191,7 +193,7 @@ export default function Layout() {
       document.head.appendChild(link);
     }
   }, []);
-  
+
   return <div>{/* ... */}</div>;
 }
 ```
@@ -211,25 +213,26 @@ async function initGameEngine() {
   const { default: BabylonEngine } = await import(
     '@babylon.js/core'
   );
-  
+
   return new BabylonEngine();
 }
 
 // Usage in game component
 export function Game() {
   const [engine, setEngine] = useState(null);
-  
+
   useEffect(() => {
     if (gameStarted) {
       initGameEngine().then(setEngine);
     }
   }, [gameStarted]);
-  
+
   return engine ? <Canvas engine={engine} /> : <Loading />;
 }
 ```
 
-**Impact:** 
+**Impact:**
+
 - Reduces initial load by ~50KB
 - Game loads in 2.5s instead of 4s
 
@@ -237,14 +240,14 @@ export function Game() {
 
 ```typescript
 // Before: Load all questions upfront
-const [allQuestions] = useQuery(() => 
-  fetch('/api/questions').then(r => r.json())
+const [allQuestions] = useQuery(() =>
+  fetch("/api/questions").then((r) => r.json()),
 );
 
 // After: Load questions as needed
 const getQuestionBatch = async (difficulty: string) => {
   const response = await fetch(
-    `/api/questions?difficulty=${difficulty}&limit=10`
+    `/api/questions?difficulty=${difficulty}&limit=10`,
   );
   return response.json();
 };
@@ -252,12 +255,13 @@ const getQuestionBatch = async (difficulty: string) => {
 // Usage
 useEffect(() => {
   if (gameStarted && currentRound === 1) {
-    getQuestionBatch('easy').then(setQuestions);
+    getQuestionBatch("easy").then(setQuestions);
   }
 }, [gameStarted, currentRound]);
 ```
 
 **Impact:**
+
 - Initial API call: 50KB → 5KB
 - Reduces TTFB (Time to First Byte) by 80%
 
@@ -276,24 +280,24 @@ const LeaderboardChart = dynamic(
 export function Leaderboard() {
   // Only load charts when tab is selected
   const [showChart, setShowChart] = useState(false);
-  
+
   return (
     <>
       <Tabs defaultValue="list">
         <TabsList>
           <TabsTrigger value="list">List</TabsTrigger>
-          <TabsTrigger 
+          <TabsTrigger
             value="chart"
             onClick={() => setShowChart(true)}
           >
             Chart
           </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="list">
           <LeaderboardList />
         </TabsContent>
-        
+
         <TabsContent value="chart">
           {showChart && <LeaderboardChart />}
         </TabsContent>
@@ -319,7 +323,7 @@ const nextConfig = {
         // Heavy libraries only on desktop
         desktop: {
           test: /[\\/]node_modules[\\/](three|babylon|pixijs)[\\/]/,
-          name: 'desktop',
+          name: "desktop",
           priority: 5,
           // Only include if on desktop route
           enforce: true,
@@ -338,26 +342,26 @@ const nextConfig = {
 
 export function useDeviceType() {
   const [device, setDevice] = useState<'mobile' | 'desktop'>('desktop');
-  
+
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
     setDevice(isMobile ? 'mobile' : 'desktop');
-    
+
     const handleResize = () => {
       setDevice(window.innerWidth < 768 ? 'mobile' : 'desktop');
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
+
   return device;
 }
 
 // Use in components
 export function Game() {
   const device = useDeviceType();
-  
+
   // Simpler rendering on mobile
   return device === 'mobile' ? (
     <SimpleGameView />
@@ -385,7 +389,7 @@ const AuthModal = dynamic(
 
 export function Header() {
   const [showAuth, setShowAuth] = useState(false);
-  
+
   return (
     <>
       <button onClick={() => setShowAuth(true)}>Login</button>
@@ -395,7 +399,8 @@ export function Header() {
 }
 ```
 
-**Impact:** 
+**Impact:**
+
 - ~20KB lazy loaded only when user clicks Login
 
 ### Cache Auth State
@@ -405,38 +410,38 @@ export function Header() {
 
 export function useAuthState() {
   const [auth, setAuth] = useContext(AuthContext);
-  
+
   useEffect(() => {
     // Load from localStorage
-    const cached = localStorage.getItem('auth');
+    const cached = localStorage.getItem("auth");
     if (cached) {
       setAuth(JSON.parse(cached));
     }
   }, []);
-  
+
   // Reduce API calls
   const login = useCallback(async (email, password) => {
-    const result = await fetch('/api/login', {
-      method: 'POST',
+    const result = await fetch("/api/login", {
+      method: "POST",
       body: JSON.stringify({ email, password }),
-    }).then(r => r.json());
-    
+    }).then((r) => r.json());
+
     // Cache for next visit
-    localStorage.setItem('auth', JSON.stringify(result));
+    localStorage.setItem("auth", JSON.stringify(result));
     setAuth(result);
-    
+
     return result;
   }, []);
-  
+
   return { auth, login };
 }
 ```
 
 ---
 
-## 🎯 Zali-Specific Metrics
+## 🎯 reui-Specific Metrics
 
-### Current Zali Performance
+### Current reui Performance
 
 ```bash
 Route: / (Home)
@@ -455,7 +460,7 @@ Route: /leaderboard
   - TTI: 4.2s
 ```
 
-### Target Zali Performance
+### Target reui Performance
 
 ```bash
 Route: /
@@ -476,7 +481,7 @@ Route: /leaderboard
 
 ---
 
-## 📋 Zali Implementation Checklist
+## 📋 reui Implementation Checklist
 
 ### Immediate (Week 1)
 
@@ -501,15 +506,17 @@ Route: /leaderboard
 
 ---
 
-## 🚀 Expected Zali Results
+## 🚀 Expected reui Results
 
 ### Home Page
+
 ```
 Before: 95KB → After: 95KB (unchanged ✅)
 Already optimal for landing page
 ```
 
 ### Game Page
+
 ```
 Before: 220KB → After: 140KB + 75KB (lazy)
 Initial load: -36% faster
@@ -521,6 +528,7 @@ FID: 180ms → 95ms (-47%)
 ```
 
 ### Leaderboard Page
+
 ```
 Before: 180KB → After: 140KB + 45KB (lazy)
 Initial load: -22% faster
@@ -562,6 +570,7 @@ npm run lighthouse
 ## 🎓 Web3 Best Practices
 
 ✅ **Do:**
+
 - Load Web3 only on Web3-dependent routes
 - Use dynamic imports for wallet UI
 - Prefetch Web3 chunk on route that needs it
@@ -569,6 +578,7 @@ npm run lighthouse
 - Lazy load error handlers/Sentry
 
 ❌ **Don't:**
+
 - Include wagmi/viem in main chunk
 - Load wallet modal on every page
 - Block game rendering on Web3 initialization
@@ -579,5 +589,5 @@ npm run lighthouse
 
 **Version:** 1.0  
 **Last Updated:** January 26, 2026  
-**Status:** Zali-Optimized  
-**Applies To:** Zali Web3 Trivia Game
+**Status:** reui-Optimized  
+**Applies To:** reui Web3 Trivia Game

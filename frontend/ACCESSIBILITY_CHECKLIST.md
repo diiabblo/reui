@@ -1,6 +1,6 @@
 # Accessibility Checklist
 
-Use this checklist when developing new features or components for Zali.
+Use this checklist when developing new features or components for reui.
 
 ## Before Development
 
@@ -13,6 +13,7 @@ Use this checklist when developing new features or components for Zali.
 ## During Development
 
 ### Semantic HTML
+
 - [ ] Use `<button>` for buttons, not `<div>`
 - [ ] Use `<a>` for links, not `<div>`
 - [ ] Use `<form>`, `<fieldset>`, `<legend>` for forms
@@ -22,6 +23,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Use `<label htmlFor="id">` for form inputs
 
 ### Keyboard Navigation
+
 - [ ] Tab to all interactive elements
 - [ ] Shift+Tab for reverse navigation
 - [ ] Enter/Space to activate buttons
@@ -31,12 +33,14 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Logical tab order
 
 ### Focus Indicators
+
 - [ ] Visible focus state on all interactive elements
 - [ ] Focus indicator contrast ratio ≥ 3:1
 - [ ] Focus indicator not removed without replacement
 - [ ] Example classes: `focus:outline-none focus:ring-2 focus:ring-{color}`
 
 ### ARIA
+
 - [ ] `aria-label` on icon-only buttons
 - [ ] `aria-labelledby` on grouped elements
 - [ ] `aria-describedby` for descriptions/errors
@@ -48,12 +52,14 @@ Use this checklist when developing new features or components for Zali.
 - [ ] `aria-busy` during loading
 
 ### Color & Contrast
+
 - [ ] Contrast ratio ≥ 4.5:1 for normal text
 - [ ] Contrast ratio ≥ 3:1 for large text (18pt+)
 - [ ] Color not used alone to convey information
 - [ ] Icons have sufficient contrast with background
 
 ### Forms
+
 - [ ] Clear, visible labels
 - [ ] Error messages associated with fields
 - [ ] Error messages descriptive and actionable
@@ -62,6 +68,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Character count announced (if applicable)
 
 ### Dynamic Content
+
 - [ ] Updates announced via `aria-live`
 - [ ] Loading states indicated
 - [ ] Results announced to screen readers
@@ -70,11 +77,13 @@ Use this checklist when developing new features or components for Zali.
 ## Testing
 
 ### Keyboard Only
+
 - [ ] Navigate using Tab key only
 - [ ] All functionality reachable
 - [ ] No traps or missing elements
 
 ### Screen Reader (at least one)
+
 - [ ] All text content readable
 - [ ] Form labels announced
 - [ ] Buttons announced with purpose
@@ -85,16 +94,19 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Links have purpose
 
 ### Browser DevTools
+
 - [ ] Lighthouse Accessibility audit
 - [ ] No detected issues
 - [ ] Manual review of detected items
 
 ### Contrast Verification
+
 - [ ] Use WebAIM Contrast Checker
 - [ ] Test with color-blind simulators
 - [ ] Verify ratio ≥ 4.5:1
 
 ### Manual Testing Checklist
+
 - [ ] Test with NVDA (Windows)
 - [ ] Test with JAWS (Windows)
 - [ ] Test with VoiceOver (Mac/iOS)
@@ -107,6 +119,7 @@ Use this checklist when developing new features or components for Zali.
 ## Components
 
 ### Buttons
+
 - [ ] Button element used
 - [ ] aria-label if icon only
 - [ ] Focus indicators visible
@@ -114,6 +127,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] aria-pressed for toggles
 
 ### Links
+
 - [ ] Clear link text (not "click here")
 - [ ] href attribute set
 - [ ] aria-label if icon only
@@ -121,6 +135,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] No underline needed (color sufficient)
 
 ### Forms
+
 - [ ] Label for each input
 - [ ] Fieldset/legend for groups
 - [ ] Error messages associated
@@ -129,6 +144,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Placeholder not used as label
 
 ### Navigation
+
 - [ ] Landmark nav element
 - [ ] Skip link provided
 - [ ] Current page indicated
@@ -136,12 +152,14 @@ Use this checklist when developing new features or components for Zali.
 - [ ] Mobile menu accessible
 
 ### Images
+
 - [ ] Meaningful alt text
 - [ ] Decorative images hidden
 - [ ] Complex images with description
 - [ ] Text in images avoided
 
 ### Modals/Dialogs
+
 - [ ] Focus trapped within modal
 - [ ] Can close with Escape
 - [ ] Title announced
@@ -149,6 +167,7 @@ Use this checklist when developing new features or components for Zali.
 - [ ] aria-modal attribute set
 
 ### Lists
+
 - [ ] Ordered lists use `<ol>`
 - [ ] Unordered lists use `<ul>`
 - [ ] List items use `<li>`
@@ -186,6 +205,7 @@ Use this checklist when developing new features or components for Zali.
 ## Questions?
 
 Refer to:
+
 1. ACCESSIBILITY.md for detailed guidelines
 2. Existing components for patterns
 3. WCAG 2.1 for specific requirements

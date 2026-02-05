@@ -30,8 +30,8 @@ services:
       retries: 3
       start_period: 40s
     networks:
-      - zali-network
+      - reui-network
 
 networks:
-  zali-network:
+  reui-network:
     driver: bridge

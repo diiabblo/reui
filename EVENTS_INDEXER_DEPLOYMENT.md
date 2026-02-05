@@ -1,6 +1,6 @@
 # Events Indexer Deployment Guide
 
-This guide covers deploying the Smart Contract Events Indexer for the Zali Trivia Game.
+This guide covers deploying the Smart Contract Events Indexer for the reui Trivia Game.
 
 ## Prerequisites
 
@@ -55,11 +55,13 @@ NEXT_PUBLIC_WS_RPC_URL=wss://base-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
 ### Option 1: Vercel (Recommended)
 
 1. **Connect Repository**
+
    ```bash
    vercel link
    ```
 
 2. **Set Environment Variables**
+
    ```bash
    vercel env add NEXT_PUBLIC_CONTRACT_ADDRESS
    vercel env add NEXT_PUBLIC_RPC_URL
@@ -67,6 +69,7 @@ NEXT_PUBLIC_WS_RPC_URL=wss://base-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
    ```
 
 3. **Deploy**
+
    ```bash
    vercel --prod
    ```
@@ -106,22 +109,25 @@ CMD ["node", "server.js"]
 ```
 
 Build and run:
+
 ```bash
-docker build -t zali-indexer .
+docker build -t reui-indexer .
 docker run -p 3000:3000 \
   -e NEXT_PUBLIC_CONTRACT_ADDRESS=0x7409Cbcb6577164E96A9b474efD4C32B9e17d59d \
   -e NEXT_PUBLIC_RPC_URL=https://mainnet.base.org \
-  zali-indexer
+  reui-indexer
 ```
 
 ### Option 3: Traditional Node.js
 
 1. **Build the application**
+
    ```bash
    npm run build
    ```
 
 2. **Start in production**
+
    ```bash
    npm start
    ```
@@ -129,7 +135,7 @@ docker run -p 3000:3000 \
 3. **Use PM2 for process management**
    ```bash
    npm install -g pm2
-   pm2 start npm --name "zali-indexer" -- start
+   pm2 start npm --name "reui-indexer" -- start
    pm2 save
    ```
 
@@ -137,14 +143,14 @@ docker run -p 3000:3000 \
 
 After deployment, the following endpoints are available:
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/events` | GET | Query events with filtering |
-| `/api/events/stats` | GET | Get event statistics |
-| `/api/events/leaderboard` | GET | Get player leaderboard |
-| `/api/events/player/[address]` | GET | Get player details |
-| `/api/events/stream` | GET | SSE event stream |
-| `/api/events/health` | GET | Health check |
+| Endpoint                       | Method | Description                 |
+| ------------------------------ | ------ | --------------------------- |
+| `/api/events`                  | GET    | Query events with filtering |
+| `/api/events/stats`            | GET    | Get event statistics        |
+| `/api/events/leaderboard`      | GET    | Get player leaderboard      |
+| `/api/events/player/[address]` | GET    | Get player details          |
+| `/api/events/stream`           | GET    | SSE event stream            |
+| `/api/events/health`           | GET    | Health check                |
 
 ## Health Check Integration
 
@@ -158,6 +164,7 @@ curl https://your-domain.com/api/events/health
 ```
 
 Expected response:
+
 ```json
 {
   "success": true,
@@ -165,8 +172,8 @@ Expected response:
     "status": "healthy",
     "uptime": 3600000,
     "components": [
-      {"name": "RPC Connection", "status": "healthy"},
-      {"name": "IndexedDB", "status": "healthy"}
+      { "name": "RPC Connection", "status": "healthy" },
+      { "name": "IndexedDB", "status": "healthy" }
     ]
   }
 }
@@ -175,6 +182,7 @@ Expected response:
 ### Alerting Thresholds
 
 Configure alerts for:
+
 - Health status != "healthy"
 - Response time > 5s
 - Error rate > 5%
@@ -192,15 +200,21 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '/api/events/stats',
+        source: "/api/events/stats",
         headers: [
-          { key: 'Cache-Control', value: 's-maxage=30, stale-while-revalidate' },
+          {
+            key: "Cache-Control",
+            value: "s-maxage=30, stale-while-revalidate",
+          },
         ],
       },
       {
-        source: '/api/events/leaderboard',
+        source: "/api/events/leaderboard",
         headers: [
-          { key: 'Cache-Control', value: 's-maxage=10, stale-while-revalidate' },
+          {
+            key: "Cache-Control",
+            value: "s-maxage=10, stale-while-revalidate",
+          },
         ],
       },
     ];
@@ -256,17 +270,26 @@ Add structured logging for production:
 // lib/logger.ts
 export const logger = {
   info: (message: string, data?: object) => {
-    console.log(JSON.stringify({ level: 'info', message, ...data, timestamp: new Date().toISOString() }));
+    console.log(
+      JSON.stringify({
+        level: "info",
+        message,
+        ...data,
+        timestamp: new Date().toISOString(),
+      }),
+    );
   },
   error: (message: string, error?: Error, data?: object) => {
-    console.error(JSON.stringify({
-      level: 'error',
-      message,
-      error: error?.message,
-      stack: error?.stack,
-      ...data,
-      timestamp: new Date().toISOString()
-    }));
+    console.error(
+      JSON.stringify({
+        level: "error",
+        message,
+        error: error?.message,
+        stack: error?.stack,
+        ...data,
+        timestamp: new Date().toISOString(),
+      }),
+    );
   },
 };
 ```
@@ -277,10 +300,10 @@ For detailed metrics, integrate with your observability platform:
 
 ```typescript
 // Example: Custom metrics endpoint
-app.get('/api/metrics', async (req, res) => {
+app.get("/api/metrics", async (req, res) => {
   const health = await getHealthCheckService().runHealthCheck();
 
-  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader("Content-Type", "text/plain");
   res.send(`
 # HELP indexer_events_processed_total Total events processed
 # TYPE indexer_events_processed_total counter
@@ -375,5 +398,6 @@ For high-traffic applications:
 ## Support
 
 For issues and questions:
-- GitHub Issues: [Zali Repository](https://github.com/DeborahOlaboye/Zali)
+
+- GitHub Issues: [reui Repository](https://github.com/DeborahOlaboye/reui)
 - Documentation: See README in `/frontend/src/services/indexer/`

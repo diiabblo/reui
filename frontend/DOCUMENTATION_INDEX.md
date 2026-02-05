@@ -1,13 +1,15 @@
 # Bundle Optimization Issue #144 - Documentation Index
 
-Complete index of all bundle optimization documentation for Issue #144. This index provides navigation and quick references for implementing bundle size optimization for the Zali application.
+Complete index of all bundle optimization documentation for Issue #144. This index provides navigation and quick references for implementing bundle size optimization for the reui application.
 
 ---
 
 ## 📚 Documentation Overview
 
-### Total Files: 11  
-### Total Lines of Documentation: ~6,500  
+### Total Files: 11
+
+### Total Lines of Documentation: ~6,500
+
 ### Total Commits: 15+ (exceeds requirement)
 
 ---
@@ -15,6 +17,7 @@ Complete index of all bundle optimization documentation for Issue #144. This ind
 ## 📖 Quick Navigation
 
 ### For Beginners
+
 Start here if you're new to bundle optimization:
 
 1. **[COMPLETE_REFERENCE_GUIDE.md](#complete-reference-guide)** ⭐ START HERE
@@ -29,6 +32,7 @@ Start here if you're new to bundle optimization:
    - Expected results
 
 ### For Implementers
+
 Start here if you're implementing the optimizations:
 
 3. **[IMPLEMENTATION_ROADMAP.md](#implementation-roadmap)** ⭐ IMPLEMENTATION
@@ -48,6 +52,7 @@ Start here if you're implementing the optimizations:
    - Alternative packages
 
 ### For Developers
+
 Start here if you're writing code:
 
 6. **[CODE_SPLITTING_EXAMPLES.md](#code-splitting-examples)** ⭐ CODE
@@ -67,6 +72,7 @@ Start here if you're writing code:
    - Production settings
 
 ### For DevOps/Monitoring
+
 Start here if you're setting up monitoring:
 
 9. **[BUNDLE_MONITORING.md](#bundle-monitoring)**
@@ -80,6 +86,7 @@ Start here if you're setting up monitoring:
     - Real-time monitoring
 
 ### For Troubleshooting
+
 Start here if something goes wrong:
 
 11. **[TROUBLESHOOTING_BEST_PRACTICES.md](#troubleshooting-best-practices)**
@@ -88,6 +95,7 @@ Start here if something goes wrong:
     - Performance workflow
 
 ### For Testing
+
 Start here if you're validating changes:
 
 12. **[TESTING_AND_VALIDATION.md](#testing-validation)**
@@ -102,18 +110,20 @@ Start here if you're validating changes:
     - Web3 bundle challenges
     - Route-specific loading
     - Wallet optimization
-    - Zali-specific metrics
+    - reui-specific metrics
 
 ---
 
 ## 📄 Detailed File Descriptions
 
 ### COMPLETE_REFERENCE_GUIDE.md
+
 **Status:** Complete  
 **Lines:** 444  
 **Best For:** Quick overview, team onboarding
 
 **Contains:**
+
 - Current state vs target metrics
 - Dependency review with priorities
 - 3-phase implementation summary
@@ -127,11 +137,13 @@ Start here if you're validating changes:
 ---
 
 ### BUNDLE_OPTIMIZATION_GUIDE.md
+
 **Status:** Complete  
 **Lines:** 308  
 **Best For:** Strategy and planning
 
 **Contains:**
+
 - Optimization strategy overview
 - 6 optimization strategies ranked by priority
 - Target metrics (200KB JS, <3s TTI)
@@ -144,11 +156,13 @@ Start here if you're validating changes:
 ---
 
 ### BUNDLE_CONFIG.md
+
 **Status:** Complete  
 **Lines:** 420  
 **Best For:** Configuration reference
 
 **Contains:**
+
 - Enhanced next.config.js example
 - Webpack optimization settings
 - Cache groups configuration
@@ -162,11 +176,13 @@ Start here if you're validating changes:
 ---
 
 ### DYNAMIC_IMPORTS.md
+
 **Status:** Complete  
 **Lines:** 566  
 **Best For:** Code splitting patterns
 
 **Contains:**
+
 - 5 levels of code splitting (route, component, feature, library, conditional)
 - Lazy load patterns and code examples
 - 4 implementation patterns with examples
@@ -181,11 +197,13 @@ Start here if you're validating changes:
 ---
 
 ### PERFORMANCE_TUNING.md
+
 **Status:** Complete  
 **Lines:** 461  
 **Best For:** Core Web Vitals optimization
 
 **Contains:**
+
 - Web Vitals targets vs current metrics
 - 7 tuning techniques with examples
 - Image, font, and CSS optimization
@@ -202,11 +220,13 @@ Start here if you're validating changes:
 ---
 
 ### BUNDLE_MONITORING.md
+
 **Status:** Complete  
 **Lines:** 473  
 **Best For:** CI/CD and monitoring setup
 
 **Contains:**
+
 - Bundle analyzer setup
 - GitHub Actions workflow for CI/CD
 - Manual bundle analysis scripts
@@ -222,11 +242,13 @@ Start here if you're validating changes:
 ---
 
 ### DEPENDENCY_ANALYSIS.md
+
 **Status:** Complete  
 **Lines:** 438  
 **Best For:** Dependency optimization
 
 **Contains:**
+
 - Current dependency overview (27 packages)
 - Priority 1-3 removal strategies
 - Package analysis commands
@@ -242,11 +264,13 @@ Start here if you're validating changes:
 ---
 
 ### CODE_SPLITTING_EXAMPLES.md
+
 **Status:** Complete  
 **Lines:** 532  
 **Best For:** Real code implementation
 
 **Contains:**
+
 - Level 1: Route-based splitting (auto)
 - Level 2: Component lazy loading (Framer Motion example)
 - Level 3: Conditional loading (feature flags, Sentry)
@@ -262,11 +286,13 @@ Start here if you're validating changes:
 ---
 
 ### IMPLEMENTATION_CHECKLIST.md
+
 **Status:** Complete  
 **Lines:** 609  
 **Best For:** Step-by-step implementation
 
 **Contains:**
+
 - 7 implementation phases:
   1. Planning & Analysis (Days 1-2)
   2. Quick Wins (Days 3-5): 65KB savings
@@ -287,11 +313,13 @@ Start here if you're validating changes:
 ---
 
 ### METRICS_DASHBOARD.md
+
 **Status:** Complete  
 **Lines:** 690  
 **Best For:** Monitoring setup
 
 **Contains:**
+
 - Core metrics to track
 - Web Vitals tracking implementation
 - Bundle size tracking
@@ -309,11 +337,13 @@ Start here if you're validating changes:
 ---
 
 ### TROUBLESHOOTING_BEST_PRACTICES.md
+
 **Status:** Complete  
 **Lines:** 516  
 **Best For:** Problem solving
 
 **Contains:**
+
 - 6 common troubleshooting issues with solutions:
   1. Build fails after removing dependency
   2. Lazy loaded component not loading
@@ -332,11 +362,13 @@ Start here if you're validating changes:
 ---
 
 ### WEB3_SPECIFIC_OPTIMIZATIONS.md
+
 **Status:** Complete  
 **Lines:** 583  
-**Best For:** Zali-specific optimization
+**Best For:** reui-specific optimization
 
 **Contains:**
+
 - Web3 bundle challenges analysis
 - Strategy 1: Load Web3 only when needed
 - Strategy 2: Separate Web3 chunks
@@ -346,7 +378,7 @@ Start here if you're validating changes:
 - Leaderboard lazy loading
 - Mobile-first optimizations
 - User authentication optimization
-- Zali-specific metrics
+- reui-specific metrics
 - Implementation checklist
 - Web3 best practices
 
@@ -355,11 +387,13 @@ Start here if you're validating changes:
 ---
 
 ### TESTING_AND_VALIDATION.md
+
 **Status:** Complete  
 **Lines:** 606  
 **Best For:** Quality assurance
 
 **Contains:**
+
 - Testing pyramid (unit, component, E2E)
 - Unit test examples
 - Component test examples
@@ -376,11 +410,13 @@ Start here if you're validating changes:
 ---
 
 ### IMPLEMENTATION_ROADMAP.md
+
 **Status:** Complete  
 **Lines:** 636  
 **Best For:** Project management
 
 **Contains:**
+
 - 4-week detailed implementation plan:
   - Week 1: Quick Wins (Days 1-5) - 65KB
   - Week 2: Component Lazy Loading (Days 6-10) - 110KB
@@ -401,28 +437,35 @@ Start here if you're validating changes:
 ## 🎯 By Use Case
 
 ### I want to understand the problem
+
 → Read: **COMPLETE_REFERENCE_GUIDE.md** (15 min)
 
 ### I want to implement the solution
+
 → Read: **IMPLEMENTATION_ROADMAP.md** (35 min)  
 → Reference: **IMPLEMENTATION_CHECKLIST.md** (during implementation)
 
 ### I want to write code
+
 → Read: **CODE_SPLITTING_EXAMPLES.md** (25 min)  
 → Reference: **BUNDLE_CONFIG.md** and **DYNAMIC_IMPORTS.md**
 
 ### I want to set up monitoring
+
 → Read: **BUNDLE_MONITORING.md** (20 min)  
 → Reference: **METRICS_DASHBOARD.md** (25 min)
 
 ### I want to optimize for Web3
+
 → Read: **WEB3_SPECIFIC_OPTIMIZATIONS.md** (22 min)  
 → Reference: **CODE_SPLITTING_EXAMPLES.md**
 
 ### I want to test the changes
+
 → Read: **TESTING_AND_VALIDATION.md** (25 min)
 
 ### I have a problem
+
 → Read: **TROUBLESHOOTING_BEST_PRACTICES.md** (20 min)
 
 ---
@@ -431,25 +474,25 @@ Start here if you're validating changes:
 
 ### By Category
 
-| Category | Files | Lines | Est. Read Time |
-|----------|-------|-------|-----------------|
-| Overview & Strategy | 2 | 752 | 25 min |
-| Implementation | 3 | 1,645 | 80 min |
-| Configuration | 2 | 1,151 | 40 min |
-| Code Examples | 2 | 1,098 | 45 min |
-| Monitoring | 2 | 1,163 | 45 min |
-| Support | 2 | 1,122 | 45 min |
-| **Total** | **13** | **6,931** | **280 min** |
+| Category            | Files  | Lines     | Est. Read Time |
+| ------------------- | ------ | --------- | -------------- |
+| Overview & Strategy | 2      | 752       | 25 min         |
+| Implementation      | 3      | 1,645     | 80 min         |
+| Configuration       | 2      | 1,151     | 40 min         |
+| Code Examples       | 2      | 1,098     | 45 min         |
+| Monitoring          | 2      | 1,163     | 45 min         |
+| Support             | 2      | 1,122     | 45 min         |
+| **Total**           | **13** | **6,931** | **280 min**    |
 
 ### By Audience
 
-| Audience | Files | Read Time |
-|----------|-------|-----------|
-| Beginners | 2 | 25 min |
-| Project Managers | 2 | 45 min |
-| Developers | 4 | 75 min |
-| DevOps/QA | 3 | 70 min |
-| Troubleshooters | 2 | 45 min |
+| Audience         | Files | Read Time |
+| ---------------- | ----- | --------- |
+| Beginners        | 2     | 25 min    |
+| Project Managers | 2     | 45 min    |
+| Developers       | 4     | 75 min    |
+| DevOps/QA        | 3     | 70 min    |
+| Troubleshooters  | 2     | 45 min    |
 
 ---
 
@@ -488,29 +531,32 @@ Start here if you're validating changes:
 
 ## 📞 Support Matrix
 
-| Issue | Primary Guide | Secondary Guide |
-|-------|--------------|-----------------|
-| "How do I start?" | COMPLETE_REFERENCE_GUIDE | IMPLEMENTATION_ROADMAP |
-| "What code do I write?" | CODE_SPLITTING_EXAMPLES | BUNDLE_CONFIG |
-| "How do I test?" | TESTING_AND_VALIDATION | IMPLEMENTATION_CHECKLIST |
-| "What went wrong?" | TROUBLESHOOTING_BEST_PRACTICES | - |
-| "How do I monitor?" | METRICS_DASHBOARD | BUNDLE_MONITORING |
-| "Web3 specific?" | WEB3_SPECIFIC_OPTIMIZATIONS | CODE_SPLITTING_EXAMPLES |
+| Issue                   | Primary Guide                  | Secondary Guide          |
+| ----------------------- | ------------------------------ | ------------------------ |
+| "How do I start?"       | COMPLETE_REFERENCE_GUIDE       | IMPLEMENTATION_ROADMAP   |
+| "What code do I write?" | CODE_SPLITTING_EXAMPLES        | BUNDLE_CONFIG            |
+| "How do I test?"        | TESTING_AND_VALIDATION         | IMPLEMENTATION_CHECKLIST |
+| "What went wrong?"      | TROUBLESHOOTING_BEST_PRACTICES | -                        |
+| "How do I monitor?"     | METRICS_DASHBOARD              | BUNDLE_MONITORING        |
+| "Web3 specific?"        | WEB3_SPECIFIC_OPTIMIZATIONS    | CODE_SPLITTING_EXAMPLES  |
 
 ---
 
 ## 🎓 Learning Paths
 
 ### Path 1: Executive Summary (30 min)
+
 1. COMPLETE_REFERENCE_GUIDE.md
 
 ### Path 2: Developer Track (2 hours)
+
 1. COMPLETE_REFERENCE_GUIDE.md
 2. CODE_SPLITTING_EXAMPLES.md
 3. BUNDLE_CONFIG.md
 4. TROUBLESHOOTING_BEST_PRACTICES.md
 
 ### Path 3: Full Implementation (5+ hours)
+
 1. COMPLETE_REFERENCE_GUIDE.md
 2. IMPLEMENTATION_ROADMAP.md
 3. IMPLEMENTATION_CHECKLIST.md
@@ -527,17 +573,20 @@ Start here if you're validating changes:
 ## 📈 Expected Outcomes
 
 ### Bundle Size
+
 - Before: 220KB initial JS
 - After: 140KB initial JS
 - Savings: 80KB (-36%)
 
 ### Performance
+
 - LCP: 4.2s → 2.1s (-50%)
 - TTI: 5.8s → 2.8s (-52%)
 - FID: 180ms → 95ms (-47%)
 - CLS: 0.15 → 0.08 (-47%)
 
 ### User Experience
+
 - Mobile 3G: 1.3s → 450ms to interactive (-65%)
 - Main chunk: 120KB → 80KB (-33%)
 - Total bundle: 350KB → 220KB (-37%)

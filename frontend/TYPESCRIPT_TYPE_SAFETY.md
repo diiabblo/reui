@@ -1,6 +1,6 @@
 # TypeScript Type Safety System
 
-This document describes the comprehensive TypeScript type safety system implemented in the Zali application.
+This document describes the comprehensive TypeScript type safety system implemented in the reui application.
 
 ## Overview
 
@@ -29,6 +29,7 @@ const MyButton: React.FC<ButtonProps> = ({ variant, size, children, ...props }) 
 ```
 
 **Key Features:**
+
 - Base component props with `className` and `data-testid`
 - Variant and size type unions for consistent styling
 - Accessibility props integration
@@ -39,12 +40,12 @@ const MyButton: React.FC<ButtonProps> = ({ variant, size, children, ...props }) 
 Type-safe Web3 and blockchain interactions:
 
 ```typescript
-import { Address, Hash, ContractCall } from '@/types/web3';
+import { Address, Hash, ContractCall } from "@/types/web3";
 
 // Usage example
 const transferTokens = async (to: Address, amount: bigint): Promise<Hash> => {
   const call: ContractCall = {
-    functionName: 'transfer',
+    functionName: "transfer",
     args: [to, amount],
   };
   return await writeContract(call);
@@ -52,6 +53,7 @@ const transferTokens = async (to: Address, amount: bigint): Promise<Hash> => {
 ```
 
 **Key Features:**
+
 - Branded types for addresses and hashes
 - Contract interaction type safety
 - Transaction state management
@@ -77,6 +79,7 @@ const UsernameField: React.FC<FormFieldProps<string>> = ({ name, error, ...props
 ```
 
 **Key Features:**
+
 - Zod schema integration
 - Form field component types
 - Multi-step form support
@@ -87,7 +90,12 @@ const UsernameField: React.FC<FormFieldProps<string>> = ({ name, error, ...props
 Runtime type checking utilities:
 
 ```typescript
-import { isString, isAddress, assertIsNumber, safeGet } from '@/utils/typeGuards';
+import {
+  isString,
+  isAddress,
+  assertIsNumber,
+  safeGet,
+} from "@/utils/typeGuards";
 
 // Usage examples
 if (isString(userInput)) {
@@ -105,12 +113,13 @@ assertIsNumber(value); // throws if not number
 // value is now typed as number
 
 // Safe property access
-const name = safeGet(userData, 'name', isString); // string | undefined
+const name = safeGet(userData, "name", isString); // string | undefined
 ```
 
 **Available Type Guards:**
 
 ### Primitive Types
+
 - `isString(value)` - Check if value is string
 - `isNumber(value)` - Check if value is number (not NaN)
 - `isBoolean(value)` - Check if value is boolean
@@ -119,16 +128,19 @@ const name = safeGet(userData, 'name', isString); // string | undefined
 - `isFunction(value)` - Check if value is function
 
 ### Web3 Types
+
 - `isAddress(value)` - Check if value is valid Ethereum address
 - `isHash(value)` - Check if value is valid transaction hash
 - `isBigInt(value)` - Check if value is bigint
 
 ### DOM Types
+
 - `isHTMLElement(value)` - Check if value is HTML element
 - `isInputElement(value)` - Check if value is input element
 - `isFormElement(value)` - Check if value is form element
 
 ### Utility Functions
+
 - `hasProperty(obj, prop)` - Check if object has property
 - `isArrayOf(arr, validator)` - Check if array contains only valid items
 - `safeJSONParse(json, validator?)` - Parse JSON with optional validation
@@ -138,11 +150,11 @@ const name = safeGet(userData, 'name', isString); // string | undefined
 Type-safe API client with validation:
 
 ```typescript
-import { TypeSafeApiClient, createApiResponseSchema } from '@/utils/apiClient';
-import { z } from 'zod';
+import { TypeSafeApiClient, createApiResponseSchema } from "@/utils/apiClient";
+import { z } from "zod";
 
 // Create client
-const api = new TypeSafeApiClient('https://api.example.com');
+const api = new TypeSafeApiClient("https://api.example.com");
 
 // Define response schema
 const userSchema = z.object({
@@ -154,11 +166,12 @@ const userSchema = z.object({
 const userResponseSchema = createApiResponseSchema(userSchema);
 
 // Type-safe API call
-const response = await api.get('/users/123', {}, userResponseSchema);
+const response = await api.get("/users/123", {}, userResponseSchema);
 // response.data is now typed as { id: number; name: string; email: string; }
 ```
 
 **Features:**
+
 - Automatic retry with exponential backoff
 - Request/response validation with Zod
 - Custom error classes with detailed information
@@ -231,7 +244,7 @@ export const MyButton: React.FC<MyButtonProps> = ({
       ghost: 'text-blue-600 hover:bg-blue-50',
       danger: 'bg-red-600 text-white',
     } as const;
-    
+
     return classes[variant];
   };
 
@@ -292,7 +305,7 @@ export const RegistrationForm: React.FC = () => {
           <span role="alert">{errors.username.message}</span>
         )}
       </div>
-      
+
       <button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Registering...' : 'Register'}
       </button>
@@ -304,31 +317,28 @@ export const RegistrationForm: React.FC = () => {
 ### Web3 Integration with Type Safety
 
 ```typescript
-import { useAccount, useContractWrite } from 'wagmi';
-import { Address, ContractCall } from '@/types/web3';
-import { isAddress, assertIsString } from '@/utils/typeGuards';
+import { useAccount, useContractWrite } from "wagmi";
+import { Address, ContractCall } from "@/types/web3";
+import { isAddress, assertIsString } from "@/utils/typeGuards";
 
 export const useTokenTransfer = () => {
   const { address } = useAccount();
 
-  const transferTokens = async (
-    to: string,
-    amount: string
-  ): Promise<void> => {
+  const transferTokens = async (to: string, amount: string): Promise<void> => {
     // Type-safe validation
     if (!isAddress(to)) {
-      throw new Error('Invalid recipient address');
+      throw new Error("Invalid recipient address");
     }
 
     assertIsString(amount);
     const amountBigInt = BigInt(amount);
 
     if (!address) {
-      throw new Error('Wallet not connected');
+      throw new Error("Wallet not connected");
     }
 
     const call: ContractCall = {
-      functionName: 'transfer',
+      functionName: "transfer",
       args: [to, amountBigInt],
     };
 
@@ -347,7 +357,7 @@ export const useTokenTransfer = () => {
 ```typescript
 // Good - Runtime type checking
 function processUserData(data: unknown): void {
-  if (isObject(data) && hasProperty(data, 'name') && isString(data.name)) {
+  if (isObject(data) && hasProperty(data, "name") && isString(data.name)) {
     // data.name is now safely typed as string
     console.log(data.name.toUpperCase());
   }
@@ -364,8 +374,8 @@ function processUserDataUnsafe(data: unknown): void {
 
 ```typescript
 // Good - Branded types prevent mixing different string types
-type UserId = string & { readonly __brand: 'UserId' };
-type Email = string & { readonly __brand: 'Email' };
+type UserId = string & { readonly __brand: "UserId" };
+type Email = string & { readonly __brand: "Email" };
 
 const createUserId = (id: string): UserId => id as UserId;
 const createEmail = (email: string): Email => email as Email;
@@ -384,11 +394,11 @@ function sendEmailUnsafe(userId: string, email: string): void {
 
 ```typescript
 // Good - Readonly array with specific types
-const BUTTON_VARIANTS = ['primary', 'secondary', 'outline'] as const;
-type ButtonVariant = typeof BUTTON_VARIANTS[number]; // 'primary' | 'secondary' | 'outline'
+const BUTTON_VARIANTS = ["primary", "secondary", "outline"] as const;
+type ButtonVariant = (typeof BUTTON_VARIANTS)[number]; // 'primary' | 'secondary' | 'outline'
 
 // Bad - Mutable array with generic string type
-const BUTTON_VARIANTS_BAD = ['primary', 'secondary', 'outline'];
+const BUTTON_VARIANTS_BAD = ["primary", "secondary", "outline"];
 type ButtonVariantBad = string; // Too broad
 ```
 
@@ -402,7 +412,7 @@ interface ApiResponse<T extends Record<string, unknown>> {
 }
 
 function processApiResponse<T extends Record<string, unknown>>(
-  response: ApiResponse<T>
+  response: ApiResponse<T>,
 ): T {
   return response.data;
 }
@@ -425,8 +435,8 @@ interface User {
   password: string;
 }
 
-type PublicUser = Omit<User, 'password'>; // Safe public interface
-type UserUpdate = Partial<Pick<User, 'name' | 'email'>>; // Update interface
+type PublicUser = Omit<User, "password">; // Safe public interface
+type UserUpdate = Partial<Pick<User, "name" | "email">>; // Update interface
 
 // Bad - Duplicate interfaces
 interface PublicUserBad {
@@ -441,24 +451,24 @@ interface PublicUserBad {
 ### Unit Tests for Type Guards
 
 ```typescript
-import { isString, isAddress, safeGet } from '@/utils/typeGuards';
+import { isString, isAddress, safeGet } from "@/utils/typeGuards";
 
-describe('Type Guards', () => {
-  it('should correctly identify strings', () => {
-    expect(isString('hello')).toBe(true);
+describe("Type Guards", () => {
+  it("should correctly identify strings", () => {
+    expect(isString("hello")).toBe(true);
     expect(isString(123)).toBe(false);
     expect(isString(null)).toBe(false);
   });
 
-  it('should correctly identify addresses', () => {
-    expect(isAddress('0x1234567890123456789012345678901234567890')).toBe(true);
-    expect(isAddress('invalid')).toBe(false);
+  it("should correctly identify addresses", () => {
+    expect(isAddress("0x1234567890123456789012345678901234567890")).toBe(true);
+    expect(isAddress("invalid")).toBe(false);
   });
 
-  it('should safely access object properties', () => {
-    const obj = { name: 'test', age: 25 };
-    expect(safeGet(obj, 'name', isString)).toBe('test');
-    expect(safeGet(obj, 'age', isString)).toBeUndefined();
+  it("should safely access object properties", () => {
+    const obj = { name: "test", age: 25 };
+    expect(safeGet(obj, "name", isString)).toBe("test");
+    expect(safeGet(obj, "age", isString)).toBeUndefined();
   });
 });
 ```
@@ -476,7 +486,7 @@ describe('MyButton', () => {
         Click me
       </MyButton>
     );
-    
+
     const button = container.querySelector('button');
     expect(button).toHaveClass('bg-blue-600', 'text-white');
   });
@@ -485,7 +495,7 @@ describe('MyButton', () => {
     const { getByRole } = render(
       <MyButton loading>Click me</MyButton>
     );
-    
+
     const button = getByRole('button');
     expect(button).toBeDisabled();
     expect(button).toHaveTextContent('Loading...');
@@ -498,16 +508,18 @@ describe('MyButton', () => {
 ### From Untyped to Typed Components
 
 1. **Add type imports:**
+
 ```typescript
 // Before
-import React from 'react';
+import React from "react";
 
 // After
-import React from 'react';
-import { ButtonProps } from '@/types/components';
+import React from "react";
+import { ButtonProps } from "@/types/components";
 ```
 
 2. **Update component props:**
+
 ```typescript
 // Before
 interface MyComponentProps {
@@ -523,6 +535,7 @@ interface MyComponentProps extends BaseComponentProps {
 ```
 
 3. **Add type guards for runtime validation:**
+
 ```typescript
 // Before
 function handleUserInput(input: any) {
@@ -531,7 +544,7 @@ function handleUserInput(input: any) {
 
 // After
 function handleUserInput(input: unknown) {
-  if (isObject(input) && hasProperty(input, 'name') && isString(input.name)) {
+  if (isObject(input) && hasProperty(input, "name") && isString(input.name)) {
     console.log(input.name.toUpperCase());
   }
 }
@@ -543,10 +556,10 @@ function handleUserInput(input: unknown) {
 
 ```typescript
 // Good - Type-only import (no runtime cost)
-import type { ButtonProps } from '@/types/components';
+import type { ButtonProps } from "@/types/components";
 
 // Bad - Value import when only type is needed
-import { ButtonProps } from '@/types/components';
+import { ButtonProps } from "@/types/components";
 ```
 
 ### Conditional Type Guards
@@ -555,15 +568,15 @@ import { ButtonProps } from '@/types/components';
 // Good - Early return for performance
 function processData(data: unknown): string | null {
   if (!isObject(data)) return null;
-  if (!hasProperty(data, 'name')) return null;
+  if (!hasProperty(data, "name")) return null;
   if (!isString(data.name)) return null;
-  
+
   return data.name.toUpperCase();
 }
 
 // Bad - Nested conditions
 function processDataBad(data: unknown): string | null {
-  if (isObject(data) && hasProperty(data, 'name') && isString(data.name)) {
+  if (isObject(data) && hasProperty(data, "name") && isString(data.name)) {
     return data.name.toUpperCase();
   }
   return null;

@@ -1,17 +1,19 @@
 # Contract Testing Contribution Guide
 
-Contributing tests to the Zali project helps ensure contract reliability and maintainability.
+Contributing tests to the reui project helps ensure contract reliability and maintainability.
 
 ## Getting Started
 
 1. **Set up your environment:**
+
    ```bash
-   cd /path/to/zali
+   cd /path/to/reui
    cd contracts
    forge build
    ```
 
 2. **Run existing tests to ensure setup is correct:**
+
    ```bash
    forge test
    ```
@@ -26,6 +28,7 @@ Contributing tests to the Zali project helps ensure contract reliability and mai
 ### Step 1: Identify What Needs Testing
 
 Before writing tests, consider:
+
 - What is the feature/function you're testing?
 - What are the happy path scenarios?
 - What error cases should be prevented?
@@ -57,22 +60,22 @@ contract ContractNameTest is Test {
     ContractName public contract_;
     address public owner;
     address public user1;
-    
+
     function setUp() public {
         owner = address(0x1);
         user1 = address(0x2);
-        
+
         vm.startPrank(owner);
         contract_ = new ContractName(/* args */);
         vm.stopPrank();
     }
-    
+
     function test_HappyPath() public {
         // Arrange
         // Act
         // Assert
     }
-    
+
     function test_RevertWhen_ErrorCondition() public {
         vm.expectRevert(ContractName.CustomError.selector);
         // perform action that should revert
@@ -103,11 +106,11 @@ Before submitting:
 function test_StateChangesCorrectly() public {
     // Capture initial state
     uint256 initialBalance = token.balanceOf(user);
-    
+
     // Perform action
     vm.prank(user);
     contract_.performAction();
-    
+
     // Verify state changed correctly
     uint256 finalBalance = token.balanceOf(user);
     assertEq(finalBalance, initialBalance + expectedChange);
@@ -119,7 +122,7 @@ function test_StateChangesCorrectly() public {
 ```solidity
 function test_RevertWhen_InvalidInput() public {
     string[] memory options = new string[](1); // Too few options
-    
+
     vm.expectRevert(SimpleTriviaGame.InvalidOptions.selector);
     vm.prank(owner);
     triviaGame.addQuestion(
@@ -153,12 +156,12 @@ function test_MultiplePlayers() public {
     vm.startPrank(player1);
     contract_.stake(amount1);
     vm.stopPrank();
-    
+
     // Player 2 action
     vm.startPrank(player2);
     contract_.stake(amount2);
     vm.stopPrank();
-    
+
     // Verify both players' states
     assertEq(contract_.getStake(player1), amount1);
     assertEq(contract_.getStake(player2), amount2);
@@ -241,6 +244,7 @@ Expand [test file] with additional scenarios
 ```
 
 Example:
+
 ```
 Add comprehensive tests for question deactivation
 Fix Faucet claim revert test assertions
@@ -264,17 +268,20 @@ Before opening a PR with tests:
 If tests fail:
 
 1. **Run with verbose output:**
+
    ```bash
    forge test --match-function test_FailingTest -vvv
    ```
 
 2. **Add console output:**
+
    ```solidity
    import "forge-std/console.sol";
    console.log("Value:", value);
    ```
 
 3. **Isolate the issue:**
+
    ```bash
    forge test --match-path "*/test/YourTest.t.sol" -v
    ```
@@ -310,10 +317,10 @@ If tests fail:
 function test_TransferTokens() public {
     uint256 amount = 10 * 10**18;
     uint256 initialBalance = token.balanceOf(user);
-    
+
     vm.prank(owner);
     token.transfer(user, amount);
-    
+
     assertEq(token.balanceOf(user), initialBalance + amount);
 }
 ```
@@ -323,7 +330,7 @@ function test_TransferTokens() public {
 ```solidity
 function test_RevertWhen_TransferExceedsBalance() public {
     uint256 amount = token.balanceOf(user) + 1;
-    
+
     vm.prank(user);
     vm.expectRevert();
     token.transfer(owner, amount);
@@ -337,15 +344,15 @@ function test_MultipleClaimsAndWithdrawals() public {
     // Multiple users claim
     vm.prank(user1);
     faucet.claim();
-    
+
     vm.prank(user2);
     faucet.claim();
-    
+
     // Owner withdraws remaining
     vm.prank(owner);
     uint256 remaining = token.balanceOf(address(faucet));
     faucet.withdrawTokens(remaining);
-    
+
     // Verify final states
     assertEq(token.balanceOf(user1), 10 * 10**18);
     assertEq(token.balanceOf(user2), 10 * 10**18);
@@ -355,4 +362,4 @@ function test_MultipleClaimsAndWithdrawals() public {
 
 ## Thank You!
 
-Thank you for contributing tests to Zali! Good tests make better contracts.
+Thank you for contributing tests to reui! Good tests make better contracts.
